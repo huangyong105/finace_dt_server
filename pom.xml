@@ -81,19 +81,6 @@
             </snapshots>
         </repository>
     </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://39.97.173.139:8081/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <modules>
         <module>eureka-dt-server</module>
