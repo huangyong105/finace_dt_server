@@ -1,0 +1,25 @@
+version: '2'
+services:
+  eureka-dt-server:
+    image: ureka-dt-server
+    restart: always
+    ports:
+      - 8761:8761
+
+  user-service:
+    image: user-service
+    restart: always
+    ports:
+      - 8770:8770
+
+  config-server:
+    image: config-server
+    restart: always
+    ports:
+      - 8767:8767
+
+  sleuth-server:
+    image: sleuth-server
+    restart: always
+    ports:
+      - 9411:9411
