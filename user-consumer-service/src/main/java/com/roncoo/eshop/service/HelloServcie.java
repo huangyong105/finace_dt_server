@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Author:yong.huang
  * @Date: 2019/3/28 20:13
  */
-@FeignClient(value = "user-service")
+@FeignClient(value = "user-service",url="http://47.101.147.30:8761/")
 public interface HelloServcie {
-    @RequestMapping(value = "/helloWorld",method = RequestMethod.GET)
+    @RequestMapping(value = "/helloWorld")
+    @ResponseBody
     public String helloWorld();
 }
