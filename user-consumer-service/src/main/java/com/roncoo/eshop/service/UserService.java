@@ -50,7 +50,7 @@ public class UserService {
 		ServiceInstance serviceInstance = loadBalancerClient.choose(clientApplicationName);
 		System.out.println(serviceInstance.getUri().getUserInfo());
 		// 获取之前eurekaClient /all接口地址
-		String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + interfaceName;
+		String url = "http://user-service" + interfaceName;
 		System.out.println(url);
 		return url;
 	}
