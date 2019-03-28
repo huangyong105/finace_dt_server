@@ -23,6 +23,6 @@ public class UserController {
 	private UserService userService;
 	@RequestMapping(value = "/hi")
 	public String hiService() {
-		return userService.hiService();
+		return userService.helloWorld();
 	}
 }
