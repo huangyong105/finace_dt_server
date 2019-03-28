@@ -94,7 +94,9 @@
         <module>eureka-dt-server</module>
         <module>sleuth-server</module>
         <module>config-server</module>
+        <module>common-service</module>
         <module>user-service</module>
+        <module>user-consumer-service</module>
         <!-- <module>app/test</module>-->
 
     </modules>
