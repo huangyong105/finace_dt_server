@@ -32,7 +32,7 @@ public class UserService {
 	HelloServcie helloServcie;
 
 	public String hiService() {
-		return restTemplate.getForObject(getUrl("user-service", "/helloWorld"),String.class);
+		return restTemplate.getForObject(getUrl("user-service", "/uc/helloWorld"),String.class);
 	}
 	
 	public List<User> findAllUsers() {
