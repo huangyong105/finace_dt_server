@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e71ba537-41ab-4779-9c74-c5084125734b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/DTO/ArticleManagementDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/DTO/InvestmentDetailsDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/DTO/InvestorManagementDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/DTO/ProjectManagementDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/config/FtpConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/converter/BeanConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/manager/ArticleManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/manager/InvestmentManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/manager/InvestorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/mapper/AdministratorMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/mapper/ArticleManagementMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/mapper/InvestmentDetailsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/mapper/InvestorManagementMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/mapper/ProjectManagementMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/model/AdministratorDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/model/ArticleManagementDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/model/InvestmentDetailsDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/model/InvestorManagementDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/model/ProjectManagementDO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/result/BaseResultConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/result/Result.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/util/FtpUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/web/controller/ArticleController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/web/controller/InvestmentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/web/controller/InvestorManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_redis_1_4_6_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_redis_1_4_6_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_1_5_2_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_1_5_2_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_2_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_2_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_2_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_2_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_2_RELEASE.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_2_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-service/common-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server/config-server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-dt-server/eureka-dt-server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/finace_dt_server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/finace_dt_server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sleuth-server/sleuth-server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-consumer-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-consumer-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/user-consumer-service/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/target/classes/com/roncoo/eshop/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/user-consumer-service/target/classes/com/roncoo/eshop/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-consumer-service/user-consumer-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/user-service.iml" beforeDir="false" />
-    </list>
+    <list default="true" id="e71ba537-41ab-4779-9c74-c5084125734b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/eureka-dt-server/target/" />
     <ignored path="$PROJECT_DIR$/common-service/target/" />
@@ -77,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/web/controller/ArticleController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+            <state relative-caret-position="300">
+              <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -471,7 +426,7 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554043870222" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554125021739" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -503,7 +458,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserServiceApplication">
+  <component name="RunManager" selected="Spring Boot.EurekaServer">
     <configuration name="UserServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.roncoo.eshop.UserServiceApplication" />
       <module name="user-consumer-service" />
@@ -576,19 +531,18 @@
       <option name="presentableId" value="Default" />
       <updated>1554023619846</updated>
       <workItem from="1554023622643" duration="135000" />
-      <workItem from="1554023786742" duration="9458000" />
+      <workItem from="1554023786742" duration="10447000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9593000" />
+    <option name="totallyTimeSpent" value="10582000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Web" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -601,14 +555,14 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Bean Validation" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1024,8 +978,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/user-consumer-service/src/main/java/com/roncoo/eshop/web/controller/ArticleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+        <state relative-caret-position="300">
+          <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
