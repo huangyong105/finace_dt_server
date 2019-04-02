@@ -31,4 +31,6 @@ public class ArticleController {
         List<ArticleManagementDTO> allArticle = articleManager.getAllArticle();
         return Result.ofSuccess(allArticle);
     }
+
+
 }

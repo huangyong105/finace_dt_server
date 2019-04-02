@@ -29,8 +29,8 @@ public class InvestmentController {
      */
     @RequestMapping("/getProjectList")
     public Result<List<ProjectManagementDTO>> getProjectList(){
-        List<ProjectManagementDTO> allInvestmentProject = investmentManager.getAllInvestmentProject();
-        return Result.ofSuccess(allInvestmentProject);
+        List<ProjectManagementDTO> list = investmentManager.getInvestmentProjectList();
+        return Result.ofSuccess(list);
     }
 
     /**
@@ -43,6 +43,40 @@ public class InvestmentController {
         return Result.ofSuccess(investmentProject);
     }
 
+    /**
+     * 添加投资项目
+     * todo 内部调用
+     * @param req
+     * @return
+     */
+    @RequestMapping("/saveProject")
+    public Result saveProject(@RequestBody ProjectManagementDTO req){
+        investmentManager.saveInvestmentProject(req);
+        return Result.ofSuccess();
+    }
+
+    /**
+     * 获取全部项目列表（包括下架）
+     * todo 内部调用
+     * @return
+     */
+    @RequestMapping("getAllProjectList")
+    public Result<List<ProjectManagementDTO>> getAllProjectList(){
+        List<ProjectManagementDTO> list = investmentManager.getAllInvestmentProject();
+        return Result.ofSuccess(list);
+    }
+
+    /**
+     * 更新项目上线状态
+     * todo 内部调用
+     * @param req
+     * @return
+     */
+    @RequestMapping("onlineOrOffline")
+    public Result online(@RequestBody ProjectManagementDTO req){
+        investmentManager.setLine(req);
+        return Result.ofSuccess();
+    }
 
 
 }

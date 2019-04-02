@@ -21,8 +21,8 @@ public class InvestmentManager {
     @Autowired
     ProjectManagementMapper projectManagementMapper;
 
-    public List<ProjectManagementDTO> getAllInvestmentProject(){
-        List<ProjectManagementDO> list = projectManagementMapper.selectAllPrimary();
+    public List<ProjectManagementDTO> getInvestmentProjectList(){
+        List<ProjectManagementDO> list = projectManagementMapper.selectPrimaryList();
         List<ProjectManagementDTO> projectManagementDTOS = BeanConverter.batchConvert(list, ProjectManagementDTO.class);
         return projectManagementDTOS;
     }
@@ -31,5 +31,21 @@ public class InvestmentManager {
         ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(id);
         ProjectManagementDTO projectManagementDTO = BeanConverter.convert(projectManagementDO, ProjectManagementDTO.class);
         return projectManagementDTO;
+    }
+
+    public void saveInvestmentProject(ProjectManagementDTO projectManagementDTO){
+        ProjectManagementDO projectManagementDO = BeanConverter.convert(projectManagementDTO, ProjectManagementDO.class);
+        projectManagementMapper.insertInvestment(projectManagementDO);
+    }
+
+    public List<ProjectManagementDTO> getAllInvestmentProject(){
+        List<ProjectManagementDO> list = projectManagementMapper.selectAllPrimary();
+        List<ProjectManagementDTO> projectManagementDTOS = BeanConverter.batchConvert(list, ProjectManagementDTO.class);
+        return projectManagementDTOS;
+    }
+
+    public void setLine(ProjectManagementDTO projectManagementDTO){
+        ProjectManagementDO projectManagementDO = BeanConverter.convert(projectManagementDTO, ProjectManagementDO.class);
+        projectManagementMapper.updateline(projectManagementDO);
     }
 }
