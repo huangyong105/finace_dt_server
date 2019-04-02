@@ -56,8 +56,6 @@ public class UserService {
 	}
 
 
-	@RequestMapping(value = "/helloWorld",method = RequestMethod.GET)
-	@ResponseBody
 	public String helloWorld() {
 		return helloServcie.helloWorld();
 	}
