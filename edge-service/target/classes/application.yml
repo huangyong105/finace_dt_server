@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: edge-service
+server:
+  port: 9999
+zuul:
+  ignored-services: '*'
+  ignoredPatterns: /**/api/**
+  routes:
+    account-service: /account/**
+    user-service: /user/**
+    catalog-service: /catalog/**
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:8181/auth/user
+  ignored: /catalog/**
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://47.101.147.30:8761/eureka/
+# 提高延时设置 elevate timeout settings, 避免因为延时造成失败
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000

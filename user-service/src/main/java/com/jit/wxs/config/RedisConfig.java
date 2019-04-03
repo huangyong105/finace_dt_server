@@ -96,7 +96,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setKeySerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
@@ -130,12 +130,6 @@ public class RedisConfig  extends CachingConfigurerSupport {
     @Bean
     public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        Map<String, Long> expires = new HashMap<String, Long>();
-        expires.put("users", 6000L);
-        expires.put("sysUserRoles", 600L);
-        expires.put("roles", 600L);
-        expires.put("permissions", 600L);
-        cacheManager.setExpires(expires);
         cacheManager.setDefaultExpiration(600); // 设置key-value超时时间
         return cacheManager;
     }

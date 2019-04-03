@@ -129,6 +129,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(SecurityConstants.VALIDATE_CODE_URL_PREFIX + "/*").permitAll()
                     .anyRequest()
                     .authenticated().and()
+
                 // 关闭CSRF跨域
                 .csrf().disable();
     }
