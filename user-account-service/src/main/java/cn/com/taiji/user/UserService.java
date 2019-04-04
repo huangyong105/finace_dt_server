@@ -29,6 +29,11 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
+    @Cacheable(value = "user", key = "#userName")
+    public User findUserByUsername(String userName) {
+        return userRepository.findUserByUsername(userName);
+    }
+
     @CachePut(value = "user", key = "#id")
     public User updateUser(Long id, User user) {
         User result = null;

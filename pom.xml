@@ -101,7 +101,7 @@
     </repositories>
 
     <modules>
-        <module>common-service</module>
+        <module>smartfactory-starter-cache</module>
         <module>eureka-dt-server</module>
         <module>sleuth-server</module>
         <module>config-server</module>
@@ -110,6 +110,7 @@
         <module>user-consumer-service</module>
         <module>user-account-service</module>
         <module>index-service</module>
+
         <!-- <module>app/test</module>-->
 
     </modules>

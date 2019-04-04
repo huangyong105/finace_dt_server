@@ -4,12 +4,12 @@ spring:
   application:
     name: index-service
 security:
+  basic:
+    enabled: false
   oauth2:
     resource:
       user-info-uri: http://localhost:8181/auth/user # 资源服务认证
     client:
-      client-id: zhuohao # 认证服务ID
-      client-secret: zhuohao888 # 认证服务密码
       access-token-uri: http://localhost:8181/auth/oauth/token # 获取token
       user-authorization-uri: http://localhost:8181/auth/oauth/authorize # 获取授权码
 zuul:

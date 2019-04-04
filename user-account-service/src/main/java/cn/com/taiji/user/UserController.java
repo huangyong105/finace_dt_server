@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.Optional;
 
 /**
@@ -18,10 +16,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
 
     @RequestMapping(path = "/users", method = RequestMethod.POST, name = "createUser")
     public ResponseEntity<User> createUser(@RequestBody User user) {
