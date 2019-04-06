@@ -8,21 +8,42 @@ import java.util.Date;
  * @date 2019-03-22 14:22
  **/
 public class ProjectManagementDTO {
+    /**
+     * 项目id
+     */
     private Integer id;
-
+    /**
+     * 项目名称
+     */
     private String projectName;
-
+    /**
+     * 预期月收益
+     */
     private Integer monthEarnings;
-
+    /**
+     * 最低承受风险
+     */
     private Integer expectedRiskTolerance;
-
+    /**
+     * 最低保证金
+     */
     private BigDecimal minMargin;
-
+    /**
+     * 资金配比
+     */
     private String moneyProportion;
-
+    /**
+     * 创建时间
+     */
     private Date gmtCreated;
-
+    /**
+     * 更新时间
+     */
     private Date gmtUpdated;
+    /**
+     * 是否上下架（1上架，0下架）
+     */
+    private Integer isOnline;
 
     public Integer getId() {
         return id;
@@ -88,4 +109,11 @@ public class ProjectManagementDTO {
         this.gmtUpdated = gmtUpdated;
     }
 
+    public Integer getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(Integer isOnline) {
+        this.isOnline = isOnline;
+    }
 }

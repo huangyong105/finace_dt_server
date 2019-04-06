@@ -60,7 +60,7 @@ public class InvestmentController {
      * todo 内部调用
      * @return
      */
-    @RequestMapping("getAllProjectList")
+    @RequestMapping("/getAllProjectList")
     public Result<List<ProjectManagementDTO>> getAllProjectList(){
         List<ProjectManagementDTO> list = investmentManager.getAllInvestmentProject();
         return Result.ofSuccess(list);
@@ -72,11 +72,14 @@ public class InvestmentController {
      * @param req
      * @return
      */
-    @RequestMapping("onlineOrOffline")
+    @RequestMapping("/onlineOrOffline")
     public Result online(@RequestBody ProjectManagementDTO req){
         investmentManager.setLine(req);
         return Result.ofSuccess();
     }
+
+
+
 
 
 }
