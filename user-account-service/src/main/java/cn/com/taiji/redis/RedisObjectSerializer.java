@@ -28,6 +28,7 @@ public class RedisObjectSerializer implements RedisSerializer<Object>{
 	/* (non-Javadoc)
 	 * @see org.springframework.data.redis.serializer.RedisSerializer#deserialize(byte[])
 	 */
+	@Override
 	public Object deserialize(byte[] bytes) {
 		if (isEmpty(bytes)) {
 			return null;
@@ -43,6 +44,7 @@ public class RedisObjectSerializer implements RedisSerializer<Object>{
 	/* (non-Javadoc)
 	 * @see org.springframework.data.redis.serializer.RedisSerializer#serialize(java.lang.Object)
 	 */
+	@Override
 	public byte[] serialize(Object object) {
 		if (object == null) {
 			return EMPTY_ARRAY;

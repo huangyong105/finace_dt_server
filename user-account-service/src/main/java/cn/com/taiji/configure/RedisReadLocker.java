@@ -1,8 +1,8 @@
 package cn.com.taiji.configure;
 
-import com.dahaonetwork.smartfactory.cache.exception.UnableToAquireLockException;
-import com.dahaonetwork.smartfactory.cache.lockinterface.AquiredLockWorker;
-import com.dahaonetwork.smartfactory.cache.lockinterface.DistributedLocker;
+import cn.com.taiji.exception.UnableToAquireLockException;
+import cn.com.taiji.lockinterface.AquiredLockWorker;
+import cn.com.taiji.lockinterface.DistributedLocker;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 @Component
-public class RedisReadLocker implements DistributedLocker{
+public class RedisReadLocker implements DistributedLocker {
 	
 	private final static String LOCKER_PREFIX = "lock:";
 	@Autowired

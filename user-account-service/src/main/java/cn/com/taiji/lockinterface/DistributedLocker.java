@@ -1,6 +1,6 @@
 package cn.com.taiji.lockinterface;
 
-import com.dahaonetwork.smartfactory.cache.exception.UnableToAquireLockException;
+import cn.com.taiji.exception.UnableToAquireLockException;
 
 /**
  * 获取锁管理类

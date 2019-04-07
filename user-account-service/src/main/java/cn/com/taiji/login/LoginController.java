@@ -1,13 +1,13 @@
 package cn.com.taiji.login;
 
 import cn.com.taiji.config.JwtUtils;
+import cn.com.taiji.configure.RedisReadLocker;
 import cn.com.taiji.dao.RedisDao;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.Token;
+import cn.com.taiji.lockinterface.AquiredLockWorker;
 import cn.com.taiji.user.User;
 import cn.com.taiji.user.UserService;
-import com.dahaonetwork.smartfactory.cache.configure.RedisReadLocker;
-import com.dahaonetwork.smartfactory.cache.lockinterface.AquiredLockWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
