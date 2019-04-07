@@ -8,10 +8,10 @@ zuul:
   routes:
     edge-service:
       path: /api/**
-      url: http://localhost:9999
+      url: http://47.101.147.30:9999
     auth-service:
       path: /user/**
-      url: http://localhost:8181/auth/user
+      url: http://47.101.147.30:8181/auth/user
 # 忽略的资源在WebSecurityConfigurer.configure方法里面配置，即OnlineStoreApplication.configure方法。因为在这里配置不够灵活
 #  ignored: /assets/**
 eureka:
