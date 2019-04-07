@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>不要问我从哪里来，也不要问我到哪里去~</title>
+</head>
+<body>
+	<h1>多少次的回眸，换回今生一见</h1>
+<!--	<a href="/login">来生入世</a>-->
+	<div id="myme">我是谁</div>
+	<button onclick="loadme()">找寻自我</button>
+	<div id="myhome">我来自哪里</div>
+	<button onclick="loadhome()">找寻他乡</button>
+	<div id="catalog">我的目录</div>
+	<button onclick="loadcatalog()">查看目录</button>
+</body>
+<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var meUrl = '/api/user/auth/v1/me';//获取用户个人信息，by<user-service>
+	function loadme() {
+		$.ajax({
+			url : meUrl,
+			//dataType : "json",
+			//data : {},
+			type : "GET",
+			success : function(result) {
+				$("#myme").text("我是：" + result.lastName + result.firstName);
+			},
+			error : function(result) {
+				$('#myme').val('有缘人在路上(赶紧把认证服务器起来，小伙！~)');
+			}
+		});
+
+	};
+	var homeUrl = '/api/account/v1/accounts';//获取用户账户信息，by<account-service>
+	function loadhome() {
+
+		$.ajax({
+			url : homeUrl,
+			//dataType : "json",
+			//data : {},
+			type : "GET",
+			success : function(result) {
+				$("#myhome").text(
+						"俺来自：" + result[0].addresses[0].country + "●"
+								+ result[0].addresses[0].province + "●"
+								+ result[0].addresses[0].city + "●"
+								+ result[0].addresses[0].district);
+			},
+			error : function(result) {
+				$('#myhome').val('找不着家了(赶紧把认证服务器起来，小伙！~)');
+			}
+		});
+
+	};
+	var catalogUrl = '/api/catalog/v1/catalog';//获取目录信息，by<catalog-service>
+	function loadcatalog() {
+
+		$.ajax({
+			url : catalogUrl,
+			type : "GET",
+			success : function(result) {
+				$("#catalog").text(
+						"无权限控制获取数据：" + result.name+"--"+result.hobby);
+			},
+			error : function(result) {
+				$('#catalog').val('找不着家了(赶紧把认证服务器起来，小伙！~)');
+			}
+		});
+
+	};
+	//loadcatalog();
+</script>
+</html>

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.dahaonetwork.smartfactory.cache.configure.RedisReadLocker,\
+com.dahaonetwork.smartfactory.cache.configure.RedissonConnector
