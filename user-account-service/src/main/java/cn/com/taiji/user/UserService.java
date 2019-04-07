@@ -1,10 +1,14 @@
 package cn.com.taiji.user;
 
+import cn.com.taiji.dao.RedisDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhuohao
@@ -12,8 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+    private final String USER_TOKEN = "USER_TOKEN";
+
     @Autowired
     private UserRepository userRepository;
+
+    @Resource(name = "redisDao")
+    private RedisDao redisDao;
 
     @CacheEvict(value = "user", key = "#user.getId()")
     public User createUser(User user) {
@@ -29,9 +38,9 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    @Cacheable(value = "user", key = "#userName")
-    public User findUserByUsername(String userName) {
-        return userRepository.findUserByUsername(userName);
+    @Cacheable(value = "user", key = "#account")
+    public User findUserByAccount(String account) {
+        return userRepository.findUserByAccount(account);
     }
 
     @CachePut(value = "user", key = "#id")
@@ -41,6 +50,30 @@ public class UserService {
             result = userRepository.save(user);
         }
         return result;
+    }
+
+    boolean exists(String account) {
+        String key = genLockKey(USER_TOKEN,"UN",account);
+        if (redisDao.exists(key)){
+            return true;
+        }
+        if(userRepository.exists(account)) {
+            return true;
+        }
+        return false;
+    }
+
+    private  String  genLockKey (String ... keys) {
+        StringBuffer sb = new StringBuffer();
+        int i = 0;
+        for (String key :keys) {
+            if(i>0) {
+                sb.append(".");
+            }
+            sb.append(key);
+            i ++ ;
+        }
+        return sb.toString();
     }
 
     @CacheEvict(value = "user", key = "#id")

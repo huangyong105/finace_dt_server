@@ -15,6 +15,7 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String account ;
     private String username;
     private String firstName;
     private String lastName;
@@ -62,6 +63,13 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public String getPassword() {
         return password;

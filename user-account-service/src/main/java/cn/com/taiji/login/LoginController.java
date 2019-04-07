@@ -45,40 +45,40 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public Result<Token> login(@RequestParam(value = "name") String name, @RequestParam(value = "password") String password) throws Exception {
-        String key = genLockKey(USER_TOKEN,"UN",name);
+    public Result<Token> login(@RequestParam(value = "account") String account, @RequestParam(value = "password") String password) throws Exception {
+        String key = genLockKey(USER_TOKEN,"UN",account);
         Token tokenObj = new Token();
         tokenObj.setExperin(60*60*24);
-        User user = userService.findUserByUsername(name);
+        User user = userService.findUserByAccount(account);
         if (user == null) {
             return Result.failure("1","用户不存在");
         }
-        if(!isValidPassword(name,password)) {
+        if(!isValidPassword(account,password)) {
             return Result.failure("2","密码错误");
         }
         if (redisDao.exists(key)) {
             String token =(String)redisDao.get(key);
-            persistRedisToken(name, token);
+            persistRedisToken(account, token);
             tokenObj.setToken(token);
             return Result.success(tokenObj);
         }
         // 将用户名传入并生成jwt
         Map<String,Object> map = new HashMap<>();
-        map.put(USER_NAME_KEY, name);
+        map.put(USER_NAME_KEY, account);
 
         String token = JwtUtils.sign(map, EXP_IMT);
-        persistRedisToken(name, token);
+        persistRedisToken(account, token);
         tokenObj.setToken(token);
         return Result.success(tokenObj);
 
     }
 
-    private void persistRedisToken(String name, String token) throws Exception {
+    private void persistRedisToken(String account, String token) throws Exception {
         redisReadLocker.lock(USER_NAME_KEY, new AquiredLockWorker<Object>() {
             @Override
             public Object invokeAfterLockAquire() throws Exception {
-                redisDao.set(genLockKey(USER_TOKEN,token),name, 60*60*24,TimeUnit.SECONDS);
-                redisDao.set(genLockKey(USER_TOKEN,"UN",name),token, 60*60*24,TimeUnit.SECONDS);
+                redisDao.set(genLockKey(USER_TOKEN,token),account, 60*60*24,TimeUnit.SECONDS);
+                redisDao.set(genLockKey(USER_TOKEN,"UN",account),token, 60*60*24,TimeUnit.SECONDS);
                 return token;
             }
         },60);
@@ -88,7 +88,7 @@ public class LoginController {
         StringBuffer sb = new StringBuffer();
         int i = 0;
         for (String key :keys) {
-            if(i>1) {
+            if(i>0) {
                 sb.append(".");
             }
             sb.append(key);
@@ -103,11 +103,11 @@ public class LoginController {
         if (!redisDao.exists(key)) {
             return Result.success(null);
         }
-        String name =(String)redisDao.get(key);
-        if(StringUtils.isEmpty(name)) {
+        String account =(String)redisDao.get(key);
+        if(StringUtils.isEmpty(account)) {
             return Result.success(null);
         }
-        User user = userService.findUserByUsername(name);
+        User user = userService.findUserByAccount(account);
         if(user == null) {
             return Result.success(null);
         }
@@ -117,19 +117,19 @@ public class LoginController {
     /**
      * 验证密码是否正确，模拟
      */
-    private boolean isValidPassword(String name, String password) {
-        User user = userService.findUserByUsername(name);
+    private boolean isValidPassword(String account, String password) {
+        User user = userService.findUserByAccount(account);
         if (user == null) {
             return false;
         }
          BCryptPasswordEncoder  bCryptPasswordEncoder =new BCryptPasswordEncoder();
-         if (StringUtils.isEmpty(password) && StringUtils.isEmpty(user.getPassword())) {
+         if (StringUtils.isEmpty(account) && StringUtils.isEmpty(user.getPassword())) {
              return true;
          }
-        if (StringUtils.isEmpty(password) && !StringUtils.isEmpty(user.getPassword())) {
+        if (StringUtils.isEmpty(account) && !StringUtils.isEmpty(user.getPassword())) {
             return false;
         }
-        if (!StringUtils.isEmpty(password) && StringUtils.isEmpty(user.getPassword())) {
+        if (!StringUtils.isEmpty(account) && StringUtils.isEmpty(user.getPassword())) {
             return false;
         }
          if (user.getPassword().equals(bCryptPasswordEncoder.encode(password))) {
