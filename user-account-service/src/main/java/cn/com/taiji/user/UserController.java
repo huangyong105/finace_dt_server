@@ -1,5 +1,6 @@
 package cn.com.taiji.user;
 
+import cn.com.taiji.code.CaptchaRender;
 import cn.com.taiji.data.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CaptchaRender render;
 
     @RequestMapping(path = "/users", method = RequestMethod.POST, name = "createUser")
     public Result<User> createUser(@RequestBody User user) {
         if (userService.exists(user.getAccount())) {
            return Result.failure("1","用户已经存在");
+        }
+        if (!render.validate(user.getCode())) {
+            return Result.failure("2","验证码错误");
         }
         Assert.notNull(user);
         return Optional.ofNullable(userService.createUser(user))

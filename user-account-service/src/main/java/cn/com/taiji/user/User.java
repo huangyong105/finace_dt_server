@@ -3,6 +3,7 @@ package cn.com.taiji.user;
 import cn.com.taiji.data.BaseEntity;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 /**
  * @author zhuohao
@@ -24,6 +25,8 @@ public class User extends BaseEntity {
     private String email;
     @Column(name = "password", nullable = true)
     private String password;
+    @Transient
+    private String  code ;
 
     public Long getId() {
         return id;
@@ -81,7 +84,16 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
+
     public String toString() {
         return "User{" +
                 "id=" + id +
