@@ -12,5 +12,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     User findUserByAccount(@Param("account") String account);
 
-    boolean exists(@Param("account") String account);
+    boolean existsByAccount(@Param("account") String account);
 }

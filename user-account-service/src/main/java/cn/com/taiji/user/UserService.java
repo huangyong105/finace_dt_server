@@ -57,7 +57,7 @@ public class UserService {
         if (redisDao.exists(key)){
             return true;
         }
-        if(userRepository.exists(account)) {
+        if(userRepository.existsByAccount(account)) {
             return true;
         }
         return false;
