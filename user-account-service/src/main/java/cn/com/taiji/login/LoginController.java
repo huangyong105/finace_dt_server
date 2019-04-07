@@ -26,7 +26,7 @@ public class LoginController {
     private final String USER_NAME_KEY = "USER_NAME";
     private final String USER_TOKEN = "USER_TOKEN";
     private final String PASSWORD = "PASSWORD";
-    private final Long EXP_IMT = 3600_000L;
+    private final Long EXP_IMT = 3600000L;
 
     @Autowired
     private UserService userService;
