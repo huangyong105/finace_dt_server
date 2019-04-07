@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,10 +24,12 @@ public class UserService {
     @Resource(name = "redisDao")
     private RedisDao redisDao;
 
-    @CacheEvict(value = "user", key = "#user.getId()")
+    @CacheEvict(value = "user", key = "#user.getAccount()")
     public User createUser(User user) {
         User result = null;
-        if(!userRepository.exists(user.getId())) {
+        BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if(!userRepository.existsByAccount(user.getAccount())) {
             result = userRepository.save(user);
         }
         return result;
