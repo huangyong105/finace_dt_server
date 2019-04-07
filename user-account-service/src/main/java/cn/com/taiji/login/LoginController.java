@@ -9,8 +9,6 @@ import cn.com.taiji.user.UserService;
 import com.dahaonetwork.smartfactory.cache.configure.RedisReadLocker;
 import com.dahaonetwork.smartfactory.cache.lockinterface.AquiredLockWorker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
