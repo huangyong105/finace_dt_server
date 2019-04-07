@@ -108,9 +108,8 @@
         <module>edge-service</module>
         <module>user-service</module>
         <module>user-consumer-service</module>
-       <module>user-account-service</module>
         <module>index-service</module>
-
+        <module>user-account-service</module>
         <!-- <module>app/test</module>-->
 
     </modules>
