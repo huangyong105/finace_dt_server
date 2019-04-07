@@ -132,7 +132,8 @@ public class LoginController {
         if (!StringUtils.isEmpty(account) && StringUtils.isEmpty(user.getPassword())) {
             return false;
         }
-         if (user.getPassword().equals(bCryptPasswordEncoder.encode(password))) {
+
+         if (bCryptPasswordEncoder.matches(password,user.getPassword())) {
              return true;
          }
          return false;

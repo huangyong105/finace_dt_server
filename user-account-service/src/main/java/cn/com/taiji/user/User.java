@@ -2,10 +2,7 @@ package cn.com.taiji.user;
 
 import cn.com.taiji.data.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author zhuohao
@@ -15,12 +12,17 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "account", nullable = true)
     private String account ;
+    @Column(name = "username", nullable = true)
     private String username;
+    @Column(name = "first_name", nullable = true)
     private String firstName;
+    @Column(name = "last_name", nullable = true)
     private String lastName;
+    @Column(name = "email", nullable = true)
     private String email;
-
+    @Column(name = "password", nullable = true)
     private String password;
 
     public Long getId() {
