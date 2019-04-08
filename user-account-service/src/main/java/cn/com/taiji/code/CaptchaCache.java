@@ -16,8 +16,6 @@
 
 package cn.com.taiji.code;
 
-import com.jfinal.captcha.Captcha;
-import com.jfinal.captcha.ICaptchaCache;
 
 import java.util.Map.Entry;
 import java.util.Timer;
@@ -31,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CaptchaCache implements ICaptchaCache {
 	
-	private ConcurrentHashMap<String, com.jfinal.captcha.Captcha> map = new ConcurrentHashMap<String, com.jfinal.captcha.Captcha>();
+	private ConcurrentHashMap<String, Captcha> map = new ConcurrentHashMap<String, Captcha>();
 	private int interval = 90 * 1000;	// timer 调度间隔为 90 秒
 	private Timer timer;
 	
@@ -47,7 +45,7 @@ public class CaptchaCache implements ICaptchaCache {
 		timer.schedule(
 			new TimerTask() {
 				public void run() {
-					for (Entry<String, com.jfinal.captcha.Captcha> e : map.entrySet()) {
+					for (Entry<String, Captcha> e : map.entrySet()) {
 						if (e.getValue().isExpired()) {
 							map.remove(e.getKey());
 						}
@@ -59,7 +57,7 @@ public class CaptchaCache implements ICaptchaCache {
 		);
 	}
 	
-	public void put(com.jfinal.captcha.Captcha captcha) {
+	public void put(Captcha captcha) {
 		map.put(captcha.getKey(), captcha);
 	}
 	

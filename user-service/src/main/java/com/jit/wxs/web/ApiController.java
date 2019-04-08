@@ -56,7 +56,7 @@ public class ApiController {
 
         session.setAttribute("smsCode", map);
 
-        log.info("{}：为 {} 设置短信验证码：{}", session.getId(), mobile, code);
+        //log.info("{}：为 {} 设置短信验证码：{}", session.getId(), mobile, code);
 
         return "发送成功";
     }
