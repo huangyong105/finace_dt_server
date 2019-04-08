@@ -10,6 +10,7 @@
         <module name="config-server" />
         <module name="eureka-dt-server" />
         <module name="sleuth-server" />
+        <module name="user-account-service" />
         <module name="user-consumer-service" />
         <module name="user-service" />
       </profile>
@@ -20,6 +21,7 @@
       <module name="eureka-dt-server" target="1.8" />
       <module name="finace_dt_server" target="1.8" />
       <module name="sleuth-server" target="1.8" />
+      <module name="user-account-service" target="1.8" />
       <module name="user-consumer-service" target="1.8" />
       <module name="user-service" target="1.8" />
     </bytecodeTargetLevel>

@@ -58,4 +58,19 @@ public class UserController {
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1","用户删除失败"));
     }
+
+    @PostMapping("/changePassword")
+    public Result changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        User userByAccount = userService.findUserByAccount(changePasswordDTO.getAccount());
+        if (!userByAccount.getPassword().equals(changePasswordDTO.getPassword())) {
+            return Result.failure("3","用户不存在");
+        }
+        if (!render.validate(changePasswordDTO.getCode())) {
+            return Result.failure("2","验证码错误");
+        }
+        User user = new User();
+        return Optional.ofNullable(userService.createUser(user))
+                .map(result ->Result.success(result))
+                .orElse(Result.failure("-1","用户注册失败"));
+    }
 }
