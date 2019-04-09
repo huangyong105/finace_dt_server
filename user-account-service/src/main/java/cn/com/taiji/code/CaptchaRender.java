@@ -56,6 +56,8 @@ public class CaptchaRender  {
 
 
 	protected static String captchaName = "_jfinal_captcha";
+
+	protected  static String  CODE ="redis.code";
 	protected static final Random random = new Random(System.nanoTime());
 	
 	// 默认的验证码大小
@@ -92,12 +94,44 @@ public class CaptchaRender  {
 	/**
 	 * 生成验证码
 	 */
-	public void render() throws ClientException {
+	public void render(String phone,int type) throws ClientException {
 		//Captcha captcha = createCaptcha();
 		/*CaptchaManager.me().getCaptchaCache().put(captcha);*/
 		String code = getRandomString();
-		redisDao.set("redis.code",code,60,TimeUnit.SECONDS);
-		SmsSendApi.sendSms(code);
+
+		String siginName=null;
+		String templateCode=null;
+		String templateJson=null;
+		redisDao.set(genRedisCode(phone,type),code,60*50,TimeUnit.SECONDS);
+		if (type == 1) {
+			siginName = "汇致旺";
+			templateCode="SMS_162635384";
+			templateJson="{\"code\":"+code+"}";
+		} else if (type == 2) { //修改密码
+			siginName = "汇致旺";
+			templateCode="SMS_162635384";
+			templateJson="{\"code\":"+code+"}";
+		}
+		else if (type == 3){ //找回密码
+			siginName = "汇致旺";
+			templateCode="SMS_162635384";
+			templateJson="{\"code\":"+code+"}";
+		}
+		SmsSendApi.sendSms(phone, code,siginName,templateCode,templateJson);
+	}
+
+	private  String  genRedisCode (String phone ,int type) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(CODE);
+		stringBuffer.append(".");
+		stringBuffer.append("type");
+		stringBuffer.append(".");
+		stringBuffer.append(type);
+		stringBuffer.append(".");
+		stringBuffer.append("phone");
+		stringBuffer.append(".");
+		stringBuffer.append(phone);
+		return stringBuffer.toString();
 	}
 	
 	protected Captcha createCaptcha() {
@@ -108,7 +142,7 @@ public class CaptchaRender  {
 
 	
 	protected String getRandomString() {
-		char[] randomChars = new char[4];
+		char[] randomChars = new char[6];
 		for (int i=0; i<randomChars.length; i++) {
 			randomChars[i] = charArray[random.nextInt(charArray.length)];
 		}
@@ -121,8 +155,8 @@ public class CaptchaRender  {
 	 * @param userInputString 用户输入的字符串
 	 * @return 验证通过返回 true, 否则返回 false
 	 */
-	public  boolean validate( String userInputString) {
-		String code = (String)redisDao.get("redis.code");
+	public  boolean validate(String phone ,int type, String userInputString) {
+		String code = (String)redisDao.get(genRedisCode(phone,type));
 		if (StringUtils.isNotEmpty(userInputString) && StringUtils.isEmpty(code)) {
 			return false;
 		}
