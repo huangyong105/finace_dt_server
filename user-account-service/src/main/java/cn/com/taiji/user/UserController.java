@@ -89,7 +89,7 @@ public class UserController {
         String templateCode="SMS_162635384";
         String templateJson="{\"code\":"+accountUser.getPassword()+"}";
         //发送密码给用户
-		SmsSendApi.sendSms(user.getPassword(), accountUser.getPassword(),siginName,templateCode,templateJson);
+		SmsSendApi.sendSms(user.getAccount(), accountUser.getPassword(),siginName,templateCode,templateJson);
 		return Result.success(null);
     }
 }
