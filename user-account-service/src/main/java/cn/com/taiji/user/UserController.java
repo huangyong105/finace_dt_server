@@ -2,6 +2,8 @@ package cn.com.taiji.user;
 
 import cn.com.taiji.code.CaptchaRender;
 import cn.com.taiji.data.Result;
+import cn.com.taiji.sms.SmsSendApi;
+import com.aliyuncs.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class UserController {
         if (userService.exists(user.getAccount())) {
            return Result.failure("1","用户已经存在");
         }
-        if (!render.validate(user.getCode())) {
+        if (!render.validate(user.getAccount(),1,user.getCode())) {
             return Result.failure("2","验证码错误");
         }
         Assert.notNull(user);
@@ -60,17 +62,34 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public Result changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+    public Result changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
         User userByAccount = userService.findUserByAccount(changePasswordDTO.getAccount());
         if (!userByAccount.getPassword().equals(changePasswordDTO.getPassword())) {
-            return Result.failure("3","用户不存在");
+            return Result.failure("3", "用户不存在");
         }
-        if (!render.validate(changePasswordDTO.getCode())) {
-            return Result.failure("2","验证码错误");
+        if (!render.validate(userByAccount.getAccount(),2,changePasswordDTO.getCode())) {
+            return Result.failure("2", "验证码错误");
         }
         User user = new User();
         return Optional.ofNullable(userService.createUser(user))
-                .map(result ->Result.success(result))
-                .orElse(Result.failure("-1","用户注册失败"));
+                .map(result -> Result.success(result))
+                .orElse(Result.failure("-1", "用户注册失败"));
+    }
+    @RequestMapping(path = "findPassword", method = RequestMethod.DELETE,
+            name = "findPassword")
+    public Result  findPassword (@RequestBody User user) throws ClientException {
+        if (userService.exists(user.getAccount())) {
+            return Result.failure("1","用户已经存在");
+        }
+        if (!render.validate(user.getAccount(),3,user.getCode())) {
+            return Result.failure("2","验证码错误");
+        }
+        User accountUser = userService.findUserByAccount(user.getAccount());
+        String siginName = "汇致旺";
+        String templateCode="SMS_162635384";
+        String templateJson="{\"code\":"+accountUser.getPassword()+"}";
+        //发送密码给用户
+		SmsSendApi.sendSms(user.getPassword(), accountUser.getPassword(),siginName,templateCode,templateJson);
+		return Result.success(null);
     }
 }

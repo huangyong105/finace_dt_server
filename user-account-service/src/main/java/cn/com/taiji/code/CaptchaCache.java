@@ -17,6 +17,7 @@
 package cn.com.taiji.code;
 
 
+
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CaptchaCache implements ICaptchaCache {
 	
-	private ConcurrentHashMap<String, Captcha> map = new ConcurrentHashMap<String, Captcha>();
+
+	private ConcurrentHashMap<String,Captcha> map = new ConcurrentHashMap<String, Captcha>();
 	private int interval = 90 * 1000;	// timer 调度间隔为 90 秒
 	private Timer timer;
 	
