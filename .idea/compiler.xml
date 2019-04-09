@@ -8,8 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="common-service" />
         <module name="config-server" />
+        <module name="edge-service" />
         <module name="eureka-dt-server" />
+        <module name="index-service" />
         <module name="sleuth-server" />
+        <module name="starter-cache" />
         <module name="user-consumer-service" />
         <module name="user-service" />
       </profile>
@@ -17,9 +20,12 @@
     <bytecodeTargetLevel>
       <module name="common-service" target="1.8" />
       <module name="config-server" target="1.8" />
+      <module name="edge-service" target="1.8" />
       <module name="eureka-dt-server" target="1.8" />
       <module name="finace_dt_server" target="1.8" />
+      <module name="index-service" target="1.8" />
       <module name="sleuth-server" target="1.8" />
+      <module name="starter-cache" target="1.8" />
       <module name="user-consumer-service" target="1.8" />
       <module name="user-service" target="1.8" />
     </bytecodeTargetLevel>

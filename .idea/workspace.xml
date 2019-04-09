@@ -322,6 +322,13 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.UserServiceApplication">
+    <configuration name="CacheApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="starter-cache" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dahaonetwork.smartfactory.cache.CacheApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ConfigServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="config-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.roncoo.eshop.ConfigServer" />
@@ -329,9 +336,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EdgeServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="edge-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.com.taiji.EdgeServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EurekaServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="eureka-dt-server" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.roncoo.eshop.EurekaServer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IndexServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="index-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.com.taiji.IndexServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
