@@ -25,6 +25,7 @@ public class User extends BaseEntity {
     private String email;
     @Column(name = "password", nullable = true)
     private String password;
+    @Column(name = "")
     @Transient
     private String  code ;
 
