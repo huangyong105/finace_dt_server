@@ -101,7 +101,6 @@
     </repositories>
 
     <modules>
-        <module>starter-cache</module>
         <module>eureka-dt-server</module>
         <module>sleuth-server</module>
         <module>config-server</module>
