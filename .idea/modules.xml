@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/common-service/common-service.iml" filepath="$PROJECT_DIR$/common-service/common-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/config-server/config-server.iml" filepath="$PROJECT_DIR$/config-server/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edge-service/edge-service.iml" filepath="$PROJECT_DIR$/edge-service/edge-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka-dt-server/eureka-dt-server.iml" filepath="$PROJECT_DIR$/eureka-dt-server/eureka-dt-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/finace_dt_server.iml" filepath="$PROJECT_DIR$/finace_dt_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/index-service/index-service.iml" filepath="$PROJECT_DIR$/index-service/index-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/sleuth-server/sleuth-server.iml" filepath="$PROJECT_DIR$/sleuth-server/sleuth-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-account-service/user-account-service.iml" filepath="$PROJECT_DIR$/user-account-service/user-account-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-consumer-service/user-consumer-service.iml" filepath="$PROJECT_DIR$/user-consumer-service/user-consumer-service.iml" />

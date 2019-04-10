@@ -1,4 +1,4 @@
-package cn.com.taiji.login;
+package cn.com.taiji.user;
 
 import cn.com.taiji.config.JwtUtils;
 import cn.com.taiji.configure.RedisReadLocker;
