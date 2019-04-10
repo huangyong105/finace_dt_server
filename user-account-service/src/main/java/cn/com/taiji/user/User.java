@@ -4,6 +4,7 @@ import cn.com.taiji.data.BaseEntity;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.Date;
 
 /**
  * @author zhuohao
@@ -25,7 +26,16 @@ public class User extends BaseEntity {
     private String email;
     @Column(name = "password", nullable = true)
     private String password;
-    @Column(name = "")
+    @Column(name = "state",nullable = true)
+    private Integer state;
+    @Column(name = "id_card_number",nullable = true)
+    private String idCardNumber;
+    @Column(name = "bank_card_number",nullable = true)
+    private String bankCardNumber;
+    @Column(name = "id_card_png_up",nullable = true)
+    private String idCardPngUp;
+    @Column(name = "id_card_png_down",nullable = true)
+    private String idCardPngDown;
     @Transient
     private String  code ;
 
@@ -91,6 +101,46 @@ public class User extends BaseEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getIdCardPngUp() {
+        return idCardPngUp;
+    }
+
+    public void setIdCardPngUp(String idCardPngUp) {
+        this.idCardPngUp = idCardPngUp;
+    }
+
+    public String getIdCardPngDown() {
+        return idCardPngDown;
+    }
+
+    public void setIdCardPngDown(String idCardPngDown) {
+        this.idCardPngDown = idCardPngDown;
     }
 
     @Override
