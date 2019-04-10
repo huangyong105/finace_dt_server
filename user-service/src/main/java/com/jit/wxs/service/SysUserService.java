@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 public class SysUserService {
     @Autowired
     private SysUserMapper userMapper;
-   // @Cacheable(value={"users"}, key= "#root.methodName+'['+#id+']'")
+    @Cacheable(value="users", key= "'users'+#id")
     public SysUser getById(Integer id) {
         return userMapper.selectById(id);
     }
-    //@Cacheable(value={"users"}, key= "#root.methodName+'['+#name+']'")
+    @Cacheable(value="users", key= "'users'+#name")
     public SysUser getByName(String name) {
         return userMapper.selectByName(name);
     }
 
-    @Cacheable(value={"users"}, key= "#root.methodName+'['+#mobile+']'")
+    @Cacheable(value="users", key= "'users'+#mobile")
     public SysUser getByMobile(String mobile) {
         return userMapper.selectByMobile(mobile);
     }

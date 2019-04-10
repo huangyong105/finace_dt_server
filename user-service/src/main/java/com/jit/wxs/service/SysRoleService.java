@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 public class SysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
-  //  @Cacheable(value={"roles"}, key= "#root.methodName+'['+#id+']'")
+    @Cacheable(value="roles", key= "'roles_'+#id")
     public SysRole getById(Integer id) {
         return roleMapper.selectById(id);
     }
-    //@Cacheable(value={"roles"}, key= "#root.methodName+'['+#p0+']'")
+    @Cacheable(value="roles", key= "'roles_'+#p0")
     public SysRole getByName(String roleName) {
         return roleMapper.selectByName(roleName);
     }
