@@ -2,6 +2,7 @@ package com.roncoo.eshop.service;
 
 import java.util.List;
 
+import com.roncoo.eshop.client.UserClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -21,7 +22,8 @@ public class UserService {
 
 	@Autowired
 	private UserMapper userMapper;
-
+	@Autowired
+	UserClient userClient;
 	@Autowired
 	LoadBalancerClient loadBalancerClient;
 

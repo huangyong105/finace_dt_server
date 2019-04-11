@@ -35,13 +35,6 @@ public class UserService {
         return result;
     }
 
-    @CacheEvict(value = "user",key ="#user.getAccount()")
-    public User updateUser(User user){
-        User result = null;
-        BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return null;
-    }
 
 
     @Cacheable(value = "user", key = "#id")
