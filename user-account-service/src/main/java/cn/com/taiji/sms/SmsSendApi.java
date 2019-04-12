@@ -26,7 +26,7 @@ public class SmsSendApi {
 
     private final static  String ASSESSKEYSECRET ="M60EeuInsdPbEoIM5VLNg1WBNq7g6X";
 
-    public static boolean sendSms (String phone ,String code,String siginName,String templateCode,String templateJson) throws ClientException {
+    public static boolean sendSms (String phone,String siginName,String templateCode,String templateJson) throws ClientException {
         //设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");

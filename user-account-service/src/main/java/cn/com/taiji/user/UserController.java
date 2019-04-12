@@ -4,6 +4,7 @@ import cn.com.taiji.code.CaptchaRender;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.sms.SmsSendApi;
 import com.aliyuncs.exceptions.ClientException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
+import java.util.Random;
 
 /**
  * @author zhuohao
@@ -18,6 +20,10 @@ import java.util.Optional;
 @RestController
 public class UserController {
 
+    // 验证码随机字符数组
+    protected static final char[] charArray = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
+
+    protected static final Random random = new Random(System.nanoTime());
     @Autowired
     private UserService userService;
 
@@ -38,9 +44,9 @@ public class UserController {
                 .orElse(Result.failure("-1","用户注册失败"));
     }
 
-    @RequestMapping(path = "users/{id}", method = RequestMethod.GET, name = "getUser")
-    public Result<User> getUser(@PathVariable("id") Long id) {
-        return Optional.ofNullable(userService.getUserById(id))
+    @RequestMapping(path = "users/{account}", method = RequestMethod.GET, name = "getUser")
+    public Result<User> getUser(@PathVariable("account") String account) {
+        return Optional.ofNullable(userService.getUserByAccount(account))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1","获取用户失败"));
     }
@@ -49,18 +55,11 @@ public class UserController {
     public Result<User> updateUser(@PathVariable(value = "id") Long id, @RequestBody User user) {
         Assert.notNull(user);
         user.setId(id);
-        return Optional.ofNullable(userService.updateUser(id, user))
+        return Optional.ofNullable(userService.updateUser( user))
                 .map(result ->Result.success(result))
                 .orElse(Result.failure("-1","获取用户失败"));
     }
 
-    @RequestMapping(path = "users/{id}", method = RequestMethod.DELETE,
-            name = "deleteUser")
-    public Result deleteUser(@PathVariable("id") Long id) {
-        return Optional.ofNullable(userService.deleteUser(id))
-                .map(result -> Result.success(result))
-                .orElse(Result.failure("-1","用户删除失败"));
-    }
 
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody User user) {
@@ -72,9 +71,8 @@ public class UserController {
             return Result.failure("1", "验证码错误");
         }
         User userByAccount = userService.findUserByAccount(user.getAccount());
-        BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
-        userByAccount.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return Optional.ofNullable(userService.updateUser(userByAccount.getId(),userByAccount))
+        userByAccount.setPassword(user.getPassword());
+        return Optional.ofNullable(userService.updateUser(userByAccount))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1", "用户注册失败"));
     }
@@ -90,9 +88,20 @@ public class UserController {
         User accountUser = userService.findUserByAccount(user.getAccount());
         String siginName = "汇致旺";
         String templateCode="SMS_162635384";
-        String templateJson="{\"code\":"+accountUser.getPassword()+"}";
+        String password = getRandomString();
+        String templateJson="{\"code\":\""+password+"\"}";
+        accountUser.setPassword(password);
+        userService.updateUser(accountUser);
         //发送密码给用户
-		SmsSendApi.sendSms(user.getAccount(), accountUser.getPassword(),siginName,templateCode,templateJson);
+		SmsSendApi.sendSms(user.getAccount(),siginName,templateCode,templateJson);
 		return Result.success(null);
+    }
+
+    protected String getRandomString() {
+        char[] randomChars = new char[8];
+        for (int i=0; i<randomChars.length; i++) {
+            randomChars[i] = charArray[random.nextInt(charArray.length)];
+        }
+        return String.valueOf(randomChars);
     }
 }

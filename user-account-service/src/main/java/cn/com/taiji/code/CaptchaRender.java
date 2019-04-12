@@ -94,7 +94,7 @@ public class CaptchaRender  {
 	/**
 	 * 生成验证码
 	 */
-	public void render(String phone,int type) throws ClientException {
+	public boolean render(String phone,int type) throws ClientException {
 		//Captcha captcha = createCaptcha();
 		/*CaptchaManager.me().getCaptchaCache().put(captcha);*/
 		String code = getRandomString();
@@ -117,7 +117,7 @@ public class CaptchaRender  {
 			templateCode="SMS_162635384";
 			templateJson="{\"code\":"+code+"}";
 		}
-		SmsSendApi.sendSms(phone, code,siginName,templateCode,templateJson);
+		return SmsSendApi.sendSms(phone,siginName,templateCode,templateJson);
 	}
 
 	private  String  genRedisCode (String phone ,int type) {
@@ -167,6 +167,7 @@ public class CaptchaRender  {
 			return false;
 		}
 		if (code.equals(userInputString)) {
+			//redisDao.remove(genRedisCode(phone,type));
 			return true;
 		}
 		return false;

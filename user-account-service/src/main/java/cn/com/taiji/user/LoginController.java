@@ -8,6 +8,7 @@ import cn.com.taiji.data.Token;
 import cn.com.taiji.lockinterface.AquiredLockWorker;
 import cn.com.taiji.user.User;
 import cn.com.taiji.user.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -122,7 +123,6 @@ public class LoginController {
         if (user == null) {
             return false;
         }
-         BCryptPasswordEncoder  bCryptPasswordEncoder =new BCryptPasswordEncoder();
          if (StringUtils.isEmpty(account) && StringUtils.isEmpty(user.getPassword())) {
              return true;
          }
@@ -132,8 +132,8 @@ public class LoginController {
         if (!StringUtils.isEmpty(account) && StringUtils.isEmpty(user.getPassword())) {
             return false;
         }
-
-         if (bCryptPasswordEncoder.matches(password,user.getPassword())) {
+         String pwd =  DigestUtils.md5Hex(password);
+         if ( pwd.equals(user.getPassword())) {
              return true;
          }
          return false;

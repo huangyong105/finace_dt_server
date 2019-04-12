@@ -1,6 +1,7 @@
 package cn.com.taiji.user;
 
 import cn.com.taiji.dao.RedisDao;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -27,8 +28,7 @@ public class UserService {
     @CacheEvict(value = "user", key = "#user.getAccount()")
     public User createUser(User user) {
         User result = null;
-        BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         if(!userRepository.existsByAccount(user.getAccount())) {
             result = userRepository.save(user);
         }
@@ -37,9 +37,9 @@ public class UserService {
 
 
 
-    @Cacheable(value = "user", key = "#id")
-    public User getUserById(Long id) {
-        return userRepository.findOne(id);
+    @Cacheable(value = "user", key = "#account")
+    public User getUserByAccount(String account) {
+        return userRepository.findUserByAccount(account);
     }
 
     @Cacheable(value = "user", key = "#account")
@@ -47,9 +47,10 @@ public class UserService {
         return userRepository.findUserByAccount(account);
     }
 
-    @CachePut(value = "user", key = "#id")
-    public User updateUser(Long id, User user) {
+    @CachePut(value = "user", key = "#user.getAccount()")
+    public User updateUser(User user) {
         User result = null;
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         if(userRepository.exists(user.getId())) {
             result = userRepository.save(user);
         }
@@ -80,13 +81,4 @@ public class UserService {
         return sb.toString();
     }
 
-    @CacheEvict(value = "user", key = "#id")
-    public boolean deleteUser(Long id) {
-        boolean deleted = false;
-        if (userRepository.exists(id)) {
-            userRepository.delete(id);
-            deleted = true;
-        }
-        return deleted;
-    }
 }
