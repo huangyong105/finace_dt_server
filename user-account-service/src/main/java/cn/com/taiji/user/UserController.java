@@ -7,6 +7,7 @@ import com.aliyuncs.exceptions.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
@@ -71,12 +72,13 @@ public class UserController {
             return Result.failure("1", "验证码错误");
         }
         User userByAccount = userService.findUserByAccount(user.getAccount());
-        userByAccount.setPassword(user.getPassword());
+        BCryptPasswordEncoder bCryptPasswordEncoder =new BCryptPasswordEncoder();
+        userByAccount.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return Optional.ofNullable(userService.updateUser(userByAccount.getId(),userByAccount))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1", "用户注册失败"));
     }
-    @RequestMapping(path = "findPassword", method = RequestMethod.DELETE,
+    @RequestMapping(path = "findPassword",
             name = "findPassword")
     public Result  findPassword (@RequestBody User user) throws ClientException {
         if (!userService.exists(user.getAccount())) {

@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Column(name = "password", nullable = true)
     private String password;
     @Column(name = "state",nullable = true)
-    private Integer state;
+    private Integer state=100;
     @Column(name = "id_card_number",nullable = true)
     private String idCardNumber;
     @Column(name = "bank_card_number",nullable = true)
