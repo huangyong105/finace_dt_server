@@ -23,7 +23,7 @@ public class DefaultLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String username = ((User) authentication.getPrincipal()).getUsername();
-        log.info("退出成功，用户名：{}", username);
+        //log.info("退出成功，用户名：{}", username);
 
         response.sendRedirect(SecurityConstants.UN_AUTHENTICATION_URL);
     }
