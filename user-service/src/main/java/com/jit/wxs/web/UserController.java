@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/uc")
 public class UserController {
 
-	@Value("${foo}")
-	String foo;
+	//@Value("${foo}")
+	String foo ="kdkfkdfkkd";
 
 	@Autowired
 	private SysUserService userService;

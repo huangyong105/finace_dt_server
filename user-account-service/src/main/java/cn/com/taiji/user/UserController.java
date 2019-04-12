@@ -62,24 +62,25 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public Result changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
-        User userByAccount = userService.findUserByAccount(changePasswordDTO.getAccount());
-        if (!userByAccount.getPassword().equals(changePasswordDTO.getPassword())) {
-            return Result.failure("3", "用户不存在");
+    public Result changePassword(@RequestBody User user) {
+        if (!userService.exists(user.getAccount())) {
+            return Result.failure("1","用户不存在");
         }
-        if (!render.validate(userByAccount.getAccount(),2,changePasswordDTO.getCode())) {
-            return Result.failure("2", "验证码错误");
+
+        if (!render.validate(user.getAccount(),2,user.getCode())) {
+            return Result.failure("1", "验证码错误");
         }
-        User user = new User();
-        return Optional.ofNullable(userService.createUser(user))
+        User userByAccount = userService.findUserByAccount(user.getAccount());
+        userByAccount.setPassword(user.getPassword());
+        return Optional.ofNullable(userService.updateUser(userByAccount.getId(),userByAccount))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1", "用户注册失败"));
     }
     @RequestMapping(path = "findPassword", method = RequestMethod.DELETE,
             name = "findPassword")
     public Result  findPassword (@RequestBody User user) throws ClientException {
-        if (userService.exists(user.getAccount())) {
-            return Result.failure("1","用户已经存在");
+        if (!userService.exists(user.getAccount())) {
+            return Result.failure("1","用户不存在");
         }
         if (!render.validate(user.getAccount(),3,user.getCode())) {
             return Result.failure("2","验证码错误");
