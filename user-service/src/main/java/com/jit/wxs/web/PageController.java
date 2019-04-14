@@ -13,7 +13,8 @@ public class PageController {
      */
     @RequestMapping(SecurityConstants.LOGIN_SUCCESS_URL)
     public String showSuccessPage() {
-        return "home.html";
+        System.out.println("--------------------");
+        return "pages/application-list.html";
     }
 
     /**
@@ -21,6 +22,6 @@ public class PageController {
      */
     @RequestMapping(SecurityConstants.UN_AUTHENTICATION_URL)
     public String showAuthenticationPage() {
-        return "login.html";
+        return "pages/page-login.html";
     }
 }

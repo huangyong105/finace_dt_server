@@ -33,8 +33,6 @@ import java.util.Set;
 @EnableCaching
 public class SecurityApplication {
 
-    @Autowired
-    JedisCluster jedisCluster;
     public static void main(String[] args) {
         SpringApplication.run(SecurityApplication.class, args);
 

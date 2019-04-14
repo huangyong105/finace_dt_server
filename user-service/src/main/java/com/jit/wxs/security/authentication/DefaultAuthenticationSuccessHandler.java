@@ -1,5 +1,7 @@
 package com.jit.wxs.security.authentication;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jit.wxs.entity.Result;
 import com.jit.wxs.security.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -20,12 +22,14 @@ import java.io.IOException;
 @Slf4j
 @Component
 public class DefaultAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
+    private ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String username = ((User) authentication.getPrincipal()).getUsername();
         log.info("认证成功，用户名：{}", username);
-
-        response.sendRedirect(SecurityConstants.LOGIN_SUCCESS_URL);
+        String json = objectMapper.writeValueAsString(Result.ofSuccess());
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(json);
+       // response.sendRedirect(SecurityConstants.LOGIN_SUCCESS_URL);
     }
 }

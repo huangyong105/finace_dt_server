@@ -1,11 +1,16 @@
 package com.jit.wxs.security.validate.code;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jit.wxs.entity.Result;
+import com.jit.wxs.entity.ResultMap;
 import com.jit.wxs.security.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,6 +30,7 @@ import java.io.IOException;
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {
     private static final PathMatcher pathMatcher = new AntPathMatcher();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,8 +40,12 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
                 //手动设置异常
                 request.getSession().setAttribute("SPRING_SECURITY_LAST_EXCEPTION",new DisabledException("验证码输入错误"));
                 // 转发到错误Url
-                request.getRequestDispatcher(SecurityConstants.VALIDATE_CODE_ERR_URL).forward(request,response);
-            } else {
+                //request.getRequestDispatcher(SecurityConstants.VALIDATE_CODE_ERR_URL).forward(request,response);
+         ;
+                String json = objectMapper.writeValueAsString(Result.ofError(-1, "验证码输入错误"));
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(json);
+                } else {
                 filterChain.doFilter(request,response);
             }
         } else {
@@ -48,7 +58,14 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         // 不分区大小写
         // 这个validateCode是在servlet中存入session的名字
-        String validateCode = ((String) request.getSession().getAttribute("validateCode")).toLowerCase();
+        String validateCode = ((String) request.getSession().getAttribute("validateCode"));
+        if (StringUtils.isEmpty(validateCode)) {
+            return false;
+        }
+        validateCode = validateCode.toLowerCase();
+        if (StringUtils.isEmpty(inputVerify)) {
+            return false;
+        }
         inputVerify = inputVerify.toLowerCase();
 
         log.info("验证码：{}, 用户输入：{}", validateCode, inputVerify);
