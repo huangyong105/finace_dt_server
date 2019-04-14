@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class ProjectManagementDO {
-    private Integer id;
+    private Long id;
 
     private String projectName;
 
@@ -27,11 +27,11 @@ public class ProjectManagementDO {
 
     private Integer deleted;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

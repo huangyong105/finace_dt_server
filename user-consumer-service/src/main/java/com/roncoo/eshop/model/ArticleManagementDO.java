@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class ArticleManagementDO {
-    private Integer id;
+    private Long id;
 
     private String articleName;
 
@@ -22,11 +22,11 @@ public class ArticleManagementDO {
 
     private String articleDesc;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

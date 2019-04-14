@@ -11,7 +11,7 @@ public class ProjectManagementDTO {
     /**
      * 项目id
      */
-    private Integer id;
+    private Long id;
     /**
      * 项目名称
      */
@@ -45,11 +45,11 @@ public class ProjectManagementDTO {
      */
     private Integer isOnline;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

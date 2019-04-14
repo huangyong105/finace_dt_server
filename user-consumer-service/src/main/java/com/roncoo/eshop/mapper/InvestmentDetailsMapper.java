@@ -3,9 +3,12 @@ package com.roncoo.eshop.mapper;
 
 
 import com.roncoo.eshop.model.InvestmentDetailsDO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
-@Repository
+import java.util.List;
+
+@Mapper
 public interface InvestmentDetailsMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,7 +16,8 @@ public interface InvestmentDetailsMapper {
 
     int insertSelective(InvestmentDetailsDO record);
 
-    InvestmentDetailsDO selectByPrimaryKey(Integer id);
+    @Select("select * from investment_details where investmenter_id=#{userId}")
+    List<InvestmentDetailsDO> selectByPrimaryKey(Long userId);
 
     int updateByPrimaryKeySelective(InvestmentDetailsDO record);
 

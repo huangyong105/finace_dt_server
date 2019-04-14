@@ -11,11 +11,11 @@ public class InvestmentDetailsDTO {
     /**
      * 主键自增id
      */
-    private Integer id;
+    private Long id;
 
-    private Integer projectId;
+    private Long projectId;
 
-    private Integer investmenterId;
+    private Long investmenterId;
 
     private String projectName;
 
@@ -35,28 +35,28 @@ public class InvestmentDetailsDTO {
 
     private Date gmtUpdated;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getProjectId() {
+    public void setInvestmenterId(Long investmenterId) {
+        this.investmenterId = investmenterId;
+    }
+
+    public Long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
 
-    public Integer getInvestmenterId() {
+    public Long getInvestmenterId() {
         return investmenterId;
-    }
-
-    public void setInvestmenterId(Integer investmenterId) {
-        this.investmenterId = investmenterId;
     }
 
     public String getProjectName() {

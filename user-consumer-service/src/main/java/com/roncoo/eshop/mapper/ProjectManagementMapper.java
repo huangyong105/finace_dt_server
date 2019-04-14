@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProjectManagementMapper {
 
     @Select("select * from project_management where id = #{id} and is_online =1 and deleted =0")
-    ProjectManagementDO selectByPrimaryKey(Integer id);
+    ProjectManagementDO selectByPrimaryKey(Long id);
 
     @Select("select * from project_management where is_online=1 and deleted=0")
     List<ProjectManagementDO> selectPrimaryList();
