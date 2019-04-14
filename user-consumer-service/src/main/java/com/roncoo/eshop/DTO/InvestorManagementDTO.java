@@ -7,22 +7,41 @@ import java.util.Date;
  * @date 2019-03-24 15:22
  **/
 public class InvestorManagementDTO {
-    private Integer id;
-
+    /**
+     * 主键自增id
+     */
+    private Long id;
+    /**
+     * 电话
+     */
     private String telNumber;
-
+    /**
+     * 密码
+     */
     private String userPassword;
-
+    /**
+     * 邮箱
+     */
     private String email;
-
+    /**
+     * 状态
+     */
     private Integer state;
-
+    /**
+     * 身份证号码
+     */
     private String idCardNumber;
-
+    /**
+     * 银行卡号
+     */
     private String bankCardNumber;
-
+    /**
+     * 身份证正面照片
+     */
     private String idCardPngUp;
-
+    /**
+     * 身份证背面照片
+     */
     private String idCardPngDown;
 
     private Date gmtCreated;
@@ -31,11 +50,11 @@ public class InvestorManagementDTO {
 
     private Integer deleted;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

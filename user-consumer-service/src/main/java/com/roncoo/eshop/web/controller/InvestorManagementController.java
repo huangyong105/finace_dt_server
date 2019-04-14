@@ -1,16 +1,15 @@
 package com.roncoo.eshop.web.controller;
 
 
+//import cn.com.taiji.user.User;
 import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.DTO.InvestorManagementDTO;
+import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestorManager;
 import com.roncoo.eshop.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +29,8 @@ import java.util.List;
 public class InvestorManagementController {
     @Autowired
     private InvestorManager investorManager;
+    @Autowired
+    private UserClient userClient;
     @Value("${image_path_url}")
     String imagePathUrl;
     /**
@@ -37,11 +38,24 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/information")
-    public Result getInformation(){
+    public Result getInformation(@RequestHeader("token")String token){
+//        cn.com.taiji.data.Result<User> userResult = null;
+//        try {
+//            userResult = userClient.getUserInfo(token);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        User user = userResult.getData();
         InvestorManagementDTO investorManagementDTO = new InvestorManagementDTO();
-        investorManagementDTO.setId(1);
-        investorManagementDTO.setTelNumber("123456789");
-        investorManagementDTO.setEmail("8435145324.@qq.com");
+//        investorManagementDTO.setId(user.getId());
+//        investorManagementDTO.setEmail(user.getEmail());
+//        investorManagementDTO.setTelNumber(user.getAccount());
+//        investorManagementDTO.setUserPassword(user.getPassword());
+//        investorManagementDTO.setState(user.getState());
+//        investorManagementDTO.setIdCardNumber(user.getIdCardNumber());
+//        investorManagementDTO.setBankCardNumber(user.getBankCardNumber());
+//        investorManagementDTO.setIdCardPngDown(user.getIdCardPngDown());
+//        investorManagementDTO.setIdCardPngUp(user.getIdCardPngUp());
         return Result.ofSuccess(investorManagementDTO);
     }
 

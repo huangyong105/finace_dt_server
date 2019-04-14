@@ -1,10 +1,18 @@
 package com.roncoo.eshop.client;
 
+
+
+
+//import cn.com.taiji.data.Result;
+//import cn.com.taiji.user.User;
+
 import com.roncoo.eshop.model.User;
 import com.roncoo.eshop.result.Result;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 功能描述: <br>
@@ -13,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
  * @Author:yong.huang
  * @Date: 2019/4/10 22:04
  */
+
 @FeignClient(value = "user-account-service",url="http://47.101.147.30:8770/")
 public interface UserClient {
     @PostMapping("/getUserInfo")

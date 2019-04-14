@@ -8,6 +8,9 @@ import java.util.Date;
  * @date 2019-03-24 15:30
  **/
 public class InvestmentDetailsDTO {
+    /**
+     * 主键自增id
+     */
     private Integer id;
 
     private Integer projectId;
