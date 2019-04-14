@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -113,6 +114,25 @@ public class LoginController {
             return Result.success(null);
         }
         return Result.success(user);
+    }
+
+    /**
+     * 实名制认证接口
+     * @param user
+     * @return
+     */
+    @PostMapping("/realNameCertification")
+    public Result realNameCertification(@RequestBody User user){
+        User userById = userService.findUserById(user.getId());
+        if (userById==null){
+            return Result.failure("1","用户不存在");
+        }
+        userById.setIdCardNumber(user.getIdCardNumber());
+        userById.setIdCardPngUp(user.getIdCardPngUp());
+        userById.setIdCardPngDown(user.getIdCardPngDown());
+        return Optional.ofNullable(userService.realNameCertification(userById))
+                .map(result -> Result.success(result))
+                .orElse(Result.failure("-1", "实名制认证失败"));
     }
 
     /**

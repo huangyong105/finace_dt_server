@@ -47,6 +47,11 @@ public class UserService {
         return userRepository.findUserByAccount(account);
     }
 
+    @Cacheable(value = "user",key = "#id")
+    public User findUserById(Long id){
+        return userRepository.findUserById(id);
+    }
+
     @CachePut(value = "user", key = "#user.getAccount()")
     public User updateUser(User user) {
         User result = null;
@@ -54,6 +59,13 @@ public class UserService {
         if(userRepository.exists(user.getId())) {
             result = userRepository.save(user);
         }
+        return result;
+    }
+
+    @CachePut(value = "user", key = "#user.getAccount()")
+    public User realNameCertification(User user) {
+        User result = null;
+        result = userRepository.save(user);
         return result;
     }
 
