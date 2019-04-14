@@ -13,4 +13,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     User findUserByAccount(@Param("account") String account);
 
     boolean existsByAccount(@Param("account") String account);
+
+    User findUserById(@Param("id")Long id);
 }

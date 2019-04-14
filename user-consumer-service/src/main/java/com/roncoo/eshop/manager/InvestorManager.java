@@ -1,6 +1,10 @@
 package com.roncoo.eshop.manager;
 
 
+import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
+import com.roncoo.eshop.converter.BeanConverter;
+import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
+import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.util.FtpUtil;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * @author dongyuan
@@ -21,6 +26,9 @@ public class InvestorManager {
     FTPClient ftpClient;
     @Autowired
     FtpUtil ftpUtil;
+    @Autowired
+    InvestmentDetailsMapper investmentDetailsMapper;
+
     public String uploadIdPhoto(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         if (file.isEmpty()){
@@ -37,5 +45,13 @@ public class InvestorManager {
     public void downloadIdPhoto(String fileName,OutputStream ops){
         ftpUtil.downloadFile(fileName,ftpClient,ops);
     }
+
+    public List<InvestmentDetailsDTO> getInvestmentDetailsDOSByuserId(Long userID){
+        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByPrimaryKey(userID);
+        List<InvestmentDetailsDTO> dtos = BeanConverter.batchConvert(investmentDetailsDOS, InvestmentDetailsDTO.class);
+        return dtos;
+    }
+
+
 
 }

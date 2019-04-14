@@ -27,7 +27,7 @@ public class InvestmentManager {
         return projectManagementDTOS;
     }
 
-    public ProjectManagementDTO getInvestmentProject(Integer id){
+    public ProjectManagementDTO getInvestmentProject(Long id){
         ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(id);
         ProjectManagementDTO projectManagementDTO = BeanConverter.convert(projectManagementDO, ProjectManagementDTO.class);
         return projectManagementDTO;

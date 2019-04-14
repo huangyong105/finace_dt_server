@@ -20,7 +20,7 @@ public interface ArticleManagementMapper {
     List<ArticleManagementDO> getAllArticle();
 
     @Select("select * from article_management where id=#{id}")
-    ArticleManagementDO getArticle(int id);
+    ArticleManagementDO getArticle(Long id);
 
     @Insert("insert into article_management" +
             "(article_name,article_desc,link,gmt_created,gmt_updated,is_online,deleted)" +

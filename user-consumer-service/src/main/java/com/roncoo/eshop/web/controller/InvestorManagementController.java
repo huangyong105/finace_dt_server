@@ -1,16 +1,16 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.user.User;
 import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.DTO.InvestorManagementDTO;
+import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestorManager;
+import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +30,8 @@ import java.util.List;
 public class InvestorManagementController {
     @Autowired
     private InvestorManager investorManager;
+    @Autowired
+    private UserClient userClient;
     @Value("${image_path_url}")
     String imagePathUrl;
     /**
@@ -37,11 +39,23 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/information")
-    public Result getInformation(){
+    public Result getInformation(@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        User user = userResult.getData();
         InvestorManagementDTO investorManagementDTO = new InvestorManagementDTO();
-        investorManagementDTO.setId(1);
-        investorManagementDTO.setTelNumber("123456789");
-        investorManagementDTO.setEmail("8435145324.@qq.com");
+        investorManagementDTO.setId(user.getId());
+        investorManagementDTO.setEmail(user.getEmail());
+        investorManagementDTO.setTelNumber(user.getAccount());
+        investorManagementDTO.setState(user.getState());
+        investorManagementDTO.setIdCardNumber(user.getIdCardNumber());
+        investorManagementDTO.setBankCardNumber(user.getBankCardNumber());
+        investorManagementDTO.setIdCardPngDown(user.getIdCardPngDown());
+        investorManagementDTO.setIdCardPngUp(user.getIdCardPngUp());
         return Result.ofSuccess(investorManagementDTO);
     }
 
@@ -50,16 +64,16 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/myInvestment")
-    public Result getMyInvestment(){
-        List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
-        InvestmentDetailsDTO investmentDetailsDTO = new InvestmentDetailsDTO();
-        investmentDetailsDTO.setId(1);
-        investmentDetailsDTO.setExpectedRiskTolerance(2);
-        BigDecimal amount = BigDecimal.valueOf(213.12);
-        investmentDetailsDTO.setInputMargin(amount);
-        investmentDetailsDTO.setState(1);
-        investmentDetailsDTOS.add(investmentDetailsDTO);
-        return Result.ofSuccess(investmentDetailsDTOS);
+    public Result getMyInvestment(@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Long id = userResult.getData().getId();
+        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
+        return Result.ofSuccess(dtos);
     }
 
     /**
@@ -67,8 +81,18 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/realNameState")
-    public Result getRealNameState(){
-        return Result.ofSuccess("已认证");
+    public Result getRealNameState(@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        User user = userResult.getData();
+        if (user.getIdCardNumber()!=null||user.getIdCardPngDown()!=null||user.getIdCardPngUp()!=null){
+            return Result.ofSuccess(1);
+        }
+        return Result.ofSuccess(0);
     }
 
     /**
@@ -76,8 +100,18 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/bindCodeState")
-    public Result getBindCodeState(){
-        return Result.ofSuccess("已绑定");
+    public Result getBindCodeState(@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        User user = userResult.getData();
+        if (user.getBankCardNumber()!=null){
+            return Result.ofSuccess(1);
+        }
+        return Result.ofSuccess(0);
     }
 
     /**
@@ -112,4 +146,37 @@ public class InvestorManagementController {
         }
     }
 
+    /**
+     * 用户认证
+     * @param investorManagementDTO
+     * @param token
+     * @return
+     */
+    @RequestMapping(value = "/realNameCertification")
+    public Result realNameCertification(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return Result.ofError(5001,"无本用户");
+        }
+        if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
+            return Result.ofError(5002,"入参不完整!");
+        }
+        Long id = userResult.getData().getId();
+        User user = new User();
+        user.setId(id);
+        user.setIdCardNumber(investorManagementDTO.getIdCardNumber());
+        user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
+        user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
+        cn.com.taiji.data.Result result = userClient.realNameCertification(user);
+        if (result.isSuccess()){
+            return Result.ofSuccess("认证成功");
+        }
+        return Result.ofError(5000,"认证失败");
+    }
 }

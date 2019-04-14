@@ -10,7 +10,7 @@ public class ArticleManagementDTO {
     /**
      * 文章id
      */
-    private Integer id;
+    private Long id;
     /**
      * 文章名称
      */
@@ -36,11 +36,11 @@ public class ArticleManagementDTO {
      */
     private Integer isOnline;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
