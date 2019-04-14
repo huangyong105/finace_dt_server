@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <!-- App title -->
+        <title>Zircos - Responsive Admin Dashboard Template</title>
+
+        <!-- Plugins css-->
+        <link href="plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet" />
+        <link href="plugins/multiselect/css/multi-select.css"  rel="stylesheet" type="text/css" />
+        <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+        <link href="plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+        <link href="plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+
+        <!-- Custom box css -->
+        <link href="plugins/custombox/css/custombox.min.css" rel="stylesheet">
+        <!-- DataTables -->
+        <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="plugins/switchery/switchery.min.css">
+
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <style>
+            .cust-arrow{
+                border-bottom: 12px solid transparent;
+                border-right: 12px solid rgb(187, 187, 187) !important;
+                border-top: 12px solid transparent;
+                display: block;
+                height: 0;
+                left: -12px;
+                margin-top: -12px;
+                position: absolute;
+                top: 50%;
+                width: 0;
+            }
+        </style>
+
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                  <div class="spinner-wrapper">
+                    <div class="rotator">
+                      <div class="inner-spin"></div>
+                      <div class="inner-spin"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <a href="#" class="logo"><span>神盾<span>系统</span></span><i class="mdi mdi-cube"></i></a>
+                    <!-- Image logo -->
+                    <!--<a href="index.html" class="logo">-->
+                        <!--<span>-->
+                            <!--<img src="assets/images/logo.png" alt="" height="30">-->
+                        <!--</span>-->
+                        <!--<i>-->
+                            <!--<img src="assets/images/logo_sm.png" alt="" height="28">-->
+                        <!--</i>-->
+                    <!--</a>-->
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+
+                        <!-- Navbar-left -->
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <button class="button-menu-mobile open-left waves-effect waves-light">
+                                    <i class="mdi mdi-menu"></i>
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Right(Notification) -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="javascript:void(0);" class="right-bar-toggle right-menu-item">
+                                    <i class="mdi mdi-settings"></i>
+                                </a>
+                            </li>
+
+                            <li class="dropdown user-box">
+                                <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
+                                    <img src="assets/images/users/default.png" alt="user-img" class="img-circle user-img">
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
+                                    <li>
+                                        <h5>Hi, John</h5>
+                                    </li>
+                                    <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
+                                    <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                                </ul>
+                            </li>
+
+                        </ul> <!-- end navbar-right -->
+
+                    </div><!-- end container -->
+                </div><!-- end navbar -->
+            </div>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <ul>
+                        	<li class="menu-title">Navigation</li>
+                            
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-windows"></i> <span> 应用管理 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="application-list.html">应用列表</a></li>
+                                    <li><a href="application-form.html">添加应用</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-headphones-settings"></i> <span> HEADER管理 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" >
+                                    <li><a href="header-list.html">应用HEADER列表</a></li>
+                                    <li><a href="header-form.html">添加HEADER应用</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-verified"></i> <span> RESULT管理 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" >
+                                    <li><a href="result-list.html">应用RESULT列表</a></li>
+                                    <li><a href="result-form.html">添加RESULT应用</a></li>
+                                </ul>
+                            </li>
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-physical-web"></i> <span> HOST管理 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" >
+                                    <li><a href="host-list.html">应用HOST列表</a></li>
+                                    <li><a href="host-form.html">添加HOST应用</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-play"></i> <span> URL管理 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" >
+                                    <li><a href="category-list.html">URL类目管理</a></li>
+                                    <li><a href="category-form.html">URL类目添加</a></li>
+                                    <li><a href="url-list.html">URL列表</a></li>
+                                    <li><a href="url-form.html">添加URL</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect active subdrop"><i class="mdi mdi-book-open-page-variant"></i> <span> 测试用例 </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" >
+                                    <li><a href="testcase-list.html">测试用例列表</a></li>
+                                    <li><a href="testcase-form.html">添加测试用例</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="caseresult-list.html" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span> 用例执行结果 </span></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                    <div class="clearfix"></div>
+
+                    <div class="help-box">
+                        <h5 class="text-muted m-t-0">帮助 ？</h5>
+                        <p class=""><span class="text-dark"><b>Email:</b></span> <br/> 奇点云科技有限公司</p>
+                        <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br/> 业务中台技术部</p>
+                    </div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container">
+
+                        <div class="row">
+							<div class="col-xs-12">
+								<div class="page-title-box">
+                                    <h4 class="page-title"> </h4>
+                                    <ol class="breadcrumb p-0 m-0">
+                                        <li>
+                                            <a href="#">神盾</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">测试用例</a>
+                                        </li>
+                                        <li class="active">
+                                            用例执行
+                                        </li>
+                                    </ol>
+                                    <div class="clearfix"></div>
+                                </div>
+							</div>
+						</div>
+                        <!-- end row -->
+
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card-box">
+                                    <h4 class="m-t-0 header-title"><b>执行用例</b></h4>
+                                    <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="button-runcase">&nbsp;执&nbsp;&nbsp;行&nbsp;</button>
+                                    
+                                    <div class="modal-body">
+                                        <div class="card-box-noshadow" >
+                                            <ul class="nav nav-tabs tabs-bordered">
+                                                <li class="active">
+                                                    <a href="#home-url" data-toggle="tab" aria-expanded="true">
+                                                        <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                                        <span class="hidden-xs">执行用例</span>
+                                                    </a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="#profile-case" data-toggle="tab" aria-expanded="false">
+                                                        <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                                        <span class="hidden-xs">用例列表</span>
+                                                    </a>
+                                                </li>
+                                                
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="home-url">
+                                                    <form class="" data-parsley-validate novalidate id="content-form" action="#">
+                                                    <input type="hidden" placeholder="" name="appId" id="id-appId"  class="form-control">
+                                                    <input type="hidden" placeholder="" name="urlId" id="id-urlId"  class="form-control">
+                                                    <input type="hidden" placeholder="" name="caseIds" id="id-caseIds"  class="form-control">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">HOST选择</label>
+                                                                <select class="selectpicker" id="host-select" name="hostId" data-style="btn-default">
+                                                                    <option value="" selected>请选择</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">HEADER配置</label>
+                                                                <select class="selectpicker" id="header-select" name="headerId" data-style="btn-default">
+                                                                    <option value="" selected>请选择</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">验证规则</label>
+                                                                <select class="selectpicker" id="result-select" name="resultId" data-style="btn-default">
+                                                                    <option value="" selected>请选择</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane" id="profile-case">
+                                                    <div class="row">
+                                                        <div class="modal-body" id="urlcase-body" style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                <h6 class="modal-title"><a href="#">URL测试用例</a></h6>
+                                                                </div>
+                                                            </div>
+                                                            <hr/>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">名称</label>
+                                                                        <input type="text" class="form-control" data-bind-runcase="name" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">请求类型</label>
+                                                                        <input type="text" class="form-control" data-bind-runcase="contentType" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">请求方法</label>
+                                                                        <input type="text" class="form-control" data-bind-runcase="method" readonly>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">URL</label>
+                                                                        <input type="text" class="form-control" data-bind-runcase="url" readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                    
+                                                        <div class="modal-body" id="cases-body" style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h6 class="modal-title"><a href="#">选择的用例列表</a></h6>
+                                                                </div>
+                                                            </div>
+                                                            <hr/>
+                                                            <div class="row">
+                                                            <!-- 每行设置4个 -->
+                                                                <div class="col-md-12">
+                                                                    <table id="param-datatable" class="table table-colored table-info">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th style="width: 10px;">id</th>
+                                                                                <th>用例名称</th>
+                                                                                <th>URL</th>
+                                                                                <th>描述</th>
+                                                                                <th style="width: 120px;">创建时间</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            
+                                                                            </tbody>
+                                                                        </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="card-box table-responsive">
+                                    <h4 class="m-t-0 header-title"><b>用例执行结果</b></h4>
+                                    <!-- 大文本执行过程 -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="timeline timeline-left" id="result-timeline">
+                                                <article class="timeline-item alt">
+                                                    <div class="text-left">
+                                                        <div class="time-show first">
+                                                            <a href="#" class="btn btn-danger w-lg">等待执行</a>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- end row -->
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <footer class="footer text-right">
+                    2016 - 2018 © Zircos.
+                </footer>
+
+            </div>
+
+            <div id="custom-modal" class="modal-demo" >
+                <input type="hidden" placeholder="" id="row-id" class="form-control">
+                                        
+                <button type="button" class="close" onclick="Custombox.close();">
+                    <span>&times;</span><span class="sr-only">Close</span>
+                </button>
+                <div class="panel panel-color panel-teal">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">信息提示</h3>
+                    </div>
+                    <div class="panel-body">
+                        <span id="box-message"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info waves-effect waves-light" id="confirm-del">&nbsp;确&nbsp;&nbsp;认&nbsp;</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" onclick="Custombox.close();">&nbsp;取&nbsp;&nbsp;消&nbsp;</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">用例执行结果</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label">用例名称</label>
+                                        <input type="text" class="form-control" data-bind-caseresult="appId" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">执行结果</label>
+                                        <input type="text" class="form-control" data-bind-caseresult="matching" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label">请求URL</label>
+                                        <input type="text" class="form-control" data-bind-caseresult="urlStr" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">验证策略</label>
+                                        <input type="text" class="form-control" data-bind-caseresult="result" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">请求Header</label>
+                                        <textarea class="form-control autogrow" readonly data-bind-caseresult="caseRes-header" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 10px;min-height:60px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">请求body</label>
+                                        <textarea class="form-control autogrow" readonly data-bind-caseresult="caseRes-bodyJson" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 10px;min-height:60px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group no-margin">
+                                        <label class="control-label">执行结果</label>
+                                        <textarea class="form-control autogrow" readonly data-bind-caseresult="execution" style="overflow: hidden; word-wrap: break-word; resize: horizontal; min-height:200px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info pull-right waves-effect waves-light" data-dismiss="modal">&nbsp;关&nbsp;&nbsp;闭&nbsp;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+        <script src="plugins/switchery/switchery.min.js"></script>
+
+        <script src="plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+        <script src="plugins/multiselect/js/jquery.multi-select.js"></script>
+        <script src="plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
+        <script src="plugins/select2/js/select2.min.js"></script>
+        <script src="plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+        <script src="plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
+        <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+        <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="plugins/datatables/dataTables.bootstrap.js"></script>
+
+        <script src="plugins/datatables/dataTables.buttons.min.js"></script>
+        <script src="plugins/datatables/buttons.bootstrap.min.js"></script>
+        <script src="plugins/datatables/jszip.min.js"></script>
+        <script src="plugins/datatables/pdfmake.min.js"></script>
+        <script src="plugins/datatables/vfs_fonts.js"></script>
+        <script src="plugins/datatables/buttons.html5.min.js"></script>
+        <script src="plugins/datatables/buttons.print.min.js"></script>
+        <script src="plugins/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="plugins/datatables/dataTables.keyTable.min.js"></script>
+        <script src="plugins/datatables/dataTables.responsive.min.js"></script>
+        <script src="plugins/datatables/responsive.bootstrap.min.js"></script>
+        <script src="plugins/datatables/dataTables.scroller.min.js"></script>
+        <script src="plugins/datatables/dataTables.colVis.js"></script>
+        <script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
+
+        <!-- init -->
+        <script src="assets/pages/jquery.datatables.init.js"></script>
+
+        <!-- Modal-Effect -->
+        <script src="plugins/custombox/js/custombox.min.js"></script>
+        <script src="plugins/custombox/js/legacy.min.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+        <script src="assets/js/jquery.validate.min.js"></script>
+        <script src="assets/js/jquery.cookie.js"></script>
+
+        <script>
+            var table;
+            var token = $.cookie('token');
+            
+            function dataCaseBind(objectId,data){
+                
+                var bulder = new DataBinderBuilder(objectId);
+                bulder.set("appId",data.application.name);
+                bulder.set("matching",data.matching);
+                bulder.set("urlStr",data.urlStr);
+                bulder.set("result",data.result);
+                bulder.set('urlStr',data.urlStr);
+                bulder.set('execution',data.execution);
+                bulder.set('caseRes-header',data.caseRes.header);
+
+            }
+            function detailResult(id){
+            //ajax查询数据
+                $.ajax({
+                    dataType : "json",
+                    url : host+"/case/result/detail/"+id,  
+                    contentType: 'application/json;charset=UTF-8',
+                    headers:{Authorization:token},
+                    type : "get", 
+                    success : function(data) {
+                        if(data.success){
+                            //数据绑定
+                            dataCaseBind('caseresult',data.value);
+                            $('#con-close-modal').modal('toggle')
+                        }
+                    },
+                    error : function (e){
+                        authorValidate(e);
+                        var d = e.responseJSON;
+                        if(d){
+                            alert(d.message);
+                        }
+                    }
+                });
+            }
+            $(document).ready(function () {
+                var appId = getUrlParam('appId');
+                var urlId = getUrlParam('urlId');
+                var caseIds = getUrlParam('caseIds');
+                var casesTable;
+
+                $('#id-urlId').val(urlId);
+                $('#id-caseIds').val(caseIds);
+                $('#id-appId').val(appId);
+                //初始化页面
+                if(urlId){
+                    $("#cases-body").hide(); 
+                    $("#urlcase-body").show(); 
+                    $.ajax({
+                        dataType : "json",
+                        url : host+"/application/url/detail/"+urlId,  
+                        contentType: 'application/json;charset=UTF-8',
+                        headers:{Authorization:token},
+                        type : "get", 
+                        success : function(data) {
+                            if(data.success){
+                                resultData = data.value;
+                                var bulder = new DataBinderBuilder('runcase');
+                                bulder.set("id",resultData.id);
+                                bulder.set("name",resultData.name);
+                                bulder.set('appId',resultData.appId);
+                                bulder.set('categoryId',resultData.categoryId);
+                                bulder.set('method',resultData.method);
+                                bulder.set('contentType',resultData.contentType);
+                                bulder.set('description',resultData.description);
+                                bulder.set('url',resultData.url);
+                                bulder.set('status',resultData.status);
+                            }
+                        },
+                        error : function (e){
+                            authorValidate(e);
+                            var d = e.responseJSON;
+                            if(d){
+                                alert(d.message);
+                            }
+                        }
+                    });
+                }else{
+                    $("#cases-body").show(); 
+                    $("#urlcase-body").hide(); 
+                    $.ajax({
+                        dataType : "json",
+                        url : host+"/url/testcase/list/all",  
+                        contentType: 'application/json;charset=UTF-8',
+                        headers:{Authorization:token},
+                        type : "post", 
+                        data : '{"ids":"'+caseIds+'","appId":"'+appId+'"}',
+                        success : function(data) {
+                            if(data.success){
+                                if(casesTable){
+                                    casesTable.destroy(); //还原初始化了的datatable
+                                }
+                                casesTable = $('#param-datatable').DataTable({
+                                    "columns": [
+                                        { data: 'id'},
+                                        { data: 'name'},
+                                        { data: 'urlId'},
+                                        { data: 'description'},
+                                        { data: 'createDate'}
+                                    ],
+                                    searching:false,
+                                    paging: false,
+                                    info: false,
+                                    "bLengthChange": false,     //关闭选择显示条数
+                                    "bSort": false, 
+                                    data:data.value
+                                });
+                            }
+                        },
+                        error : function (e){
+                            authorValidate(e);
+                            var d = e.responseJSON;
+                            if(d){
+                                alert(d.message);
+                            }
+                        }
+                    });
+                }
+                
+                $.ajax({
+                    dataType : "json",
+                    url : host+"/application/host/list/all",  
+                    contentType: 'application/json;charset=UTF-8',
+                    headers:{Authorization:token},
+                    type : "post", 
+                    data : '{"appId":"'+appId+'"}',
+                    success : function(data) {
+                        if(data.success){
+                            var apps = data.value;
+                            $.each(apps, function (i, item) { 
+                                //将拿到的值显示到jsp页面
+                                $('#host-select').append('<option value="'+item.id+'">'+item.name+'（'+item.host+'）</option>');
+                            });
+                            $('#host-select').selectpicker('refresh');
+                        }
+                    },
+                    error : function (e){
+                        authorValidate(e);
+                        var d = e.responseJSON;
+                        if(d){
+                            alert(d.message);
+                        }
+                    }
+                });
+                $.ajax({
+                    dataType : "json",
+                    url : host+"/application/header/list/all",  
+                    contentType: 'application/json;charset=UTF-8',
+                    headers:{Authorization:token},
+                    type : "post", 
+                    data : '{"appId":"'+appId+'"}',
+                    success : function(data) {
+                        if(data.success){
+                            var apps = data.value;
+                            $.each(apps, function (i, item) { 
+                                if(item.isDefault){
+                                    //将拿到的值显示到jsp页面
+                                    $('#header-select').append('<option value="'+item.id+' selected">'+item.name+'</option>');
+                                }else{
+                                    //将拿到的值显示到jsp页面
+                                    $('#header-select').append('<option value="'+item.id+'">'+item.name+'</option>');
+                                }
+                            });
+                            $('#header-select').selectpicker('refresh');
+                        }
+                    },
+                    error : function (e){
+                        authorValidate(e);
+                        var d = e.responseJSON;
+                        if(d){
+                            alert(d.message);
+                        }
+                    }
+                });
+                $.ajax({
+                    dataType : "json",
+                    url : host+"/application/result/list/all",  
+                    contentType: 'application/json;charset=UTF-8',
+                    headers:{Authorization:token},
+                    type : "post", 
+                    data : '{"appId":"'+appId+'"}',
+                    success : function(data) {
+                        if(data.success){
+                            var apps = data.value;
+                            $.each(apps, function (i, item) { 
+                                if(item.isDefault){
+                                    //将拿到的值显示到jsp页面
+                                    $('#result-select').append('<option value="'+item.id+'" selected>'+item.name+'</option>');
+                                }else{
+                                    //将拿到的值显示到jsp页面
+                                    $('#result-select').append('<option value="'+item.id+'">'+item.name+'</option>');
+                                }
+                            });
+                            $('#result-select').selectpicker('refresh');
+                        }
+                    },
+                    error : function (e){
+                        authorValidate(e);
+                        var d = e.responseJSON;
+                        if(d){
+                            alert(d.message);
+                        }
+                    }
+                });
+                $("#content-form").validate({
+                    rules: {
+                        hostId: "required"
+                    },
+                    messages: {
+                        hostId: "请选择要执行的HOST"
+                    },
+                    submitHandler:function(form){
+                        
+                        $.ajax({
+                            dataType : "json",
+                            url : host+'/url/testcase/run',  
+                            contentType: 'application/json;charset=UTF-8',
+                            type : "post", 
+                            headers:{Authorization:token},
+                            data : JSON.stringify(getFormData($("#content-form"))), 
+                            success : function(data) {
+                                if(!data.success){
+                                    showCustombox(data.message,false);
+                                }
+                                var startTime = new Date().getTime();
+                                //定时刷新结果
+                                var intval = setInterval(function() {
+                                    if(new Date().getTime() - startTime > 120000){
+                                        clearInterval(intval);
+                                        return;
+                                    }
+                                    refreshResult(data.value,intval);
+                                }, 1000);
+
+                            },
+                            error : function (e){
+                                authorValidate(e);
+                                var d = e.responseJSON;
+                                if(d){
+                                    alert(d.message);
+                                }
+                            }
+                        });
+                        return false; //阻止form提交
+                    }
+                });
+
+                $('#button-runcase').click(function(){
+                    $('#content-form').submit()
+                });
+
+                var num = 0;
+                function refreshResult(feature,intval){
+                    
+                    $.ajax({
+                        dataType : "json",
+                        url : host+'/url/testcase/result/refresh',  
+                        contentType: 'application/json;charset=UTF-8',
+                        type : "post", 
+                        headers:{Authorization:token},
+                        data : '{"feature":"'+feature+'"}', 
+                        success : function(data) {
+                            var value = data.value;
+                            if(!data.success){
+                                //clearInterval(intval);
+                                return;
+                            }
+                            var row = parseInt(Math.random()*5);
+                            while(num === row){
+                                row = parseInt(Math.random()*5);
+                            }
+                            num = row;
+                            var csclass = ['bg-success','bg-primary','bg-purple','bg-info','bg-warning'];
+                            var cs = csclass[row];
+                            var txcs = 'text-warning';
+                            var txinfo = '未匹配';
+                            if(value.matching){
+                                txcs = 'text-success';
+                                txinfo = '匹配';
+                            }
+                            var html = 
+                                '<article class="timeline-item ">'+
+                                    '<div class="timeline-desk">'+
+                                        '<div class="panel">'+
+                                            '<div class="timeline-box">'+
+                                                '<span class="cust-arrow"></span>'+
+                                                '<span class="timeline-icon  '+cs+'"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>'+
+                                                '<h4 class="'+txcs+'">'+txinfo+'</h4>'+
+                                                '<p class="timeline-date text-muted"><small>'+value.createDate+'</small>&nbsp;&nbsp;<span>用例：<a href="#">'+value.caseRes.name+'</a></span></p>'+
+                                                '<p><a href="#" onclick="detailResult(\''+value.id+'\')">'+value.execution+'</a></p>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</article>';
+                            //添加
+                            $('#result-timeline').prepend(html);
+
+                        },
+                        error : function (e){
+                            authorValidate(e);
+                            var d = e.responseJSON;
+                            if(d){
+                                alert(d.message);
+                            }
+                        }
+                    });
+                }
+
+                
+            });
+
+        </script>
+
+
+    </body>
+</html>

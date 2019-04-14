@@ -1,7 +1,7 @@
 package com.jit.wxs.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jit.wxs.util.ResultMap;
+import com.jit.wxs.entity.ResultMap;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 

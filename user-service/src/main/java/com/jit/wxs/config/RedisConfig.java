@@ -41,9 +41,9 @@ public class RedisConfig  extends CachingConfigurerSupport {
 
 
     private final Logger logger = LoggerFactory.getLogger(RedisConfig.class);
-
+/*
     @Value("${spring.redis.cluster.nodes}")
-    private String clusterNodes;
+    private String clusterNodes;*/
     @Value("${spring.redis.password}")
     private String password;
     @Value("${spring.redis.timeout}")
@@ -55,7 +55,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
     @Value("${spring.redis.commandTimeout}")
     private int commandTimeout;
 
-    @Bean
+ /*   @Bean
     public JedisCluster jedisCluster(){
         String[] cNodes = clusterNodes.split(",");
         Set<HostAndPort> nodes = new HashSet<>();
@@ -76,7 +76,7 @@ public class RedisConfig  extends CachingConfigurerSupport {
         jedisCluster.set("key1","test");
         System.out.println(jedisCluster.get("key1"));
         return jedisCluster;
-    }
+    }*/
 
     /**
      * 设置数据存入redis 的序列化方式
