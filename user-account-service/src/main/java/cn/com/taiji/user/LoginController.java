@@ -135,6 +135,18 @@ public class LoginController {
                 .orElse(Result.failure("-1", "实名制认证失败"));
     }
 
+    @PostMapping("/bindCard")
+    public Result bindCard(@RequestBody User user){
+        User userById = userService.findUserById(user.getId());
+        if (userById==null){
+            return Result.failure("1","用户不存在");
+        }
+        userById.setBankCardNumber(user.getBankCardNumber());
+        return Optional.ofNullable(userService.realNameCertification(userById))
+                .map(result -> Result.success(result))
+                .orElse(Result.failure("-1", "绑定银行卡失败"));
+    }
+
     /**
      * 验证密码是否正确，模拟
      */

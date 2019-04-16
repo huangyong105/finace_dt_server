@@ -29,5 +29,8 @@ public interface UserClient {
 
     @PostMapping("/auth/realNameCertification")
     public Result realNameCertification(@RequestBody User user);
+
+    @PostMapping("/auth/bindCard")
+    public Result bindCard(@RequestBody User user);
 }
 

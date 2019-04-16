@@ -179,4 +179,30 @@ public class InvestorManagementController {
         }
         return Result.ofError(5000,"认证失败");
     }
+
+    @RequestMapping(value = "/bindCard")
+    public Result bindCard(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
+        cn.com.taiji.data.Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return Result.ofError(5001,"无本用户");
+        }
+        if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
+            return Result.ofError(5002,"入参不完整!");
+        }
+        Long id = userResult.getData().getId();
+        User user = new User();
+        user.setId(id);
+        user.setBankCardNumber(investorManagementDTO.getBankCardNumber());
+        cn.com.taiji.data.Result result = userClient.bindCard(user);
+        if (result.isSuccess()){
+            return Result.ofSuccess("绑定成功");
+        }
+        return Result.ofError(5000,"绑定失败");
+    }
 }
