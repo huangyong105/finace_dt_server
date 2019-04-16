@@ -4,7 +4,7 @@ package com.roncoo.eshop.web.controller;
 import com.roncoo.eshop.DTO.ArticleManagementDTO;
 import com.roncoo.eshop.manager.ArticleManager;
 import com.roncoo.eshop.model.ArticleManagementDO;
-import com.roncoo.eshop.result.Result;
+import com.roncoo.eshop.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +29,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getArticleList")
-    public Result<List<ArticleManagementDTO>> getArticleList(){
+    public MyResult<List<ArticleManagementDTO>> getArticleList(){
         List<ArticleManagementDTO> list = articleManager.getArticleList();
-        return Result.ofSuccess(list);
+        return MyResult.ofSuccess(list);
     }
 
     /**
@@ -41,9 +41,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/addArticleList")
-    public Result addArticleList(@RequestBody ArticleManagementDTO articleManagementDTO){
+    public MyResult addArticleList(@RequestBody ArticleManagementDTO articleManagementDTO){
         articleManager.addArticle(articleManagementDTO);
-        return Result.ofSuccess();
+        return MyResult.ofSuccess();
     }
 
     /**
@@ -52,9 +52,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getAllArticle")
-    public Result<List<ArticleManagementDTO>> getAllArticle(){
+    public MyResult<List<ArticleManagementDTO>> getAllArticle(){
         List<ArticleManagementDTO> list = articleManager.getAllArticle();
-        return Result.ofSuccess(list);
+        return MyResult.ofSuccess(list);
     }
 
     /**
@@ -64,9 +64,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/onlineOrOffline")
-    public Result online(@RequestBody ArticleManagementDTO articleManagementDTO){
+    public MyResult online(@RequestBody ArticleManagementDTO articleManagementDTO){
         articleManager.setLine(articleManagementDTO);
-        return Result.ofSuccess();
+        return MyResult.ofSuccess();
     }
 
     /**
@@ -76,9 +76,9 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/updateArticle")
-    public Result updateArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
+    public MyResult updateArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
         articleManager.updateArticle(articleManagementDTO);
-        return Result.ofSuccess();
+        return MyResult.ofSuccess();
     }
 
     /**
@@ -88,8 +88,8 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getArticle")
-    public Result<ArticleManagementDTO> getArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
+    public MyResult<ArticleManagementDTO> getArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
         ArticleManagementDTO res = articleManager.getArticle(articleManagementDTO);
-        return Result.ofSuccess(res);
+        return MyResult.ofSuccess(res);
     }
 }

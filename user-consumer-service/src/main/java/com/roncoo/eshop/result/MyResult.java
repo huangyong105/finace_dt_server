@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @reviewer
  */
-public class Result<T> implements Serializable {
+public class MyResult<T> implements Serializable {
 
     /**
      * 是否成功
@@ -29,38 +29,38 @@ public class Result<T> implements Serializable {
      */
     private T value;
 
-    private Result() {
+    private MyResult() {
     }
 
-    public static <T> Result<T> ofSuccess() {
+    public static <T> MyResult<T> ofSuccess() {
         return ofSuccess(null);
     }
 
-    public static <T> Result<T> ofSuccess(T value) {
-        Result<T> result = new Result<>();
+    public static <T> MyResult<T> ofSuccess(T value) {
+        MyResult<T> result = new MyResult<>();
         result.setSuccess(true);
         result.setValue(value);
         return result;
     }
 
-    public static <T> Result<T> ofErrorT(int code, String message) {
-        Result<T> result = new Result<>();
+    public static <T> MyResult<T> ofErrorT(int code, String message) {
+        MyResult<T> result = new MyResult<>();
         result.setSuccess(false);
         result.setCode(code);
         result.setMessage(message);
         return result;
     }
 
-    public static Result ofError(int code, String message) {
-        Result result = new Result();
+    public static MyResult ofError(int code, String message) {
+        MyResult result = new MyResult();
         result.setSuccess(false);
         result.setCode(code);
         result.setMessage(message);
         return result;
     }
 
-    public static Result ofError(BaseResultConstant errorCode) {
-        Result result = new Result();
+    public static MyResult ofError(BaseResultConstant errorCode) {
+        MyResult result = new MyResult();
         result.setSuccess(false);
         result.setCode(errorCode.getResultCode());
         result.setMessage(errorCode.getDescription());

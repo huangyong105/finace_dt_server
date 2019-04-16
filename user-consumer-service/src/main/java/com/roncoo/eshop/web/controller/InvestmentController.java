@@ -3,7 +3,7 @@ package com.roncoo.eshop.web.controller;
 
 import com.roncoo.eshop.DTO.ProjectManagementDTO;
 import com.roncoo.eshop.manager.InvestmentManager;
-import com.roncoo.eshop.result.Result;
+import com.roncoo.eshop.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +28,9 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/getProjectList")
-    public Result<List<ProjectManagementDTO>> getProjectList(){
+    public MyResult<List<ProjectManagementDTO>> getProjectList(){
         List<ProjectManagementDTO> list = investmentManager.getInvestmentProjectList();
-        return Result.ofSuccess(list);
+        return MyResult.ofSuccess(list);
     }
 
     /**
@@ -38,9 +38,9 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/getProject")
-    public Result<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
+    public MyResult<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
         ProjectManagementDTO investmentProject = investmentManager.getInvestmentProject(req.getId());
-        return Result.ofSuccess(investmentProject);
+        return MyResult.ofSuccess(investmentProject);
     }
 
     /**
@@ -50,9 +50,9 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/saveProject")
-    public Result saveProject(@RequestBody ProjectManagementDTO req){
+    public MyResult saveProject(@RequestBody ProjectManagementDTO req){
         investmentManager.saveInvestmentProject(req);
-        return Result.ofSuccess();
+        return MyResult.ofSuccess();
     }
 
     /**
@@ -61,9 +61,9 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/getAllProjectList")
-    public Result<List<ProjectManagementDTO>> getAllProjectList(){
+    public MyResult<List<ProjectManagementDTO>> getAllProjectList(){
         List<ProjectManagementDTO> list = investmentManager.getAllInvestmentProject();
-        return Result.ofSuccess(list);
+        return MyResult.ofSuccess(list);
     }
 
     /**
@@ -73,9 +73,9 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/onlineOrOffline")
-    public Result online(@RequestBody ProjectManagementDTO req){
+    public MyResult online(@RequestBody ProjectManagementDTO req){
         investmentManager.setLine(req);
-        return Result.ofSuccess();
+        return MyResult.ofSuccess();
     }
 
 

@@ -1,18 +1,22 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
 import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.DTO.InvestorManagementDTO;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestorManager;
-import com.roncoo.eshop.result.Result;
+
+
+import com.roncoo.eshop.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -36,8 +40,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/information")
-    public Result getInformation(@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult getInformation(@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -53,7 +57,7 @@ public class InvestorManagementController {
         investorManagementDTO.setBankCardNumber(user.getBankCardNumber());
         investorManagementDTO.setIdCardPngDown(user.getIdCardPngDown());
         investorManagementDTO.setIdCardPngUp(user.getIdCardPngUp());
-        return Result.ofSuccess(investorManagementDTO);
+        return MyResult.ofSuccess(investorManagementDTO);
     }
 
     /**
@@ -61,8 +65,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/myInvestment")
-    public Result getMyInvestment(@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult getMyInvestment(@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -70,7 +74,7 @@ public class InvestorManagementController {
         }
         Long id = userResult.getData().getId();
         List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
-        return Result.ofSuccess(dtos);
+        return MyResult.ofSuccess(dtos);
     }
 
     /**
@@ -78,8 +82,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/realNameState")
-    public Result getRealNameState(@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult getRealNameState(@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -87,9 +91,9 @@ public class InvestorManagementController {
         }
         User user = userResult.getData();
         if (user.getIdCardNumber()!=null||user.getIdCardPngDown()!=null||user.getIdCardPngUp()!=null){
-            return Result.ofSuccess(1);
+            return MyResult.ofSuccess(1);
         }
-        return Result.ofSuccess(0);
+        return MyResult.ofSuccess(0);
     }
 
     /**
@@ -97,8 +101,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/bindCodeState")
-    public Result getBindCodeState(@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult getBindCodeState(@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -106,9 +110,9 @@ public class InvestorManagementController {
         }
         User user = userResult.getData();
         if (user.getBankCardNumber()!=null){
-            return Result.ofSuccess(1);
+            return MyResult.ofSuccess(1);
         }
-        return Result.ofSuccess(0);
+        return MyResult.ofSuccess(0);
     }
 
     /**
@@ -117,14 +121,14 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/uploadIdPhoto")
-    public Result uploadIdPhoto(@RequestParam("file") MultipartFile file){
+    public MyResult uploadIdPhoto(@RequestParam("file") MultipartFile file){
         String fileName = null;
         try {
             fileName = investorManager.uploadIdPhoto(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  Result.ofSuccess(imagePathUrl+fileName);
+        return  MyResult.ofSuccess(imagePathUrl+fileName);
     }
 
     /**
@@ -150,8 +154,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping(value = "/realNameCertification")
-    public Result realNameCertification(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult realNameCertification(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -159,10 +163,10 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return Result.ofError(5001,"无本用户");
+            return MyResult.ofError(5001,"无本用户");
         }
         if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
-            return Result.ofError(5002,"入参不完整!");
+            return MyResult.ofError(5002,"入参不完整!");
         }
         Long id = userResult.getData().getId();
         User user = new User();
@@ -170,16 +174,16 @@ public class InvestorManagementController {
         user.setIdCardNumber(investorManagementDTO.getIdCardNumber());
         user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
         user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
-        cn.com.taiji.data.Result result = userClient.realNameCertification(user);
+        Result result = userClient.realNameCertification(user);
         if (result.isSuccess()){
-            return Result.ofSuccess("认证成功");
+            return MyResult.ofSuccess("认证成功");
         }
-        return Result.ofError(5000,"认证失败");
+        return MyResult.ofError(5000,"认证失败");
     }
 
     @RequestMapping(value = "/bindCard")
-    public Result bindCard(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
-        cn.com.taiji.data.Result<User> userResult = null;
+    public MyResult bindCard(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
+        Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
@@ -187,10 +191,10 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return Result.ofError(5001,"无本用户");
+            return MyResult.ofError(5001,"无本用户");
         }
         if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
-            return Result.ofError(5002,"入参不完整!");
+            return MyResult.ofError(5002,"入参不完整!");
         }
         Long id = userResult.getData().getId();
         User user = new User();
@@ -198,8 +202,8 @@ public class InvestorManagementController {
         user.setBankCardNumber(investorManagementDTO.getBankCardNumber());
         cn.com.taiji.data.Result result = userClient.bindCard(user);
         if (result.isSuccess()){
-            return Result.ofSuccess("绑定成功");
+            return MyResult.ofSuccess("绑定成功");
         }
-        return Result.ofError(5000,"绑定失败");
+        return MyResult.ofError(5000,"绑定失败");
     }
 }

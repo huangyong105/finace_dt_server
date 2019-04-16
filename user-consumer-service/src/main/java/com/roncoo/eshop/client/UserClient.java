@@ -6,8 +6,10 @@ package com.roncoo.eshop.client;
 
 
 
+
+import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
-import com.roncoo.eshop.result.Result;
+
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
