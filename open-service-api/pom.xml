@@ -137,7 +137,7 @@
 		</dependency>
         <dependency>
             <groupId>cn.com.taiji</groupId>
-            <artifactId>userEntity-account-service</artifactId>
+            <artifactId>user-account-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
