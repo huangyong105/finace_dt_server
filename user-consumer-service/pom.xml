@@ -66,6 +66,10 @@
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.investment.web</groupId>
+			<artifactId>finace_dt_server</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>3.6</version>
