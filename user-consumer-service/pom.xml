@@ -66,8 +66,8 @@
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.investment.web</groupId>
-			<artifactId>finace_dt_server</artifactId>
+			<groupId>cn.com.taiji</groupId>
+			<artifactId>user-account-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
