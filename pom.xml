@@ -108,6 +108,7 @@
         <module>user-service</module>
         <module>user-consumer-service</module>
         <module>index-service</module>
+        <module>user-account-service</module>
         <module>open-service-api</module>
         <!-- <module>app/test</module>-->
 
