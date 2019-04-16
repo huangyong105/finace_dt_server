@@ -106,10 +106,10 @@
         <module>config-server</module>
         <module>edge-service</module>
         <module>user-service</module>
-        <module>user-consumer-service</module>
         <module>index-service</module>
         <module>user-account-service</module>
-        <module>open-service-api</module>
+        <module>service-api</module>
+        <module>user-consumer-service</module>
         <!-- <module>app/test</module>-->
 
     </modules>

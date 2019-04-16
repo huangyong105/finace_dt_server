@@ -66,11 +66,6 @@
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>cn.com.taiji</groupId>
-			<artifactId>open-service-api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>3.6</version>
@@ -80,9 +75,9 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>cn.com.taiji</groupId>
-			<artifactId>user-account-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+            <groupId>cn.com.taiji</groupId>
+            <artifactId>service-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
