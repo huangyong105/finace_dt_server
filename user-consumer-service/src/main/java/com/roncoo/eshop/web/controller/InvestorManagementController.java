@@ -1,12 +1,11 @@
 package com.roncoo.eshop.web.controller;
 
 
-import cn.com.taiji.user.User;
+import cn.com.taiji.data.User;
 import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.DTO.InvestorManagementDTO;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestorManager;
-import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -11,7 +11,7 @@ zuul:
     socket-timeout-millis: 60000
   routes:
     account-service: /account/**
-    user-account-service: /user/**
+    user-account-service: /service/**
     catalog-service: /catalog/**
 # 提高延时设置 elevate timeout settings, 避免因为延时造成失败
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000

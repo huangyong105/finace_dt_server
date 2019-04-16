@@ -3,11 +3,11 @@
   	<modelVersion>4.0.0</modelVersion>
 
   	<groupId>com.roncoo.eshop</groupId>
-  	<artifactId>user-consumer-service</artifactId>
+  	<artifactId>userEntity-consumer-service</artifactId>
   	<version>0.0.1-SNAPSHOT</version>
   	<packaging>jar</packaging>
 
-  	<name>user-consumer-service</name>
+  	<name>userEntity-consumer-service</name>
   	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -67,7 +67,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.com.taiji</groupId>
-			<artifactId>user-account-service</artifactId>
+			<artifactId>open-service-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -81,7 +81,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.com.taiji</groupId>
-			<artifactId>user-account-service</artifactId>
+			<artifactId>userEntity-account-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

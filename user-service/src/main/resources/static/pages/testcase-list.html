@@ -121,12 +121,12 @@
                                 </a>
                             </li>
 
-                            <li class="dropdown user-box">
-                                <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
-                                    <img src="assets/images/users/default.png" alt="user-img" class="img-circle user-img">
+                            <li class="dropdown userEntity-box">
+                                <a href="" class="dropdown-toggle waves-effect waves-light userEntity-link" data-toggle="dropdown" aria-expanded="true">
+                                    <img src="assets/images/users/default.png" alt="userEntity-img" class="img-circle userEntity-img">
                                 </a>
 
-                                <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
+                                <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right userEntity-list notify-list">
                                     <li>
                                         <h5>Hi, John</h5>
                                     </li>
@@ -314,7 +314,7 @@
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label">创建人</label>
                                                 <div class="col-md-8">
-                                                    <select class="selectpicker" id="user-select" name="createUser" data-style="btn-default">
+                                                    <select class="selectpicker" id="userEntity-select" name="createUser" data-style="btn-default">
                                                         <option value="" selected>请选择</option>
                                                     </select>
                                                 </div>
@@ -410,7 +410,7 @@
                                     </li>
                                     <li class="active">
                                         <a href="#profile-case" data-toggle="tab" aria-expanded="true">
-                                            <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                            <span class="visible-xs"><i class="fa fa-userEntity"></i></span>
                                             <span class="hidden-xs">用例详情</span>
                                         </a>
                                     </li>
@@ -938,7 +938,7 @@
                 });
                 $.ajax({
                     dataType : "json",
-                    url : host+"/common/user/list/all",  
+                    url : host+"/common/userEntity/list/all",
                     contentType: 'application/json;charset=UTF-8',
                     headers:{Authorization:token},
                     type : "post", 
@@ -947,9 +947,9 @@
                             var apps = data.value;
                             $.each(apps, function (i, item) { 
                                 //将拿到的值显示到jsp页面
-                                $('#user-select').append('<option value="'+item.id+'">'+item.name+'</option>');
+                                $('#userEntity-select').append('<option value="'+item.id+'">'+item.name+'</option>');
                             });
-                            $('#user-select').selectpicker('refresh');
+                            $('#userEntity-select').selectpicker('refresh');
                         }
                     },
                     error : function (e){

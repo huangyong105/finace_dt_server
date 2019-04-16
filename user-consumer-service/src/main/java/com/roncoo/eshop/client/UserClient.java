@@ -6,14 +6,12 @@ package com.roncoo.eshop.client;
 
 
 
-import cn.com.taiji.user.User;
+import cn.com.taiji.data.User;
 import com.roncoo.eshop.result.Result;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 功能描述: <br>

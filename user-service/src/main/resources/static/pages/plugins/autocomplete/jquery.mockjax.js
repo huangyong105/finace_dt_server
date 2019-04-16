@@ -103,7 +103,7 @@
 		// Inspect the URL of the request and check if the mock handler's url
 		// matches the url for this ajax request
 		if ( $.isFunction(handler.url.test) ) {
-			// The user provided a regex for the url, test it
+			// The service provided a regex for the url, test it
 			if ( !handler.url.test( requestSettings.url ) ) {
 				return null;
 			}

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.com.taiji</groupId>
-	<artifactId>user-account-service</artifactId>
+	<artifactId>userEntity-account-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<parent>
@@ -13,7 +13,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<name>user-account-service</name>
+	<name>userEntity-account-service</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
