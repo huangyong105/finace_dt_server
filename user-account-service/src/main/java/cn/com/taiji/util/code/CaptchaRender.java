@@ -46,7 +46,7 @@ public class CaptchaRender  {
 	// 默认的验证码大小
 	protected static final int WIDTH = 108, HEIGHT = 40;
 	// 验证码随机字符数组
-	protected static final char[] charArray = "1234567890".toCharArray();
+	protected static final char[] charArray = "123456789".toCharArray();
 	// 验证码字体
 	protected static final Font[] RANDOM_FONT = new Font[] {
 		new Font(Font.DIALOG, Font.BOLD, 33),
