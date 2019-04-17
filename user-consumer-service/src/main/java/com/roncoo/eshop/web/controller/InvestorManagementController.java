@@ -193,7 +193,7 @@ public class InvestorManagementController {
         {
             return MyResult.ofError(5001,"无本用户");
         }
-        if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
+        if (investorManagementDTO.getBankCardNumber()==null){
             return MyResult.ofError(5002,"入参不完整!");
         }
         Long id = userResult.getData().getId();

@@ -1,13 +1,6 @@
 package com.roncoo.eshop.client;
 
 
-
-
-
-
-
-
-
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
 import org.springframework.cloud.netflix.feign.FeignClient;
