@@ -110,7 +110,7 @@
     }
 
     /**
-     * Preparing service defined options for further usage
+     * Preparing user defined options for further usage
      * merge them with defaults appropriately
      */
     function autoCode($this, settings) {
@@ -120,7 +120,7 @@
             vmin = (!settings.vMin && settings.vMin !== 0) ? [] : settings.vMin.toString().split('.');
         convertKeyToNumber(settings, 'vMax');
         convertKeyToNumber(settings, 'vMin');
-        convertKeyToNumber(settings, 'mDec'); /** set mDec if not defined by service */
+        convertKeyToNumber(settings, 'mDec'); /** set mDec if not defined by user */
         settings.mDec = (settings.mRound === 'CHF') ? '2' : settings.mDec;
         settings.allowLeading = true;
         settings.aNeg = settings.vMin < 0 ? '-' : '';
