@@ -53,7 +53,7 @@ public class UserService {
         return userRepository.findUserById(id);
     }
 
-    @CachePut(value = "user", key = "#user.getAccount()")
+    @CachePut(value = "user", key = "#user.account")
     public User updateUser(User user) {
         User result = null;
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
@@ -63,7 +63,7 @@ public class UserService {
         return result;
     }
 
-    @CachePut(value = "user", key = "#user.getAccount()")
+    @CachePut(value = "user", key = "#user.account")
     public User realNameCertification(User user) {
         User result = null;
         result = userRepository.save(user);

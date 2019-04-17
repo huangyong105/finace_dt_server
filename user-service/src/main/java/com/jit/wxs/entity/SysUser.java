@@ -3,6 +3,7 @@ package com.jit.wxs.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class SysUser implements Serializable {
@@ -15,6 +16,10 @@ public class SysUser implements Serializable {
     private String mobile;
 
     private String password;
+
+    private Date createTime ;
+
+    private Date  updateTime ;
 
     public Integer getId() {
         return id;
@@ -46,5 +51,21 @@ public class SysUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
