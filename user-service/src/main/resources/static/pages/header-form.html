@@ -1,516 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
-        <meta name="author" content="Coderthemes">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+    <meta name="author" content="Coderthemes">
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- App title -->
+    <title>Zircos - Responsive Admin Dashboard Template</title>
 
-        <!-- Custom box css -->
-        <link href="plugins/custombox/css/custombox.min.css" rel="stylesheet">
-        <!-- App title -->
-        <title>Zircos - Responsive Admin Dashboard Template</title>
+    <!-- DataTables -->
+    <link href="plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
-        <!-- Plugins css-->
-        <link href="plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet" />
-        <link href="plugins/multiselect/css/multi-select.css"  rel="stylesheet" type="text/css" />
-        <link href="plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
-        <link href="plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+    <!-- Custom box css -->
+    <link href="plugins/custombox/css/custombox.min.css" rel="stylesheet">
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="plugins/switchery/switchery.min.css">
 
-        <!-- App css -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
-        <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="plugins/switchery/switchery.min.css">
+    <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
-        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-    </head>
+</head>
 
 
-    <body class="fixed-left">
+<body class="fixed-left">
 
-        <!-- Loader -->
-        <div id="preloader">
-            <div id="status">
-                <div class="spinner">
-                  <div class="spinner-wrapper">
-                    <div class="rotator">
-                      <div class="inner-spin"></div>
-                      <div class="inner-spin"></div>
-                    </div>
-                  </div>
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="spinner-wrapper">
+                <div class="rotator">
+                    <div class="inner-spin"></div>
+                    <div class="inner-spin"></div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Begin page -->
-        <div id="wrapper">
+<!-- Begin page -->
+<div id="wrapper">
 
-            <!-- Top Bar Start -->
-            <div class="topbar">
+    <!-- Top Bar Start -->
+    <div class="topbar">
 
-                <!-- LOGO -->
-                <div class="topbar-left">
-                    <a href="#" class="logo"><span>神盾<span>系统</span></span><i class="mdi mdi-cube"></i></a>
-                    <!-- Image logo -->
-                    <!--<a href="index.html" class="logo">-->
-                        <!--<span>-->
-                            <!--<img src="assets/images/logo.png" alt="" height="30">-->
-                        <!--</span>-->
-                        <!--<i>-->
-                            <!--<img src="assets/images/logo_sm.png" alt="" height="28">-->
-                        <!--</i>-->
-                    <!--</a>-->
-                </div>
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <a href="#" class="logo"><span>汇致旺<span>控制台</span></span><i class="mdi mdi-cube"></i></a>
+            <!-- Image logo -->
+            <!--<a href="index.html" class="logo">-->
+            <!--<span>-->
+            <!--<img src="assets/images/logo.png" alt="" height="30">-->
+            <!--</span>-->
+            <!--<i>-->
+            <!--<img src="assets/images/logo_sm.png" alt="" height="28">-->
+            <!--</i>-->
+            <!--</a>-->
+        </div>
 
-                <!-- Button mobile view to collapse sidebar menu -->
-                <div class="navbar navbar-default" role="navigation">
-                    <div class="container">
+        <!-- Button mobile view to collapse sidebar menu -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
 
-                        <!-- Navbar-left -->
-                        <ul class="nav navbar-nav navbar-left">
+                <!-- Navbar-left -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <button class="button-menu-mobile open-left waves-effect waves-light">
+                            <i class="mdi mdi-menu"></i>
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Right(Notification) -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="javascript:void(0);" class="right-bar-toggle right-menu-item">
+                            <i class="mdi mdi-settings"></i>
+                        </a>
+                    </li>
+
+                    <li class="dropdown user-box">
+                        <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
+                            <img src="assets/images/users/default.png" alt="user-img" class="img-circle user-img">
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
                             <li>
-                                <button class="button-menu-mobile open-left waves-effect waves-light">
-                                    <i class="mdi mdi-menu"></i>
-                                </button>
+                                <h5>Hi, John</h5>
                             </li>
+                            <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
+                            <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
                         </ul>
+                    </li>
 
-                        <!-- Right(Notification) -->
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="javascript:void(0);" class="right-bar-toggle right-menu-item">
-                                    <i class="mdi mdi-settings"></i>
-                                </a>
-                            </li>
+                </ul> <!-- end navbar-right -->
 
-                            <li class="dropdown user-box">
-                                <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
-                                    <img src="assets/images/users/default.png" alt="user-img" class="img-circle user-img">
-                                </a>
+            </div><!-- end container -->
+        </div><!-- end navbar -->
+    </div>
+    <!-- Top Bar End -->
 
-                                <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
-                                    <li>
-                                        <h5>Hi, John</h5>
-                                    </li>
-                                    <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
-                                    <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
-                                </ul>
-                            </li>
 
-                        </ul> <!-- end navbar-right -->
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left side-menu">
+        <div class="sidebar-inner slimscrollleft">
 
-                    </div><!-- end container -->
-                </div><!-- end navbar -->
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Navigation</li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-play"></i> <span>添加投资项目</span></a>
+                    </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i> <span>添加文章</span> </a>
+                    </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-physical-web"></i> <span>投资人管理</span></a>
+                    </li>
+                    <li class="has_sub">
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-verified"></i> <span> 用户管理 </span> </a>
+                    </li>
+
+                </ul>
             </div>
-            <!-- Top Bar End -->
+            <!-- Sidebar -->
+            <div class="clearfix"></div>
 
-
-            <!-- ========== Left Sidebar Start ========== -->
-            <div class="left side-menu">
-                <div class="sidebar-inner slimscrollleft">
-
-                    <!--- Sidemenu -->
-                    <div id="sidebar-menu">
-                        <ul>
-                            <li class="menu-title">Navigation</li>
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-windows"></i> <span> 应用管理 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled">
-                                    <li><a href="application-list.html">应用列表</a></li>
-                                    <li><a href="application-form.html">添加应用</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect active subdrop"><i class="mdi mdi-headphones-settings"></i> <span> HEADER管理 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled" >
-                                    <li><a href="header-list.html">应用HEADER列表</a></li>
-                                    <li><a href="header-form.html">添加HEADER应用</a></li>
-                                </ul>
-                            </li>
-    
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-verified"></i> <span> RESULT管理 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled" >
-                                    <li><a href="result-list.html">应用RESULT列表</a></li>
-                                    <li><a href="result-form.html">添加RESULT应用</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-physical-web"></i> <span> HOST管理 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled" >
-                                    <li><a href="host-list.html">应用HOST列表</a></li>
-                                    <li><a href="host-form.html">添加HOST应用</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-play"></i> <span> URL管理 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled" >
-                                    <li><a href="category-list.html">URL类目管理</a></li>
-                                    <li><a href="category-form.html">URL类目添加</a></li>
-                                    <li><a href="url-list.html">URL列表</a></li>
-                                    <li><a href="url-form.html">添加URL</a></li>
-                                </ul>
-                            </li>
-                            <li class="has_sub">
-                                <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i> <span> 测试用例 </span> <span class="menu-arrow"></span></a>
-                                <ul class="list-unstyled" >
-                                    <li><a href="testcase-list.html">测试用例列表</a></li>
-                                    <li><a href="testcase-form.html">添加测试用例</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="caseresult-list.html" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span> 用例执行结果 </span></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <!-- Sidebar -->
-                    <div class="clearfix"></div>
-
-                    <div class="help-box">
-                        <h5 class="text-muted m-t-0">帮助 ？</h5>
-                        <p class=""><span class="text-dark"><b>Email:</b></span> <br/> 奇点云科技有限公司</p>
-                        <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br/> 业务中台技术部</p>
-                    </div>
-
-                </div>
-                <!-- Sidebar -left -->
-
+            <div class="help-box">
+                <h5 class="text-muted m-t-0">帮助 ？</h5>
+                <p class=""><span class="text-dark"><b>Email:</b></span> <br/> 汇致旺</p>
+                <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br/> </p>
             </div>
-            <!-- Left Sidebar End -->
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
 
 
 
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
-            <div class="content-page">
-                <!-- Start content -->
-                <div class="content">
-                    <div class="container">
-                        <div class="row">
-							<div class="col-xs-12">
-								<div class="page-title-box">
-                                    <h4 class="page-title">系统应用添加 </h4>
-                                    <ol class="breadcrumb p-0 m-0">
-                                        <li>
-                                            <a href="#">神盾</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">HEADER管理 </a>
-                                        </li>
-                                        <li class="active">
-                                            添加应用HEADER
-                                        </li>
-                                    </ol>
-                                    <div class="clearfix"></div>
-                                </div>
-							</div>
-						</div>
-                        <!-- end row -->
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
 
-                        <div class="row">
-                            <form class="form-horizontal" data-parsley-validate novalidate id="content-form" action="#">
-                            <div class="col-xs-12">
-                                <div class="card-box">
-                                    <div class="demo-box p-b-0">
-                                        <h4 class="header-title m-t-0" id="content-title">新增</h4>
-                                        <p class="text-muted font-13 m-b-10">
-                                            为系统应用配置默认HEADER,在执行测试用例时默认使用.
-                                        </p>
-                                    </div>
-                                    <div class="row">
-                                        <input type="hidden" placeholder="" name="id" data-bind-header="id" class="form-control">
-                                        <div class="col-sm-12 col-xs-12">
-                                            
-                                            <div class="row">
-                                                <div class="col-sm-6 col-xs-12">
-                                                    <div class="demo-box">
-                                                        <div class="form-group">
-                                                            <label>应用</label>
-                                                            <select class="selectpicker" id="app-select" name="appId" data-bind-header="appId" data-style="btn-default">
-                                                                <option value="-1" selected>请选择</option>
-                                                                
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                    <div class="demo-box">
-                                                        <div class="form-group">
-                                                            <label>是否默认</label>
-                                                            <select class="selectpicker" name="isDefault" data-bind-header="isDefault" data-style="btn-default">
-                                                                <option value="1" selected>是</option>
-                                                                <option value="0" selected>否</option>
-                                                            </select>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6 col-xs-12">
-                                                    <div class="demo-box">
-                                                        <div class="form-group">
-                                                            <label>应用名称</label>
-                                                            <input type="text" placeholder="" name="name" data-bind-header="name" class="form-control">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="demo-box">
-                                                        <div class="form-group m-b-0">
-                                                            <label>header配置</label>
-                                                            <textarea class="form-control" name="header" data-bind-header="header" rows="5"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div> <!-- end row -->
-
-                                        </div>
-                                    </div>
-                                    <!-- end row -->
-                                    <div class="row">
-                                        <div class="col-md-12 button-list">
-                                            <button type="button" class="btn btn-inverse pull-right waves-effect waves-light" id="but_cancle">&nbsp;&nbsp;取&nbsp;&nbsp;消&nbsp;&nbsp;</button>
-                                            <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="but_submit">&nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</button>
-                                            
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- end col-->
-                            </form>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title"> </h4>
+                            <ol class="breadcrumb p-0 m-0">
+                                <li>
+                                    <a href="#">汇致旺</a>
+                                </li>
+                                <li class="active">
+                                    用户管理
+                                </li>
+                            </ol>
+                            <div class="clearfix"></div>
                         </div>
-                        <!-- end row -->
-
-
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-
-                <footer class="footer text-right">
-                    2016 - 2018 © Zircos.
-                </footer>
-
-            </div>
-            <div id="custom-modal" class="modal-demo" >
-                <button type="button" class="close" onclick="Custombox.close();">
-                    <span>&times;</span><span class="sr-only">Close</span>
-                </button>
-                <div class="panel panel-color panel-teal">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">信息提示</h3>
-                    </div>
-                    <div class="panel-body">
-                        <span id="box-message"></span>
                     </div>
                 </div>
+                <!-- end row -->
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form class="form-horizontal" id="search_form" action="#">
+                            <div class="card-box">
+                                <h4 class="m-t-0 header-title"><b>添加用户</b></h4>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card-box">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <form class="form-horizontal">
+
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label">名称</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" placeholder="请输入名称">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label">手机号</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" placeholder="请输入手机号">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label">邮箱</label>
+                                                            <div class="col-md-10">
+                                                                <input type="text" class="form-control" placeholder="请输入邮箱地址">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-2 control-label">管理权限</label>
+
+                                                            <div class="btn-switch btn-switch-info">
+                                                                <input type="checkbox" id="input-btn-switch-info1"/>
+                                                                <label for="input-btn-switch-info1"
+                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
+                                                                    <em class="glyphicon glyphicon-ok"></em>
+                                                                    <strong> 投资项目管理</strong>
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="btn-switch btn-switch-info">
+                                                                <input type="checkbox" id="input-btn-switch-info2"/>
+                                                                <label for="input-btn-switch-info2"
+                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
+                                                                    <em class="glyphicon glyphicon-ok"></em>
+                                                                    <strong> 文章管理</strong>
+                                                                </label>
+                                                            </div>
+                                                            <div class="btn-switch btn-switch-info">
+                                                                <input type="checkbox" id="input-btn-switch-info3"/>
+                                                                <label for="input-btn-switch-info3"
+                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
+                                                                    <em class="glyphicon glyphicon-ok"></em>
+                                                                    <strong> 投资人管理</strong>
+                                                                </label>
+                                                            </div>
+                                                            <div class="btn-switch btn-switch-info">
+                                                                <input type="checkbox" id="input-btn-switch-info4"/>
+                                                                <label for="input-btn-switch-info4"
+                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
+                                                                    <em class="glyphicon glyphicon-ok"></em>
+                                                                    <strong> 用户管理</strong>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="but_search">&nbsp;&nbsp;创&nbsp;&nbsp;建&nbsp;&nbsp;</button>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card-box table-responsive">
+                            <h4 class="m-t-0 header-title"><b>项目列表</b></h4>
+
+                            <table id="datatable" class="table table-striped  table-colored table-info">
+                                <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>手机号</th>
+                                    <th>邮箱</th>
+                                    <th>权限</th>
+                                    <th>状态</th>
+                                    <th style="width: 50px">操作</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end row -->
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <footer class="footer text-right">
+            2016 - 2018 © Zircos.
+        </footer>
+
+    </div>
+
+    <div id="custom-modal" class="modal-demo" >
+        <input type="hidden" placeholder="" id="row-id" class="form-control">
+
+        <button type="button" class="close" onclick="Custombox.close();">
+            <span>&times;</span><span class="sr-only">Close</span>
+        </button>
+        <div class="panel panel-color panel-teal">
+            <div class="panel-heading">
+                <h3 class="panel-title">信息提示</h3>
             </div>
-
-            <!-- ============================================================== -->
-            <!-- End Right content here -->
-            <!-- ============================================================== -->
-
+            <div class="panel-body">
+                <span id="box-message"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info waves-effect waves-light" id="confirm-del">&nbsp;确&nbsp;&nbsp;认&nbsp;</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" onclick="Custombox.close();">&nbsp;取&nbsp;&nbsp;消&nbsp;</button>
+            </div>
         </div>
-        <!-- END wrapper -->
+    </div>
 
-        <script>
-            var resizefunc = [];
-        </script>
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
 
-        <!-- jQuery  -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/detect.js"></script>
-        <script src="assets/js/fastclick.js"></script>
-        <script src="assets/js/jquery.blockUI.js"></script>
-        <script src="assets/js/waves.js"></script>
-        <script src="assets/js/jquery.slimscroll.js"></script>
-        <script src="assets/js/jquery.scrollTo.min.js"></script>
-        <script src="plugins/switchery/switchery.min.js"></script>
+</div>
+<!-- END wrapper -->
 
-        <script type="text/javascript" src="plugins/parsleyjs/parsley.min.js"></script>
+<script>
+    var resizefunc = [];
+</script>
 
-        <script src="plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
-        <script src="plugins/multiselect/js/jquery.multi-select.js"></script>
-        <script src="plugins/jquery-quicksearch/jquery.quicksearch.js"></script>
-        <script src="plugins/select2/js/select2.min.js"></script>
-        <script src="plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
-        <script src="plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
-        <script src="plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js"></script>
-        <script src="plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/detect.js"></script>
+<script src="assets/js/fastclick.js"></script>
+<script src="assets/js/jquery.blockUI.js"></script>
+<script src="assets/js/waves.js"></script>
+<script src="assets/js/jquery.slimscroll.js"></script>
+<script src="assets/js/jquery.scrollTo.min.js"></script>
+<script src="plugins/switchery/switchery.min.js"></script>
 
-        <!-- Modal-Effect -->
-        <script src="plugins/custombox/js/custombox.min.js"></script>
-        <script src="plugins/custombox/js/legacy.min.js"></script>
-        <!-- App js -->
-        <script src="assets/js/jquery.core.js"></script>
-        <script src="assets/js/jquery.app.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.js"></script>
 
-        <script src="assets/js/jquery.validate.min.js"></script>
-        <script src="assets/js/jquery.cookie.js"></script>
+<script src="plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables/buttons.bootstrap.min.js"></script>
+<script src="plugins/datatables/jszip.min.js"></script>
+<script src="plugins/datatables/pdfmake.min.js"></script>
+<script src="plugins/datatables/vfs_fonts.js"></script>
+<script src="plugins/datatables/buttons.html5.min.js"></script>
+<script src="plugins/datatables/buttons.print.min.js"></script>
+<script src="plugins/datatables/dataTables.fixedHeader.min.js"></script>
+<script src="plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="plugins/datatables/dataTables.scroller.min.js"></script>
+<script src="plugins/datatables/dataTables.colVis.js"></script>
+<script src="plugins/datatables/dataTables.fixedColumns.min.js"></script>
 
-        <script type="text/javascript">
-            var token = $.cookie('token');
-            $(function(){
-                jQuery.validator.addMethod("isJSON", function(value, element) { 
-                    if (typeof value == 'string') {
-                        try {
-                            JSON.parse(value);
-                            return true;
-                        } catch(e) {
-                            return false;
-                        }
-                    }  
-                    return false;    
-                }, "内容必须为json数据"); 
-            });  
-			$(document).ready(function() {
-                $('form').parsley();
-                var contentUrl = host+'/application/header/create';
-                var refresh = true;
-                //获取所有应用列表
-                var appReq = $.ajax({
+<!-- init -->
+<script src="assets/pages/jquery.datatables.init.js"></script>
+
+<!-- Modal-Effect -->
+<script src="plugins/custombox/js/custombox.min.js"></script>
+<script src="plugins/custombox/js/legacy.min.js"></script>
+
+<!-- App js -->
+<script src="assets/js/jquery.core.js"></script>
+<script src="assets/js/jquery.app.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/jquery.cookie.js"></script>
+
+<script>
+    var table;
+    var token = $.cookie('token');
+    function del(id,name){
+        $('#row-id').val(id);
+        //弹出提示框
+        showCustombox("确认删除应用："+name,false);
+    }
+
+    function update(id){
+        window.location.href='application-form.html?id='+id;
+    }
+    function showSecurity(security,obj){
+        $(obj).parents('span').html(security);
+    }
+    $(document).ready(function () {
+        $('#confirm-del').click(function(){
+            var id = $('#row-id').val();
+            $.ajax({
+                dataType : "json",
+                url: host+"/application/delete",
+                contentType: 'application/json;charset=UTF-8',
+                type: 'POST',
+                headers:{Authorization:token},
+                // 传给服务器的数据，可以添加我们自己的查询参数
+                data: '{"id":"'+id+'"}',
+                success:function(res){
+                    table.ajax.reload();
+                },
+                error: function(res){
+                    authorValidate(res);
+                }
+            });
+            Custombox.close();
+        });
+        table = $('#datatable').DataTable({
+            "processing" : false,
+            "serverSide": true,
+            "bLengthChange": false,     //关闭选择显示条数
+            "bSort": false,             //不能排序
+            "iDisplayLength": 10,
+            "searching" : false,
+            ajax(data, callback, settings){
+                //封装请求参数
+                var param = getFormData($("#search_form"));
+                param.pageSize = data.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
+                param.pageNo = (data.start / data.length)+1;   //开始的记录序号
+                $.ajax({
                     dataType : "json",
-                    url : host+"/application/list/all",  
+                    url: host+"/application/page/list",
                     contentType: 'application/json;charset=UTF-8',
+                    type: 'POST',
                     headers:{Authorization:token},
-                    type : "post", 
-                    success : function(data) {
-                        if(data.success){
-                            var apps = data.value;
-                            $.each(apps, function (i, item) { 
-                                //将拿到的值显示到jsp页面
-                                $('#app-select').append('<option value="'+item.id+'">'+item.name+'</option>');
-                            });
-                            $('#app-select').selectpicker('refresh');
-                        }
+                    // 传给服务器的数据，可以添加我们自己的查询参数
+                    data: JSON.stringify(param),
+                    success:function(res){
+                        setTimeout( function () {
+                            var out = {};
+                            out.draw = data.draw;
+                            out.recordsTotal = res.total;
+                            out.recordsFiltered = res.total;
+                            out.data =  res.list;
+                            callback( out );
+                        },50);
                     },
-                    error : function (e){
-                        authorValidate(e);
-                        var d = e.responseJSON;
-                        if(d){
-                            alert(d.message);
-                        }
+                    error: function(res){
+                        authorValidate(res);
                     }
                 });
-
-                function dataBind(objectId,data){
-                    //获取当前路径中的id参数
-
-                    var bulder = new DataBinderBuilder(objectId);
-                    bulder.set("id",data.id);
-                    bulder.set("name",data.name);
-                    bulder.set("isDefault",data.isDefault);
-                    bulder.set('appId',data.appId);
-                    bulder.set('header',data.header);
+            },
+            "columns": [
+                { data: 'id'},
+                { data : 'appid'},
+                { data: 'name'},
+                { data: 'security'},
+                { data : 'description'},
+                { data : 'createDate'},
+                { data : null}
+            ],
+            columnDefs: [{
+                targets: 3,
+                render: function(data, type, row, meta) {
+                    return '<span><a type="button" href="#" onclick="showSecurity(\''+row.security+'\',this)"><i class="glyphicon glyphicon-eye-open"></i></a><span>';
                 }
-
-                documentInit();
-
-                /** 若为更新则id参数存在 **/
-                function documentInit(){
-                    var resultData = {};
-                    var id = getUrlParam('id');
-                    if(! id){
-                        return;
-                    }
-                    contentUrl = host+'/application/header/update';
-                    refresh = false;
-                    $('#but_submit').html('&nbsp;&nbsp;更&nbsp;&nbsp;新&nbsp;&nbsp;');
-                    $('#content-title').html('更新');
-                    var infoReq = $.ajax({
-                        dataType : "json",
-                        url : host+"/application/header/detail/"+id,  
-                        contentType: 'application/json;charset=UTF-8',
-                        headers:{Authorization:token},
-                        type : "get", 
-                        success : function(data) {
-                            if(data.success){
-                                resultData = data.value;
-                            }
-                        },
-                        error : function (e){
-                            authorValidate(e);
-                            var d = e.responseJSON;
-                            if(d){
-                                alert(d.message);
-                            }
-                        }
-                    });
-                    $.when(appReq,infoReq).done(function(){
-                        dataBind('header',resultData);
-                    });
+            },{
+                targets: 6,
+                render: function(data, type, row, meta) {
+                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\')" >更新</a>';
                 }
+            }],
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
 
-                $("#but_submit").click(function(){
-                    $("#content-form").submit();
-                });
-                
-                $("#content-form").validate({
-                    rules: {
-                        name: "required",
-                        header: {
-                            required:true,
-                            isJSON:true
-                        },
-                        appId: "required"
-                    },
-                    messages: {
-                        name: "请输入应用名称",
-                        header: {required:"请输入应用HEADER JSON配置",isJSON:"HEADER必须为JSON数据"},
-                        name: "请输入应用HEADER名称"
-                    },
-                    submitHandler:function(form){
-                        $.ajax({
-                            dataType : "json",
-                            url : contentUrl,  
-                            contentType: 'application/json;charset=UTF-8',
-                            type : "post", 
-                            headers:{Authorization:token},
-                            data : JSON.stringify(getFormData($("#content-form"))), 
-                            success : function(data) {
-                                if(data.success){
-                                    showCustombox("应用HEADER保存成功！",refresh);
-                                }else{
-                                    showCustombox(data.message,false);
-                                }
-                                
-                            },
-                            error : function (e){
-                                authorValidate(e);
-                                var d = e.responseJSON;
-                                if(d){
-                                    alert(d.message);
-                                }
-                            }
-                        });
-                        return false; //阻止form提交
-                    }
-                });
-			});
-		</script>
+    });
+    TableManageButtons.init();
+    $("#but_search").click(function(){
+        table.ajax.reload();
+    });
 
-    </body>
+</script>
+
+
+</body>
 </html>
