@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -18,6 +19,11 @@ public class SysUserService {
     public SysUser getById(Integer id) {
         return userMapper.selectById(id);
     }
+
+    public List<SysUser> loadUsers() {
+        return userMapper.loadUsers();
+    }
+
     @Cacheable(value="sys_user", key= "#name")
     public SysUser getByName(String name) {
         return userMapper.selectByName(name);

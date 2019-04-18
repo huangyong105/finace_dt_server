@@ -128,9 +128,9 @@
 
             <!--- Sidemenu -->
             <div id="sidebar-menu">
-                <ul>
+                <ul id ="ul_has_sub">
                     <li class="menu-title">Navigation</li>
-                    <li class="has_sub">
+          <!--          <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-play"></i> <span>添加投资项目</span></a>
                     </li>
                     <li class="has_sub">
@@ -141,7 +141,7 @@
                     </li>
                     <li class="has_sub">
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-verified"></i> <span> 用户管理 </span> </a>
-                    </li>
+                    </li>-->
 
                 </ul>
             </div>
@@ -367,7 +367,40 @@
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
+    function showUI () {
+        $.ajax({
+            dataType : "json",
+            url: host+"/loadUrls",
+            contentType: 'application/json;charset=UTF-8',
+            type: 'POST',
+            success:function(data){
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    $.each(data.value, function(i, item) {
+                        $("#ul_has_sub").append(
+              /*              "<div>" + item.id + "</div>" +
+                            "<div>" + item.nickname    + "</div>" +
+                            "<div>" + item.content + "</div><hr/>");*/
+                            "<li class=\"has_sub\">" +
+                            "<a href=\"" +
+                              item.url +
+                            "\" class=\"waves-effect\"><i class=\"mdi mdi-google-play\"></i>" +
+                            " <span>"+
+                            item.name
+                            +"</span></a>"
+                            +"</li>"
+                       );
+                    });
+                }
+            },
+            error: function(res){
+                authorValidate(res);
+            }
+        });
+    }
     $(document).ready(function () {
+        showUI ();
         $('#confirm-del').click(function(){
             var id = $('#row-id').val();
             $.ajax({

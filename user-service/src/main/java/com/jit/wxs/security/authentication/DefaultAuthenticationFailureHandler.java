@@ -25,7 +25,7 @@ public class DefaultAuthenticationFailureHandler implements AuthenticationFailur
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        String json = objectMapper.writeValueAsString(Result.ofError(-1, "账号或密码错误"));
+        String json = objectMapper.writeValueAsString(Result.ofError(4001, "账号或密码错误"));
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(json);
     }

@@ -17,7 +17,7 @@ public class SysPermissionService {
     /**
      * 获取指定角色所有权限
      */
-    @Cacheable(value="permissions", key= "'permissions_'+#p0")
+    //@Cacheable(value="permissions", key= "'permissions_'+#p0")
     public List<SysPermission> listByRoleId( Integer roleId) {
         return permissionMapper.listByRoleId(roleId);
     }

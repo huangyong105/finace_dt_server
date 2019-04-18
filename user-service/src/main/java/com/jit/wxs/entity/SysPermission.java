@@ -14,6 +14,8 @@ public class SysPermission implements Serializable {
 
     private String url;
 
+    private String name;
+
     private Integer roleId;
 
     private String permission;

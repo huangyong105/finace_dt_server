@@ -13,7 +13,7 @@ public class SysUserRoleService {
     @Autowired
     private SysUserRoleMapper userRoleMapper;
 
-    @Cacheable(value = "sysUserRoles",  key= "'sysUserRoles_'+#userId")
+   // @Cacheable(value = "sysUserRoles",  key= "'sysUserRoles_'+#userId")
     public List<SysUserRole> listByUserId(Integer userId) {
         return userRoleMapper.listByUserId(userId);
     }

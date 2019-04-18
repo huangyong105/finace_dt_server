@@ -1,6 +1,7 @@
 package com.jit.wxs.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,9 +18,32 @@ public class SysUser implements Serializable {
 
     private String password;
 
+    private String email ;
+
+    private Integer state ;
+
     private Date createTime ;
 
     private Date  updateTime ;
+
+    @Transient
+    private String perms;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
     public Integer getId() {
         return id;
@@ -67,5 +91,13 @@ public class SysUser implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
     }
 }
