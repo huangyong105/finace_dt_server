@@ -1,20 +1,18 @@
 package com.jit.wxs.web;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import com.jit.wxs.entity.Result;
-import com.jit.wxs.entity.SysPermission;
-import com.jit.wxs.entity.SysUser;
-import com.jit.wxs.entity.SysUserRole;
+import com.jit.wxs.entity.*;
 import com.jit.wxs.service.SysPermissionService;
 import com.jit.wxs.service.SysUserRoleService;
 import com.jit.wxs.service.SysUserService;
+import com.jit.wxs.util.BeanConverter;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +59,35 @@ public class UserController {
 			return sysUser;
 		}).collect(Collectors.toList());
 		return Result.ofSuccess(sysUsers);
+	}
+
+	@RequestMapping("/createUser")
+	public Result createUser (SysUserReq sysUserReq) {
+		SysUser sysUser = BeanConverter.convert(sysUserReq,SysUser.class);
+		if (Objects.nonNull(sysUser.getId())) {
+			sysUser = userService.updateUser(sysUser);
+			bindUserRole(sysUserReq, sysUser);
+			return Result.ofSuccess(sysUser);
+		}
+		sysUser =userService.createUser(sysUser);
+		bindUserRole(sysUserReq, sysUser);
+		return Result.ofSuccess(sysUser);
+	}
+
+	private void bindUserRole(SysUserReq sysUserReq, SysUser sysUser) {
+		sysUserRoleService.delete(sysUser.getId());
+		if (Objects.nonNull(sysUserReq.getPerms())) {
+			List<SysUserRole> sysUserRoles = new ArrayList<>();
+			for (String perm : sysUserReq.getPerms()) {
+				SysUserRole sysUserRole = new SysUserRole();
+				sysUserRole.setRoleId(NumberUtils.toInt(perm));
+				sysUserRole.setUserId(sysUser.getId());
+				sysUserRoles.add(sysUserRole);
+			}
+			if (!CollectionUtils.isEmpty(sysUserRoles)) {
+				sysUserRoleService.createSysUserRole(sysUserRoles);
+			}
+		}
 	}
 
 

@@ -270,17 +270,45 @@
                                                     <input type="text" name="mobile" class="form-control" id="mobile" placeholder="手机号">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="password">密码</label>
+                                                    <input type="text" name="password" class="form-control" id="password" placeholder="手机号">
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="email">邮箱</label>
                                                     <input type="text" name="email" class="form-control" id="email" placeholder="邮箱">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="perms">管理权限</label>
-                                                    <input type="text" name="perms" class="form-control" id="perms" placeholder="管理权限">
+                                                    <label for="inlineCheckbox11">管理权限</label><br/>
+                                                <!--    <input type="text" name="perms" class="form-control" id="perms" placeholder="管理权限">-->
+                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                        <input type="checkbox" id="inlineCheckbox11" name="perms" value="1">
+                                                        <label for="inlineCheckbox11">添加投资项目</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                        <input type="checkbox" id="inlineCheckbox21" value="2" name="perms" checked>
+                                                        <label for="inlineCheckbox21">添加文章</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                        <input type="checkbox" id="inlineCheckbox31" name="perms" value="3">
+                                                        <label for="inlineCheckbox31">投资人管理</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                        <input type="checkbox" id="inlineCheckbox41"  name="perms" value="4">
+                                                        <label for="inlineCheckbox41">用户管理</label>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="txt_statu">用户状态</label>
-                                                    <input type="text" name="txt_statu" class="form-control" id="txt_statu" placeholder="用户状态">
+                                                    <label for="txt_statu_1">用户状态</label><br/>
+                                                    <div class="radio radio-info radio-inline">
+                                                        <input type="radio" id="txt_statu_1" value="0" name="state" checked>
+                                                        <label for="txt_statu_1"> 激活 </label>
+                                                    </div>
+                                                    <div class="radio radio-inline">
+                                                        <input type="radio" id="txt_statu_2" value="1" name="state" checked>
+                                                        <label for="txt_statu_1"> 冻结 </label>
+                                                    </div>
                                                 </div>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
@@ -570,6 +598,30 @@
     $("#but_search").click(function(){
         table.ajax.reload();
     });
+
+    $("#btn_submit").click(function(){
+        $.ajax({
+            dataType : "json",
+            url : host+"/uc/createUser",
+            type : "post",
+            data : $('#search_form').serialize(),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    table.ajax.reload();
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
+
+    });
+
 </script>
 
 

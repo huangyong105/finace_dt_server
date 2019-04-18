@@ -17,4 +17,12 @@ public class SysUserRoleService {
     public List<SysUserRole> listByUserId(Integer userId) {
         return userRoleMapper.listByUserId(userId);
     }
+
+    public Integer  createSysUserRole (List<SysUserRole> sysUserRoles) {
+        return userRoleMapper.createSysUserRole(sysUserRoles);
+    }
+
+    public Long delete(Integer userId) {
+        return userRoleMapper.delete(userId);
+    }
 }

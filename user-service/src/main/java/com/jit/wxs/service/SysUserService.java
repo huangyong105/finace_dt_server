@@ -15,7 +15,7 @@ import java.util.Objects;
 public class SysUserService {
     @Autowired
     private SysUserMapper userMapper;
-    @Cacheable(value="sys_user", key= "#id")
+/*    @Cacheable(value="sys_user", key= "#id")*/
     public SysUser getById(Integer id) {
         return userMapper.selectById(id);
     }
@@ -24,26 +24,27 @@ public class SysUserService {
         return userMapper.loadUsers();
     }
 
-    @Cacheable(value="sys_user", key= "#name")
+/*    @Cacheable(value="sys_user", key= "#name")*/
     public SysUser getByName(String name) {
         return userMapper.selectByName(name);
     }
 
-    @Cacheable(value="sys_user", key= "#mobile")
+/*    @Cacheable(value="sys_user", key= "#mobile")*/
     public SysUser getByMobile(String mobile) {
         return userMapper.selectByMobile(mobile);
     }
 
-    @CacheEvict(value="sys_user", allEntries=true)
+/*    @CacheEvict(value="sys_user", allEntries=true)*/
     public SysUser createUser (SysUser sysUser) {
-        Integer id = userMapper.createSysUser(sysUser);
-        if (Objects.nonNull(id)) {
-            sysUser =this.getById(id);
+       userMapper.createSysUser(sysUser);
+
+        if (Objects.nonNull(sysUser.getId())) {
+            sysUser =this.getById(sysUser.getId());
         }
         return sysUser;
     }
 
-    @CacheEvict(value="sys_user", allEntries=true)
+/*    @CacheEvict(value="sys_user", allEntries=true)*/
     public SysUser updateUser (SysUser sysUser) {
         sysUser.setUpdateTime(new Date());
         Integer id = userMapper.update(sysUser);

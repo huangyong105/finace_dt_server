@@ -19,8 +19,8 @@ public interface SysUserMapper {
     @Select("SELECT * FROM sys_user WHERE mobile = #{mobile}")
     SysUser selectByMobile(String mobile);
 
-    @Insert({ "insert into sys_user(name, mobile, password, create_time,update_time) values(#{name}, #{mobile}, #{password}, #{createTime, jdbcType=TIMESTAMP}, #{updateTime, jdbcType=TIMESTAMP})" })
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert({ "insert into sys_user(name, mobile, password,email,state, create_time,update_time) values(#{name}, #{mobile}, #{password}, #{email},#{state}, #{createTime, jdbcType=TIMESTAMP}, #{updateTime, jdbcType=TIMESTAMP})" })
+    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     Integer  createSysUser (SysUser sysUser) ;
 
     @Update({ "<script>" +

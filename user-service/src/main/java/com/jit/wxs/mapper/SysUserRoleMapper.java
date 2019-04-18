@@ -13,11 +13,19 @@ public interface SysUserRoleMapper {
     @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
     public List<SysUserRole> listByUserId(Integer userId);
 
+
+    @Select("DELETE FROM sys_user_role WHERE user_id = #{userId}")
+    public Long delete(Integer userId);
     /**
      * 创建系统角色
-     * @param sysUserRole
+     * @param sysUserRoles
      * @return
      */
-    @Insert({ "insert into sys_user_role(userId ,roleId) values(#{userId}, #{roleId})" })
-    Integer  createSysRole (SysUserRole sysUserRole) ;
+    @Insert({ "<script>" +
+            "insert into sys_user_role(user_id ,role_id) values"
+            +" <foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\">"
+            +"(#{item.userId,jdbcType=INTEGER}, #{item.roleId,jdbcType=INTEGER})"
+            +"</foreach>"
+            +"</script>" })
+    Integer  createSysUserRole (List<SysUserRole> sysUserRoles) ;
 }

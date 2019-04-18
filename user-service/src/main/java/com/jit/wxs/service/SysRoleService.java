@@ -14,16 +14,16 @@ import java.util.Objects;
 public class SysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
-    @Cacheable(value="roles", key= "'roles_'+#id")
+/*    @Cacheable(value="roles", key= "'roles_'+#id")*/
     public SysRole getById(Integer id) {
         return roleMapper.selectById(id);
     }
-    @Cacheable(value="roles", key= "'roles_'+#p0")
+/*    @Cacheable(value="roles", key= "'roles_'+#p0")*/
     public SysRole getByName(String roleName) {
         return roleMapper.selectByName(roleName);
     }
 
-    @CacheEvict(value="roles", allEntries=true)
+/*    @CacheEvict(value="roles", allEntries=true)*/
     public SysRole createUser (SysRole sysRole) {
         Integer id = roleMapper.createSysRole(sysRole);
         if (Objects.nonNull(id)) {
