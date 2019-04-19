@@ -10,8 +10,8 @@ public interface SysUserMapper {
     @Select("SELECT * FROM sys_user WHERE id = #{id}")
     SysUser selectById(Integer id);
 
-    @Select("SELECT * FROM sys_user")
-    List<SysUser> loadUsers () ;
+    @Select("SELECT * FROM sys_user WHERE `delete` = #{delete}")
+    List<SysUser> loadUsers (int delete) ;
 
     @Select("SELECT * FROM sys_user WHERE name = #{name}")
     SysUser selectByName(String name);
@@ -30,13 +30,19 @@ public interface SysUserMapper {
             + "name = #{name},"
             + "</if>"
             + "<if test='mobile!=null'>"
-            +"mobile = #{mobile}"
+            +"mobile = #{mobile},"
             + "</if>"
             + "<if test='password!=null'>"
-            +",password = #{password},"
+            +"password = #{password},"
             + "</if>"
-            + "<if test='update_time!=null'>"
-            + "update_time = #{update_time, jdbcType=TIMESTAMP} "
+            + "<if test='delete!=null'>"
+            +"`delete` = #{delete} ,"
+            + "</if>"
+            + "<if test='state!=null'>"
+            +"state = #{state},"
+            + "</if>"
+            + "<if test='updateTime!=null'>"
+            + "update_time = #{updateTime, jdbcType=TIMESTAMP} "
             + "</if>"
             +"where id = #{id}"
             +"</script>" })

@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/uc")
@@ -65,10 +62,12 @@ public class UserController {
 	public Result createUser (SysUserReq sysUserReq) {
 		SysUser sysUser = BeanConverter.convert(sysUserReq,SysUser.class);
 		if (Objects.nonNull(sysUser.getId())) {
+            sysUser.setUpdateTime(new Date());
 			sysUser = userService.updateUser(sysUser);
 			bindUserRole(sysUserReq, sysUser);
 			return Result.ofSuccess(sysUser);
 		}
+        sysUser.setCreateTime(new Date());
 		sysUser =userService.createUser(sysUser);
 		bindUserRole(sysUserReq, sysUser);
 		return Result.ofSuccess(sysUser);
@@ -89,6 +88,19 @@ public class UserController {
 			}
 		}
 	}
+
+    @RequestMapping("/deleteSysUser")
+    @ResponseBody
+	public Result  deleteSysUser (@RequestBody SysUserReq sysUserReq) {
+        SysUser sysUser = BeanConverter.convert(sysUserReq,SysUser.class);
+        sysUser.setUpdateTime(new Date());
+        sysUser.setDelete(1);
+        sysUser = userService.updateUser(sysUser);
+        if (Objects.nonNull(sysUser)) {
+            return Result.ofSuccess(sysUser);
+        }
+        return Result.ofError(1,"删除失败");
+    }
 
 
 }

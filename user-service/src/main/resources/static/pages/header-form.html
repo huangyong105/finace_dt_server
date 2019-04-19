@@ -470,9 +470,6 @@
                 }else{
                     $.each(data.value, function(i, item) {
                         $("#ul_has_sub").append(
-                            /*              "<div>" + item.id + "</div>" +
-                                          "<div>" + item.nickname    + "</div>" +
-                                          "<div>" + item.content + "</div><hr/>");*/
                             "<li class=\"has_sub\">" +
                             "<a href=\"" +
                             item.url +
@@ -496,10 +493,9 @@
             var id = $('#row-id').val();
             $.ajax({
                 dataType : "json",
-                url: host+"/application/delete",
+                url: host+"/uc/deleteSysUser",
                 contentType: 'application/json;charset=UTF-8',
                 type: 'POST',
-                headers:{Authorization:token},
                 // 传给服务器的数据，可以添加我们自己的查询参数
                 data: '{"id":"'+id+'"}',
                 success:function(res){

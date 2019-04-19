@@ -21,7 +21,7 @@ public class SysUserService {
     }
 
     public List<SysUser> loadUsers() {
-        return userMapper.loadUsers();
+        return userMapper.loadUsers(0);
     }
 
 /*    @Cacheable(value="sys_user", key= "#name")*/
@@ -47,9 +47,9 @@ public class SysUserService {
 /*    @CacheEvict(value="sys_user", allEntries=true)*/
     public SysUser updateUser (SysUser sysUser) {
         sysUser.setUpdateTime(new Date());
-        Integer id = userMapper.update(sysUser);
-        if (Objects.nonNull(id)) {
-            sysUser =this.getById(id);
+         userMapper.update(sysUser);
+        if (Objects.nonNull(sysUser.getId())) {
+            sysUser =this.getById(sysUser.getId());
         }
         return sysUser;
     }

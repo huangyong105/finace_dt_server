@@ -22,6 +22,8 @@ public class SysUser implements Serializable {
 
     private Integer state ;
 
+    private Integer delete ;
+
     private Date createTime ;
 
     private Date  updateTime ;
@@ -100,4 +102,14 @@ public class SysUser implements Serializable {
     public void setPerms(String perms) {
         this.perms = perms;
     }
+
+    public Integer getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Integer delete) {
+        this.delete = delete;
+    }
+
+
 }
