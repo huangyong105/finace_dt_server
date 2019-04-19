@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class SysUser implements Serializable {
@@ -30,6 +31,9 @@ public class SysUser implements Serializable {
 
     @Transient
     private String perms;
+
+
+    private List idList ;
 
     public String getEmail() {
         return email;
@@ -112,4 +116,11 @@ public class SysUser implements Serializable {
     }
 
 
+    public List getIdList() {
+        return idList;
+    }
+
+    public void setIdList(List idList) {
+        this.idList = idList;
+    }
 }

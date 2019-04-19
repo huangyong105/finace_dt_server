@@ -179,148 +179,74 @@
 
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <form class="form-horizontal" id="search_form" action="#">
+                                <input type="hidden" placeholder="" id="row-id-1" name ="id" class="form-control">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">新增</h4>
+                                    </div>
+                                    <div class="modal-body">
 
-                       <!--     <div class="card-box">
-                                <h4 class="m-t-0 header-title"><b>添加用户</b></h4>-->
-
-                                <!--<div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="card-box">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <form class="form-horizontal">
-
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">名称</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入名称">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">手机号</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入手机号">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">邮箱</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入邮箱地址">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">管理权限</label>
-
-                                                            <div class="btn-switch btn-switch-info">
-                                                                <input type="checkbox" id="input-btn-switch-info1"/>
-                                                                <label for="input-btn-switch-info1"
-                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
-                                                                    <em class="glyphicon glyphicon-ok"></em>
-                                                                    <strong> 投资项目管理</strong>
-                                                                </label>
-                                                            </div>
-
-                                                            <div class="btn-switch btn-switch-info">
-                                                                <input type="checkbox" id="input-btn-switch-info2"/>
-                                                                <label for="input-btn-switch-info2"
-                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
-                                                                    <em class="glyphicon glyphicon-ok"></em>
-                                                                    <strong> 文章管理</strong>
-                                                                </label>
-                                                            </div>
-                                                            <div class="btn-switch btn-switch-info">
-                                                                <input type="checkbox" id="input-btn-switch-info3"/>
-                                                                <label for="input-btn-switch-info3"
-                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
-                                                                    <em class="glyphicon glyphicon-ok"></em>
-                                                                    <strong> 投资人管理</strong>
-                                                                </label>
-                                                            </div>
-                                                            <div class="btn-switch btn-switch-info">
-                                                                <input type="checkbox" id="input-btn-switch-info4"/>
-                                                                <label for="input-btn-switch-info4"
-                                                                       class="btn btn-rounded btn-info waves-effect waves-light">
-                                                                    <em class="glyphicon glyphicon-ok"></em>
-                                                                    <strong> 用户管理</strong>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                        <div class="form-group">
+                                            <label for="name">名称</label>
+                                            <input type="text" name="name" class="form-control" id="name" placeholder="名称">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile">手机号</label>
+                                            <input type="text" name="mobile" class="form-control" id="mobile" placeholder="手机号">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">密码</label>
+                                            <input type="text" name="password" class="form-control" id="password" placeholder="手机号">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">邮箱</label>
+                                            <input type="text" name="email" class="form-control" id="email" placeholder="邮箱">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inlineCheckbox11">管理权限</label><br/>
+                                        <!--    <input type="text" name="perms" class="form-control" id="perms" placeholder="管理权限">-->
+                                            <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                <input type="checkbox" id="inlineCheckbox11" name="perms" value="1">
+                                                <label for="inlineCheckbox11">添加投资项目</label>
+                                            </div>
+                                            <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                <input type="checkbox" id="inlineCheckbox21" value="2" name="perms" checked>
+                                                <label for="inlineCheckbox21">添加文章</label>
+                                            </div>
+                                            <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                <input type="checkbox" id="inlineCheckbox31" name="perms" value="3">
+                                                <label for="inlineCheckbox31">投资人管理</label>
+                                            </div>
+                                            <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
+                                                <input type="checkbox" id="inlineCheckbox41"  name="perms" value="4">
+                                                <label for="inlineCheckbox41">用户管理</label>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>-->
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <form class="form-horizontal" id="search_form" action="#">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">新增</h4>
+                                        <div class="form-group">
+                                            <label for="txt_statu_1">用户状态</label><br/>
+                                            <div class="radio radio-info radio-inline">
+                                                <input type="radio" id="txt_statu_1" value="0" name="state" checked>
+                                                <label for="txt_statu_1"> 激活 </label>
                                             </div>
-                                            <div class="modal-body">
-
-                                                <div class="form-group">
-                                                    <label for="name">名称</label>
-                                                    <input type="text" name="name" class="form-control" id="name" placeholder="名称">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="mobile">手机号</label>
-                                                    <input type="text" name="mobile" class="form-control" id="mobile" placeholder="手机号">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">密码</label>
-                                                    <input type="text" name="password" class="form-control" id="password" placeholder="手机号">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="email">邮箱</label>
-                                                    <input type="text" name="email" class="form-control" id="email" placeholder="邮箱">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inlineCheckbox11">管理权限</label><br/>
-                                                <!--    <input type="text" name="perms" class="form-control" id="perms" placeholder="管理权限">-->
-                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                        <input type="checkbox" id="inlineCheckbox11" name="perms" value="1">
-                                                        <label for="inlineCheckbox11">添加投资项目</label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                        <input type="checkbox" id="inlineCheckbox21" value="2" name="perms" checked>
-                                                        <label for="inlineCheckbox21">添加文章</label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                        <input type="checkbox" id="inlineCheckbox31" name="perms" value="3">
-                                                        <label for="inlineCheckbox31">投资人管理</label>
-                                                    </div>
-                                                    <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                        <input type="checkbox" id="inlineCheckbox41"  name="perms" value="4">
-                                                        <label for="inlineCheckbox41">用户管理</label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="txt_statu_1">用户状态</label><br/>
-                                                    <div class="radio radio-info radio-inline">
-                                                        <input type="radio" id="txt_statu_1" value="0" name="state" checked>
-                                                        <label for="txt_statu_1"> 激活 </label>
-                                                    </div>
-                                                    <div class="radio radio-inline">
-                                                        <input type="radio" id="txt_statu_2" value="1" name="state" checked>
-                                                        <label for="txt_statu_1"> 冻结 </label>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                                <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                                            <div class="radio radio-inline">
+                                                <input type="radio" id="txt_statu_2" value="1" name="state" checked>
+                                                <label for="txt_statu_2"> 冻结 </label>
                                             </div>
                                         </div>
+
                                     </div>
-                                    </form>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                        <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                                    </div>
                                 </div>
-                       <!--        </div>-->
-
-           <!--                 </div>-->
+                            </div>
+                            </form>
+                        </div>
                         </form>
                     </div>
                     <div class="col-sm-12">
@@ -447,8 +373,24 @@
         showCustombox("确认删除应用："+name,false);
     }
 
-    function update(id){
-        window.location.href='application-form.html?id='+id;
+    function update(id,name,mobile,email,state,perms,password,idList){
+        $('#row-id-1').val(id);
+        $('#name').val(name);
+        $('#mobile').val(mobile);
+        $('#email').val(email);
+        $('#password').val(password);
+        idArr  =idList.split(',')
+        $(":radio[name='state'][value='" + state + "']").prop("checked", "checked");
+        $(":checkbox").each(function(index) {
+            val1 = idArr[index]
+            val2= $(this).val();
+            alert(val1 +":"+val2);
+            if (val1 === val2) {
+               $(this).prop('checked', false);
+            }
+        });
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
     }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
@@ -560,7 +502,7 @@
             },{
                 targets: 6,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\')" >更新</a>';
+                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\',\'' + row.mobile + '\',\'' + row.email + '\',\'' + row.state + '\',\'' + row.perms + '\',\'' + row.password + '\',\'' + row.idList + '\')" >更新</a>';
                 }
             }],
             language: {
