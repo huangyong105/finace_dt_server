@@ -31,8 +31,8 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private FreeMarkerConfigurer freeMarkerConfigurer;  //自动注入
+/*    @Autowired
+    private FreeMarkerConfigurer freeMarkerConfigurer;  //自动注入*/
 
 
     /**

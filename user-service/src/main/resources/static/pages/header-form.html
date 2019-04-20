@@ -210,11 +210,11 @@
                                             <label for="inlineCheckbox11">管理权限</label><br/>
                                         <!--    <input type="text" name="perms" class="form-control" id="perms" placeholder="管理权限">-->
                                             <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                <input type="checkbox" id="inlineCheckbox11" name="perms" value="1">
+                                                <input type="checkbox" id="inlineCheckbox11" name="perms" value="1" checked>
                                                 <label for="inlineCheckbox11">添加投资项目</label>
                                             </div>
                                             <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
-                                                <input type="checkbox" id="inlineCheckbox21" value="2" name="perms" checked>
+                                                <input type="checkbox" id="inlineCheckbox21" value="2" name="perms" >
                                                 <label for="inlineCheckbox21">添加文章</label>
                                             </div>
                                             <div class="checkbox checkbox-pink checkbox-inline checkbox-circle">
@@ -233,7 +233,7 @@
                                                 <label for="txt_statu_1"> 激活 </label>
                                             </div>
                                             <div class="radio radio-inline">
-                                                <input type="radio" id="txt_statu_2" value="1" name="state" checked>
+                                                <input type="radio" id="txt_statu_2" value="1" name="state" >
                                                 <label for="txt_statu_2"> 冻结 </label>
                                             </div>
                                         </div>
@@ -379,15 +379,18 @@
         $('#mobile').val(mobile);
         $('#email').val(email);
         $('#password').val(password);
-        idArr  =idList.split(',')
+        arr  =idList.split(',')
         $(":radio[name='state'][value='" + state + "']").prop("checked", "checked");
         $(":checkbox").each(function(index) {
-            val1 = idArr[index]
+            $(this).prop('checked', false);
+        });
+        $(":checkbox").each(function(index) {
             val2= $(this).val();
-            alert(val1 +":"+val2);
-            if (val1 === val2) {
-               $(this).prop('checked', false);
-            }
+            for (var i = 0;i<arr.length;i++) {
+                if (arr[i] === val2) {
+                    $(this).prop('checked', true);
+                }
+            };
         });
         $("#myModalLabel").text("更新");
         $('#myModal').modal();
