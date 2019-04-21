@@ -434,7 +434,7 @@
                 param.pageNo = (data.start / data.length)+1;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
-                    url: host+"/application/page/list",
+                    url: host+"/uc/findAllUsers",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
                     headers:{Authorization:token},
