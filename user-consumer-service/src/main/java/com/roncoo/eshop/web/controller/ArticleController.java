@@ -1,12 +1,16 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.data.Result;
+import cn.com.taiji.data.User;
 import com.roncoo.eshop.DTO.ArticleManagementDTO;
+import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.ArticleManager;
 import com.roncoo.eshop.model.ArticleManagementDO;
 import com.roncoo.eshop.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,13 +27,24 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleManager articleManager;
+    @Autowired
+    private UserClient userClient;
 
     /**
      * 获取所有文章列表
      * @return
      */
     @RequestMapping("/getArticleList")
-    public MyResult<List<ArticleManagementDTO>> getArticleList(){
+    public MyResult<List<ArticleManagementDTO>> getArticleList(@RequestHeader("token")String token){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (userResult.getCode()==null){
+            return MyResult.ofError(4000,"非法登陆");
+        }
         List<ArticleManagementDTO> list = articleManager.getArticleList();
         return MyResult.ofSuccess(list);
     }

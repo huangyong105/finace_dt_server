@@ -121,7 +121,16 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/uploadIdPhoto")
-    public MyResult uploadIdPhoto(@RequestParam("file") MultipartFile file){
+    public MyResult uploadIdPhoto(@RequestParam("file") MultipartFile file,@RequestHeader("token")String token){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (userResult.getCode()==null){
+            return MyResult.ofError(4000,"非法登陆");
+        }
         String fileName = null;
         try {
             fileName = investorManager.uploadIdPhoto(file);
@@ -137,7 +146,16 @@ public class InvestorManagementController {
      * @param response
      */
     @RequestMapping(value = "/downloadIdPhoto",method = RequestMethod.GET)
-    public void downLoadIdPhoto(@RequestParam String fileName, HttpServletResponse response){
+    public MyResult downLoadIdPhoto(@RequestParam String fileName, HttpServletResponse response,@RequestHeader("token")String token){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (userResult.getCode()==null){
+            return MyResult.ofError(4000,"非法登陆");
+        }
         response.setContentType("image/jpeg");
         response.setHeader("Cache-Control", "max-age=604800");
         try {
@@ -145,6 +163,7 @@ public class InvestorManagementController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return MyResult.ofSuccess("下载成功");
     }
 
     /**
@@ -163,7 +182,7 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return MyResult.ofError(5001,"无本用户");
+            return MyResult.ofError(4000,"无本用户");
         }
         if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
             return MyResult.ofError(5002,"入参不完整!");
@@ -191,7 +210,7 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return MyResult.ofError(5001,"无本用户");
+            return MyResult.ofError(4000,"无本用户");
         }
         if (investorManagementDTO.getBankCardNumber()==null){
             return MyResult.ofError(5002,"入参不完整!");

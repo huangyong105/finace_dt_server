@@ -1,11 +1,15 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.data.Result;
+import cn.com.taiji.data.User;
 import com.roncoo.eshop.DTO.ProjectManagementDTO;
+import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestmentManager;
 import com.roncoo.eshop.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +26,24 @@ import java.util.List;
 public class InvestmentController {
     @Autowired
     private InvestmentManager investmentManager;
+    @Autowired
+    private UserClient userClient;
 
     /**
      * 获取全部项目列表
      * @return
      */
     @RequestMapping("/getProjectList")
-    public MyResult<List<ProjectManagementDTO>> getProjectList(){
+    public MyResult<List<ProjectManagementDTO>> getProjectList(@RequestHeader("token")String token){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (userResult.getCode()==null){
+            return MyResult.ofError(4000,"非法登陆");
+        }
         List<ProjectManagementDTO> list = investmentManager.getInvestmentProjectList();
         return MyResult.ofSuccess(list);
     }
@@ -38,7 +53,16 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping("/getProject")
-    public MyResult<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
+    public MyResult<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req,@RequestHeader("token")String token){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (userResult.getCode()==null){
+            return MyResult.ofError(4000,"非法登陆");
+        }
         ProjectManagementDTO investmentProject = investmentManager.getInvestmentProject(req.getId());
         return MyResult.ofSuccess(investmentProject);
     }
