@@ -2,7 +2,6 @@ package com.jit.wxs.web;
 
 import com.jit.wxs.client.InvestmentClient;
 import cn.com.taiji.DTO.ProjectManagementDTO;
-import cn.com.taiji.result.MyResult;
 import com.jit.wxs.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

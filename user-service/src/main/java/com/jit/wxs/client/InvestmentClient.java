@@ -1,7 +1,6 @@
 package com.jit.wxs.client;
 
 import cn.com.taiji.DTO.ProjectManagementDTO;
-import cn.com.taiji.result.MyResult;
 import com.jit.wxs.entity.Result;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
