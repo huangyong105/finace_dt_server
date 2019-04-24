@@ -128,20 +128,8 @@
 
             <!--- Sidemenu -->
             <div id="sidebar-menu">
-                <ul>
+                <ul id ="ul_has_sub">
                     <li class="menu-title">Navigation</li>
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-play"></i> <span>添加投资项目</span></a>
-                    </li>
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-book-open-page-variant"></i> <span>添加文章</span> </a>
-                    </li>
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-google-physical-web"></i> <span>投资人管理</span></a>
-                    </li>
-                    <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-verified"></i> <span> 用户管理 </span> </a>
-                    </li>
 
                 </ul>
             </div>
@@ -179,7 +167,7 @@
                                     <a href="#">汇致旺</a>
                                 </li>
                                 <li class="active">
-                                    添加投资项目
+                                    项目管理
                                 </li>
                             </ol>
                             <div class="clearfix"></div>
@@ -191,87 +179,85 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <form class="form-horizontal" id="search_form" action="#">
-                            <div class="card-box">
-                                <h4 class="m-t-0 header-title"><b>添加项目</b></h4>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <form class="form-horizontal" id="search_form" action="#">
+                                <input type="hidden" placeholder="" id="row-id-1" name ="id" class="form-control">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">新增</h4>
+                                        </div>
+                                        <div class="modal-body">
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="card-box">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="projectName">项目名称</label>
+                                                <input type="text" name="projectName" class="form-control" id="projectName" placeholder="项目名称">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="monthEarnings">预期月收益</label>
+                                                <input type="text" name="monthEarnings" class="form-control" id="monthEarnings" placeholder="预期月收益">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="expectedRiskTolerance">最低承受风险</label>
+                                                <input type="text" name="expectedRiskTolerance" class="form-control" id="expectedRiskTolerance" placeholder="最低承受风险">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="minMargin">最低保证金</label>
+                                                <input type="text" name="minMargin" class="form-control" id="minMargin" placeholder="最低保证金">
+                                            </div>
 
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">项目名称</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入名称">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">预期月收益</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入月收益(%)">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">承受风险</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入承受风险(%)">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">最低保证金</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入最低保证金">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="col-md-2 control-label">资金配比</label>
-                                                            <div class="col-md-10">
-                                                                <input type="text" class="form-control" placeholder="请输入资金配比">
-                                                            </div>
-                                                        </div>
-
-
-
-
-                                                    </form>
-                                                </div>
-
+                                            <div class="form-group">
+                                                <label for="moneyProportion">资金配比</label>
+                                                <input type="text" name="moneyProportion" class="form-control" id="moneyProportion" placeholder="资金配比">
                                             </div>
 
 
 
+                                            <div class="form-group">
+                                                <label for="isOnline_1">上线状态</label><br/>
+                                                <div class="radio radio-info radio-inline">
+                                                    <input type="radio" id="isOnline_1" value="0" name="isOnline" checked>
+                                                    <label for="isOnline_1"> 下线 </label>
+                                                </div>
+                                                <div class="radio radio-inline">
+                                                    <input type="radio" id="isOnline_2" value="1" name="isOnline" >
+                                                    <label for="isOnline_2"> 上线 </label>
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                            <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="but_search">&nbsp;&nbsp;添&nbsp;&nbsp;加&nbsp;&nbsp;</button>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
+                        </div>
                         </form>
                     </div>
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
-                            <h4 class="m-t-0 header-title"><b>项目列表</b></h4>
-
+                            <div class="row">
+                                <h4 class="m-t-0 header-title" style="float:left"><b>&nbsp;&nbsp;&nbsp;&nbsp;项目列表</b></h4>
+                                <div class="col-md-1" style="float:right;">
+                                    <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="btn_add">创&nbsp;&nbsp;建</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
                             <table id="datatable" class="table table-striped  table-colored table-info">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>项目名称</th>
                                     <th>预期月收益</th>
-                                    <th>预期承受风险</th>
-                                    <th>最低保证金</th>
+                                    <th>最低承受风险</th>
+                                    <th>最低承受风险/th>
                                     <th>资金配比</th>
                                     <th>创建时间</th>
                                     <th>状态</th>
-                                    <th style="width: 50px">操作</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
 
@@ -377,21 +363,88 @@
         showCustombox("确认删除应用："+name,false);
     }
 
-    function update(id){
-        window.location.href='application-form.html?id='+id;
+    function update(id,name,mobile,email,state,perms,password,idList){
+        $('#row-id-1').val(id);
+        $('#name').val(name);
+        $('#mobile').val(mobile);
+        $('#email').val(email);
+        $('#password').val(password);
+        arr  =idList.split(',')
+        $(":radio[name='state'][value='" + state + "']").prop("checked", "checked");
+        $(":checkbox").each(function(index) {
+            $(this).prop('checked', false);
+        });
+        $(":checkbox").each(function(index) {
+            val2= $(this).val();
+            for (var i = 0;i<arr.length;i++) {
+                if (arr[i] === val2) {
+                    $(this).prop('checked', true);
+                }
+            };
+        });
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
     }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
+    $("#btn_add").click(function () {
+        $("#myModalLabel").text("新增");
+        $('#myModal').modal();
+    });
+    function formatDate(inputTime){
+        var date = new Date(inputTime);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    }
+    function showUI () {
+        $.ajax({
+            dataType : "json",
+            url: host+"/loadUrls",
+            contentType: 'application/json;charset=UTF-8',
+            type: 'POST',
+            success:function(data){
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    $.each(data.value, function(i, item) {
+                        $("#ul_has_sub").append(
+                            "<li class=\"has_sub\">" +
+                            "<a href=\"" +
+                            item.url +
+                            "\" class=\"waves-effect\"><i class=\"mdi mdi-google-play\"></i>" +
+                            " <span>"+
+                            item.name
+                            +"</span></a>"
+                            +"</li>"
+                        );
+                    });
+                }
+            },
+            error: function(res){
+                authorValidate(res);
+            }
+        });
+    }
     $(document).ready(function () {
+        showUI ();
         $('#confirm-del').click(function(){
             var id = $('#row-id').val();
             $.ajax({
                 dataType : "json",
-                url: host+"/application/delete",
+                url: host+"/uc/deleteSysUser",
                 contentType: 'application/json;charset=UTF-8',
                 type: 'POST',
-                headers:{Authorization:token},
                 // 传给服务器的数据，可以添加我们自己的查询参数
                 data: '{"id":"'+id+'"}',
                 success:function(res){
@@ -417,19 +470,16 @@
                 param.pageNo = (data.start / data.length)+1;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
-                    url: host+"/application/page/list",
+                    url: host+"/investment/getProjectList",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
-                    headers:{Authorization:token},
-                    // 传给服务器的数据，可以添加我们自己的查询参数
-                    data: JSON.stringify(param),
                     success:function(res){
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
                             out.recordsTotal = res.total;
                             out.recordsFiltered = res.total;
-                            out.data =  res.list;
+                            out.data =  res.value;
                             callback( out );
                         },50);
                     },
@@ -440,22 +490,35 @@
             },
             "columns": [
                 { data: 'id'},
-                { data : 'appid'},
-                { data: 'name'},
-                { data: 'security'},
-                { data : 'description'},
-                { data : 'createDate'},
+                { data: 'projectName'},
+                { data : 'monthEarnings'},
+                { data: 'expectedRiskTolerance'},
+                { data: 'minMargin'},
+                { data: 'moneyProportion'},
+                { data : 'gmtCreated'},
+                { data : 'isOnline'},
                 { data : null}
             ],
             columnDefs: [{
-                targets: 3,
-                render: function(data, type, row, meta) {
-                    return '<span><a type="button" href="#" onclick="showSecurity(\''+row.security+'\',this)"><i class="glyphicon glyphicon-eye-open"></i></a><span>';
-                }
-            },{
                 targets: 6,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\')" >更新</a>';
+                    if(row.gmtCreated ){
+                        formatDate(row.gmtCreated);
+                    }
+                }
+            },{
+                targets: 7,
+                render: function(data, type, row, meta) {
+                    if(row.isOnline && row.isOnline === 1){
+                        return '上架';
+                    }else{
+                        return '下架';
+                    }
+                }
+            },{
+                targets: 8,
+                render: function(data, type, row, meta) {
+                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\',\'' + row.mobile + '\',\'' + row.email + '\',\'' + row.state + '\',\'' + row.perms + '\',\'' + row.password + '\',\'' + row.idList + '\')" >更新</a>';
                 }
             }],
             language: {
@@ -488,6 +551,29 @@
     TableManageButtons.init();
     $("#but_search").click(function(){
         table.ajax.reload();
+    });
+
+    $("#btn_submit").click(function(){
+        $.ajax({
+            dataType : "json",
+            url : host+"/uc/createUser",
+            type : "post",
+            data : $('#search_form').serialize(),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    table.ajax.reload();
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
+
     });
 
 </script>
