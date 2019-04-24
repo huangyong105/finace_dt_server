@@ -26,24 +26,32 @@ public class FtpConfig {
     @Value("${ftp.basePath}")
     private String basePath;
 
-    @Bean
-    public FTPClient ftpClientFactory(){
-        FTPClient ftpClient = new FTPClient();
-        try {
-            ftpClient.connect(hostName, port);
-            ftpClient.login(loginName, loginPwd);
-            ftpClient.changeWorkingDirectory(basePath);
-            int reply=ftpClient.getReplyCode();
-            if(!FTPReply.isPositiveCompletion(reply)){
-                ftpClient.disconnect();
-            }
-        } catch (SocketException e) {
-            LOG.error("socket错误：",e);
-        }catch (IOException e) {
-            LOG.error("io错误：",e);
-        }
-        return ftpClient;
-    }
+//    @Bean
+//    public FTPClient ftpClientFactory(){
+//        FTPClient ftpClient = new FTPClient();
+//        try {
+//            ftpClient.connect(hostName, port);
+//            ftpClient.login(loginName, loginPwd);
+//            ftpClient.changeWorkingDirectory(basePath);
+//            int reply=ftpClient.getReplyCode();
+//            if(!FTPReply.isPositiveCompletion(reply)){
+//                ftpClient.disconnect();
+//            }
+//            ftpClient.logout();
+//        } catch (SocketException e) {
+//            LOG.error("socket错误：",e);
+//        }catch (IOException e) {
+//            LOG.error("io错误：",e);
+//        }finally {
+//            if (ftpClient.isConnected()){
+//                try{
+//                    ftpClient.disconnect();
+//                }catch (IOException ioe){
+//                }
+//            }
+//        }
+//        return ftpClient;
+//    }
 
     public int getPort() {
         return port;

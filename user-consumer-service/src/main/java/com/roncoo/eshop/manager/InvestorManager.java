@@ -23,8 +23,6 @@ import java.util.List;
 @Service
 public class InvestorManager {
     @Autowired
-    FTPClient ftpClient;
-    @Autowired
     FtpUtil ftpUtil;
     @Autowired
     InvestmentDetailsMapper investmentDetailsMapper;
@@ -35,7 +33,7 @@ public class InvestorManager {
             return null;
         }
         String newName = ftpUtil.getFileSuffName(fileName);
-        boolean upload = ftpUtil.uploadFile(file.getInputStream(), newName, ftpClient);
+        boolean upload = ftpUtil.uploadFile(file.getInputStream(), newName);
         if (upload){
             return newName;
         }
@@ -43,7 +41,7 @@ public class InvestorManager {
     }
 
     public void downloadIdPhoto(String fileName,OutputStream ops){
-        ftpUtil.downloadFile(fileName,ftpClient,ops);
+        ftpUtil.downloadFile(fileName,ops);
     }
 
     public List<InvestmentDetailsDTO> getInvestmentDetailsDOSByuserId(Long userID){
