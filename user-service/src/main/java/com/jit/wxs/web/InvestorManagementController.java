@@ -3,6 +3,7 @@ package com.jit.wxs.web;
 import com.jit.wxs.client.InvestmentClient;
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import cn.com.taiji.result.MyResult;
+import com.jit.wxs.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/getProjectList")
-    public MyResult<List<ProjectManagementDTO>> getProjectList(){
-        MyResult<List<ProjectManagementDTO>> list = investmentClient.getProjectList();
+    public Result<List<ProjectManagementDTO>> getProjectList(){
+        Result<List<ProjectManagementDTO>> list = investmentClient.getProjectList();
         return list;
     }
 
@@ -37,8 +38,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/getProject")
-    public MyResult<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
-        MyResult<ProjectManagementDTO> project = investmentClient.getProject(req);
+    public Result<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
+        Result<ProjectManagementDTO> project = investmentClient.getProject(req);
         return project;
     }
 
@@ -49,8 +50,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/saveProject")
-    public MyResult saveProject(@RequestBody ProjectManagementDTO req){
-        MyResult result = investmentClient.saveProject(req);
+    public Result saveProject(@RequestBody ProjectManagementDTO req){
+        Result result = investmentClient.saveProject(req);
         return result;
     }
 
@@ -60,8 +61,8 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/getAllProjectList")
-    public MyResult<List<ProjectManagementDTO>> getAllProjectList(){
-        MyResult<List<ProjectManagementDTO>> listMyResult = investmentClient.getAllProjectList();
+    public Result<List<ProjectManagementDTO>> getAllProjectList(){
+        Result<List<ProjectManagementDTO>> listMyResult = investmentClient.getAllProjectList();
         return listMyResult;
     }
 
@@ -72,9 +73,9 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/onlineOrOffline")
-    public MyResult online(@RequestBody ProjectManagementDTO req){
+    public Result online(@RequestBody ProjectManagementDTO req){
         investmentClient.online(req);
-        return MyResult.ofSuccess();
+        return Result.ofSuccess();
     }
 
 }

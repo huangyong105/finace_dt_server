@@ -2,6 +2,7 @@ package com.jit.wxs.client;
 
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import cn.com.taiji.result.MyResult;
+import com.jit.wxs.entity.Result;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +25,14 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/getProjectList")
-    public MyResult<List<ProjectManagementDTO>> getProjectList();
+    public Result<List<ProjectManagementDTO>> getProjectList();
 
     /**
      * 根据id获取项目详情
      * @return
      */
     @RequestMapping("/getProject")
-    public MyResult<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req);
+    public Result<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req);
 
     /**
      * 添加投资项目
@@ -40,14 +41,14 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/saveProject")
-    public MyResult saveProject(@RequestBody ProjectManagementDTO req);
+    public Result saveProject(@RequestBody ProjectManagementDTO req);
     /**
      * 获取全部项目列表（包括下架）
      * todo 内部调用
      * @return
      */
     @RequestMapping("/getAllProjectList")
-    public MyResult<List<ProjectManagementDTO>> getAllProjectList();
+    public Result<List<ProjectManagementDTO>> getAllProjectList();
 
     /**
      * 更新项目上线状态
@@ -56,6 +57,6 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/onlineOrOffline")
-    public MyResult online(@RequestBody ProjectManagementDTO req);
+    public Result online(@RequestBody ProjectManagementDTO req);
 }
 
