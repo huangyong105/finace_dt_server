@@ -2,11 +2,11 @@ package com.roncoo.eshop.client;
 
 
 import cn.com.taiji.data.Result;
+import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
+import cn.com.taiji.data.UserEntity;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 功能描述: <br>
@@ -26,5 +26,27 @@ public interface UserClient {
 
     @PostMapping("/auth/bindCard")
     public Result bindCard(@RequestBody User user);
+
+    @PostMapping("/auth/login")
+    public Result<Token> login(@RequestParam(value = "account")String account,@RequestParam(value = "password") String password);
+
+    @RequestMapping(path = "/auth/users", method = RequestMethod.POST, name = "createUser")
+    public Result<UserEntity> createUser(@RequestBody UserEntity userEntity);
+
+    @PostMapping("/auth/sendRegisterSmsCode")
+    public Result sendRegisterSmsCode (@RequestParam(value ="mobile") String mobile);
+
+    @PostMapping("/auth/sendChangePasswordSmsCode")
+    public Result sendChangePasswordSmsCode(@RequestParam(value ="mobile") String mobile);
+
+    @PostMapping("/auth/sendFindPasswordSmsCode")
+    public Result sendFindPasswordSmsCode (@RequestParam(value ="mobile") String mobile);
+
+    @PostMapping("/auth/changePassword")
+    public Result changePassword(@RequestBody UserEntity userEntity);
+
+    @RequestMapping(path = "/auth/findPassword", name = "findPassword")
+    public Result  findPassword (@RequestBody UserEntity userEntity);
+
 }
 

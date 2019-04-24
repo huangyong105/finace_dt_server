@@ -2,7 +2,9 @@ package com.roncoo.eshop.web.controller;
 
 
 import cn.com.taiji.data.Result;
+import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
+import cn.com.taiji.data.UserEntity;
 import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.DTO.InvestorManagementDTO;
 import com.roncoo.eshop.client.UserClient;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 用户相关接口
@@ -225,4 +228,144 @@ public class InvestorManagementController {
         }
         return MyResult.ofError(5000,"绑定失败");
     }
+
+    /**
+     * 用户登陆
+     * @param account
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public MyResult<Token> login(@RequestParam(value = "account") String account, @RequestParam(value = "password") String password) throws Exception {
+        Result<Token> login = null;
+        try {
+            login = userClient.login(account, password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (login.isSuccess()){
+            return MyResult.ofSuccess(login.getData());
+        }
+        return MyResult.ofError(4000,login.getMessage());
+    }
+
+    /**
+     * 注册用户
+     * @param userEntity
+     * @return
+     */
+    @RequestMapping(path = "/users", method = RequestMethod.POST, name = "createUser")
+    public MyResult<UserEntity> createUser(@RequestBody UserEntity userEntity){
+        Result<UserEntity> createUser = null;
+        try{
+            createUser = userClient.createUser(userEntity);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (createUser.isSuccess()){
+            return MyResult.ofSuccess(createUser.getData());
+        }
+        return MyResult.ofError(4000,createUser.getMessage());
+    }
+
+    /**
+     * 发送注册短信验证码
+     * @param mobile
+     * @return
+     */
+    @PostMapping("/sendRegisterSmsCode")
+    public MyResult sendRegisterSmsCode (@RequestParam(value ="mobile") String mobile){
+        Result send = null;
+        try{
+            send = userClient.sendRegisterSmsCode(mobile);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (send.isSuccess()){
+            return MyResult.ofSuccess();
+        }
+        return MyResult.ofError(4000,send.getMessage());
+    }
+
+    /**
+     * 发送修改密码验证码短信
+     * @param mobile
+     * @return
+     */
+    @PostMapping("/sendChangePasswordSmsCode")
+    public MyResult sendChangePasswordSmsCode(@RequestParam(value ="mobile") String mobile){
+        Result send = null;
+        try{
+            send = userClient.sendChangePasswordSmsCode(mobile);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (send.isSuccess()){
+            return MyResult.ofSuccess();
+        }
+        return MyResult.ofError(4000,send.getMessage());
+    }
+
+    /**
+     * 发送找回密码验证码短信
+     * @param mobile
+     * @return
+     */
+    @PostMapping("/sendFindPasswordSmsCode")
+    public MyResult sendFindPasswordSmsCode (@RequestParam(value ="mobile") String mobile){
+        Result send = null;
+        try{
+            send = userClient.sendFindPasswordSmsCode(mobile);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (send.isSuccess()){
+            return MyResult.ofSuccess();
+        }
+        return MyResult.ofError(4000,send.getMessage());
+    }
+
+    /**
+     * 修改密码
+     * @param userEntity
+     * @return
+     */
+    @PostMapping("/changePassword")
+    public MyResult changePassword(@RequestBody UserEntity userEntity){
+        Result res = null;
+        try{
+            res = userClient.changePassword(userEntity);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (res.isSuccess()){
+            return MyResult.ofSuccess(res.getData());
+        }
+        return MyResult.ofError(4000,res.getMessage());
+    }
+
+    /**
+     * 找回密码
+     * @param userEntity
+     * @return
+     */
+    @RequestMapping(path = "/findPassword", name = "findPassword")
+    public MyResult  findPassword (@RequestBody UserEntity userEntity){
+        Result res = null;
+        try{
+            res = userClient.findPassword(userEntity);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (res.isSuccess()){
+            return MyResult.ofSuccess(res.getData());
+        }
+        return MyResult.ofError(4000,res.getMessage());
+    }
+
+
+
+
+
 }
