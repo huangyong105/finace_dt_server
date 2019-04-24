@@ -1,12 +1,11 @@
 package com.roncoo.eshop.manager;
 
 
-import com.roncoo.eshop.DTO.ArticleManagementDTO;
+import cn.com.taiji.DTO.ArticleManagementDTO;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.ArticleManagementMapper;
 import com.roncoo.eshop.model.ArticleManagementDO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.roncoo.eshop.result;
+package cn.com.taiji.result;
 
 /**
  * 公用的错误编码类

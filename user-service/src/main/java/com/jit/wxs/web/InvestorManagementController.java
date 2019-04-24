@@ -1,8 +1,8 @@
 package com.jit.wxs.web;
 
 import com.jit.wxs.client.InvestmentClient;
-import com.roncoo.eshop.DTO.ProjectManagementDTO;
-import com.roncoo.eshop.result.MyResult;
+import cn.com.taiji.DTO.ProjectManagementDTO;
+import cn.com.taiji.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,17 +1,18 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.DTO.InvestmentDetailsDTO;
+import cn.com.taiji.DTO.InvestorManagementDTO;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
 import cn.com.taiji.data.UserEntity;
-import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
-import com.roncoo.eshop.DTO.InvestorManagementDTO;
+
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.InvestorManager;
 
 
-import com.roncoo.eshop.result.MyResult;
+import cn.com.taiji.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 用户相关接口

@@ -1,4 +1,4 @@
-package com.roncoo.eshop.DTO;
+package cn.com.taiji.DTO;
 
 import java.math.BigDecimal;
 import java.util.Date;

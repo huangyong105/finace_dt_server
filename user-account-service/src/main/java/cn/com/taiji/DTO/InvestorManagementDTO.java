@@ -1,4 +1,4 @@
-package com.roncoo.eshop.DTO;
+package cn.com.taiji.DTO;
 
 import java.util.Date;
 

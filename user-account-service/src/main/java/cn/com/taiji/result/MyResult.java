@@ -1,4 +1,4 @@
-package com.roncoo.eshop.result;
+package cn.com.taiji.result;
 
 import java.io.Serializable;
 

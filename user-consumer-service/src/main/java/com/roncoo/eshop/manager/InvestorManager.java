@@ -1,12 +1,11 @@
 package com.roncoo.eshop.manager;
 
 
-import com.roncoo.eshop.DTO.InvestmentDetailsDTO;
+import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.util.FtpUtil;
-import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

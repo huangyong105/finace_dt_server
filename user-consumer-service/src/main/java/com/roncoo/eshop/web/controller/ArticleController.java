@@ -3,11 +3,10 @@ package com.roncoo.eshop.web.controller;
 
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
-import com.roncoo.eshop.DTO.ArticleManagementDTO;
+import cn.com.taiji.DTO.ArticleManagementDTO;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.ArticleManager;
-import com.roncoo.eshop.model.ArticleManagementDO;
-import com.roncoo.eshop.result.MyResult;
+import cn.com.taiji.result.MyResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;

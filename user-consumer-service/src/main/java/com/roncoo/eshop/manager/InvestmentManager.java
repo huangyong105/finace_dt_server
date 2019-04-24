@@ -1,7 +1,7 @@
 package com.roncoo.eshop.manager;
 
 
-import com.roncoo.eshop.DTO.ProjectManagementDTO;
+import cn.com.taiji.DTO.ProjectManagementDTO;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.ProjectManagementMapper;
 import com.roncoo.eshop.model.ProjectManagementDO;
