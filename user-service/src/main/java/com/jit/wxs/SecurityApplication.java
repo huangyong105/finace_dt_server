@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableEurekaClient
 //@EnableDiscoveryClient
 //@RefreshScope
 @EnableTransactionManagement
@@ -33,6 +33,7 @@ import java.util.Set;
 @EnableScheduling
 @EnableAsync
 @EnableCaching
+@EnableFeignClients
 public class SecurityApplication {
 
     public static void main(String[] args) {
