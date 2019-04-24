@@ -62,6 +62,8 @@ public class FtpUtil {
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
             ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+            ftpClient.setDataTimeout(20000);
+            ftpClient.setConnectTimeout(20000);
             if(!ftpClient.storeFile(fileName, is)){
                 return flag;
             }
