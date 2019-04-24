@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -25,14 +26,13 @@ import java.util.Set;
 
 @SpringBootApplication
 //@EnableEurekaClient
-@EnableDiscoveryClient
-@RefreshScope
+//@EnableDiscoveryClient
+//@RefreshScope
 @EnableTransactionManagement
 @ServletComponentScan
 @EnableScheduling
 @EnableAsync
 @EnableCaching
-@EnableFeignClients
 public class SecurityApplication {
 
     public static void main(String[] args) {
