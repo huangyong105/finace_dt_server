@@ -203,6 +203,12 @@ public class InvestorManagementController {
         return MyResult.ofError(5000,"认证失败");
     }
 
+    /**
+     * 绑定银行卡
+     * @param investorManagementDTO
+     * @param token
+     * @return
+     */
     @RequestMapping(value = "/bindCard")
     public MyResult bindCard(@RequestBody InvestorManagementDTO investorManagementDTO,@RequestHeader("token")String token){
         Result<User> userResult = null;

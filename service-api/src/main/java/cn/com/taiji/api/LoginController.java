@@ -115,11 +115,23 @@ public class LoginController {
         user.setIdCardNumber(userEntity.getIdCardNumber());
         user.setIdCardPngUp(userEntity.getIdCardPngUp());
         user.setIdCardPngDown(userEntity.getIdCardPngDown());
+        if (userService.realNameCertification(user)!=null){
+            if (user.getBankCardNumber()==null){
+                user.setState(110);
+            }else{
+                user.setState(111);
+            }
+        }
         return Optional.ofNullable(userService.realNameCertification(user))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1", "实名制认证失败"));
     }
 
+    /**
+     * 绑定银行卡
+     * @param userEntity
+     * @return
+     */
     @PostMapping("/bindCard")
     public Result bindCard(@RequestBody UserEntity userEntity){
         User user = userService.findUserById(userEntity.getId());
@@ -127,6 +139,13 @@ public class LoginController {
             return Result.failure("1","用户不存在");
         }
         user.setBankCardNumber(userEntity.getBankCardNumber());
+        if (userService.realNameCertification(user)!=null){
+            if (user.getIdCardNumber()==null){
+                user.setState(101);
+            }else{
+                user.setState(111);
+            }
+        }
         return Optional.ofNullable(userService.realNameCertification(user))
                 .map(result -> Result.success(result))
                 .orElse(Result.failure("-1", "绑定银行卡失败"));
