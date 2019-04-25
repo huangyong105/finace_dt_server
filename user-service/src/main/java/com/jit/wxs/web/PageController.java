@@ -63,8 +63,8 @@ public class PageController {
      */
     @RequestMapping(SecurityConstants.UN_AUTHENTICATION_URL)
     public String showAuthenticationPage() {
+        /*return "pages/page-login.html";*/
         return "pages/page-login.html";
-
     }
 
 

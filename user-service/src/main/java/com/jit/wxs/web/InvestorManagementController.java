@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 /**
@@ -17,31 +19,12 @@ import java.util.List;
  * @Author:yong.huang
  * @Date: 2019/4/22 19:33
  */
-@Controller
+@RestController
 @RequestMapping(value = "/investment")
 public class InvestorManagementController {
 
     @Autowired
     InvestmentClient investmentClient;
-    /**
-     * 获取全部项目列表
-     * @return
-     */
-    @RequestMapping("/getProjectList")
-    public Result<List<ProjectManagementDTO>> getProjectList(){
-        Result<List<ProjectManagementDTO>> list = investmentClient.getProjectList();
-        return list;
-    }
-
-    /**
-     * 根据id获取项目详情
-     * @return
-     */
-    @RequestMapping("/getProject")
-    public Result<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req){
-        Result<ProjectManagementDTO> project = investmentClient.getProject(req);
-        return project;
-    }
 
     /**
      * 添加投资项目
@@ -49,7 +32,7 @@ public class InvestorManagementController {
      * @param req
      * @return
      */
-    @RequestMapping("/saveProject")
+    @RequestMapping(value = "/saveProject")
     public Result saveProject(@RequestBody ProjectManagementDTO req){
         Result result = investmentClient.saveProject(req);
         return result;
@@ -60,7 +43,7 @@ public class InvestorManagementController {
      * todo 内部调用
      * @return
      */
-    @RequestMapping("/getAllProjectList")
+    @RequestMapping(value = "/getAllProjectList")
     public Result<List<ProjectManagementDTO>> getAllProjectList(){
         Result<List<ProjectManagementDTO>> listMyResult = investmentClient.getAllProjectList();
         return listMyResult;
@@ -72,7 +55,7 @@ public class InvestorManagementController {
      * @param req
      * @return
      */
-    @RequestMapping("/onlineOrOffline")
+    @RequestMapping(value = "/onlineOrOffline")
     public Result online(@RequestBody ProjectManagementDTO req){
         investmentClient.online(req);
         return Result.ofSuccess();

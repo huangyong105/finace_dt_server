@@ -25,9 +25,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
-@EnableEurekaClient
-//@EnableDiscoveryClient
-//@RefreshScope
+//@EnableEurekaClient
+@EnableDiscoveryClient
+@RefreshScope
 @EnableTransactionManagement
 @ServletComponentScan
 @EnableScheduling

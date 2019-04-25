@@ -8,7 +8,6 @@ import com.jit.wxs.service.SysPermissionService;
 import com.jit.wxs.service.SysUserRoleService;
 import com.jit.wxs.service.SysUserService;
 import com.jit.wxs.util.BeanConverter;
-import com.jit.wxs.util.mail.EmailModelDTO;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;

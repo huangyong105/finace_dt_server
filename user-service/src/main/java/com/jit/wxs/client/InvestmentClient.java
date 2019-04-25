@@ -19,19 +19,6 @@ import java.util.List;
 public interface InvestmentClient {
 
 
-    /**
-     * 获取全部项目列表
-     * @return
-     */
-    @RequestMapping("/getProjectList")
-    public Result<List<ProjectManagementDTO>> getProjectList();
-
-    /**
-     * 根据id获取项目详情
-     * @return
-     */
-    @RequestMapping("/getProject")
-    public Result<ProjectManagementDTO> getProject(@RequestBody ProjectManagementDTO req);
 
     /**
      * 添加投资项目
@@ -39,14 +26,14 @@ public interface InvestmentClient {
      * @param req
      * @return
      */
-    @RequestMapping("/saveProject")
+    @RequestMapping("/investment/saveProject")
     public Result saveProject(@RequestBody ProjectManagementDTO req);
     /**
      * 获取全部项目列表（包括下架）
      * todo 内部调用
      * @return
      */
-    @RequestMapping("/getAllProjectList")
+    @RequestMapping("/investment/getAllProjectList")
     public Result<List<ProjectManagementDTO>> getAllProjectList();
 
     /**
@@ -55,7 +42,7 @@ public interface InvestmentClient {
      * @param req
      * @return
      */
-    @RequestMapping("/onlineOrOffline")
+    @RequestMapping("/investment/onlineOrOffline")
     public Result online(@RequestBody ProjectManagementDTO req);
 }
 

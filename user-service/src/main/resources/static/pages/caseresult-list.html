@@ -253,7 +253,7 @@
                                     <th>项目名称</th>
                                     <th>预期月收益</th>
                                     <th>最低承受风险</th>
-                                    <th>最低承受风险/th>
+                                    <th>最低保证金</th>
                                     <th>资金配比</th>
                                     <th>创建时间</th>
                                     <th>状态</th>
@@ -362,33 +362,24 @@
         //弹出提示框
         showCustombox("确认删除应用："+name,false);
     }
-
-    function update(id,name,mobile,email,state,perms,password,idList){
+    function update(id,projectName,monthEarnings,expectedRiskTolerance,minMargin,moneyProportion,gmtCreated,isOnline){
         $('#row-id-1').val(id);
-        $('#name').val(name);
-        $('#mobile').val(mobile);
-        $('#email').val(email);
-        $('#password').val(password);
-        arr  =idList.split(',')
-        $(":radio[name='state'][value='" + state + "']").prop("checked", "checked");
-        $(":checkbox").each(function(index) {
-            $(this).prop('checked', false);
-        });
-        $(":checkbox").each(function(index) {
-            val2= $(this).val();
-            for (var i = 0;i<arr.length;i++) {
-                if (arr[i] === val2) {
-                    $(this).prop('checked', true);
-                }
-            };
-        });
+        $('#projectName').val(projectName);
+        $('#monthEarnings').val(monthEarnings);
+        $('#expectedRiskTolerance').val(expectedRiskTolerance);
+        $('#minMargin').val(minMargin);
+        $('#moneyProportion').val(moneyProportion);
+        $('#gmtCreated').val(gmtCreated);
+        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
         $("#myModalLabel").text("更新");
+        $("#btn_submit").attr("id","btn_submit_update");
         $('#myModal').modal();
     }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
     $("#btn_add").click(function () {
+        $("#btn_submit_update").attr("id","btn_submit");
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
@@ -470,7 +461,7 @@
                 param.pageNo = (data.start / data.length)+1;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
-                    url: host+"/investment/getProjectList",
+                    url: host+"/investment/getAllProjectList",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
                     success:function(res){
@@ -503,7 +494,7 @@
                 targets: 6,
                 render: function(data, type, row, meta) {
                     if(row.gmtCreated ){
-                        formatDate(row.gmtCreated);
+                       return formatDate(row.gmtCreated);
                     }
                 }
             },{
@@ -518,7 +509,7 @@
             },{
                 targets: 8,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\',\'' + row.mobile + '\',\'' + row.email + '\',\'' + row.state + '\',\'' + row.perms + '\',\'' + row.password + '\',\'' + row.idList + '\')" >更新</a>';
+                    return '<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >更新</a>';
                 }
             }],
             language: {
@@ -554,11 +545,38 @@
     });
 
     $("#btn_submit").click(function(){
+        var param = getFormData($("#search_form"));
         $.ajax({
             dataType : "json",
-            url : host+"/uc/createUser",
+            url : host+"/investment/saveProject",
+            contentType: 'application/json;charset=UTF-8',
             type : "post",
-            data : $('#search_form').serialize(),
+            data : JSON.stringify(param),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    table.ajax.reload();
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
+
+    });
+
+    $("#btn_submit_update").click(function(){
+        var param = getFormData($("#search_form"));
+        $.ajax({
+            dataType : "json",
+            url : host+"/investment/onlineOrOffline",
+            contentType: 'application/json;charset=UTF-8',
+            type : "post",
+            data : JSON.stringify(param),
             success : function(data) {
                 if(!data.success){
                     alert(data.message);
