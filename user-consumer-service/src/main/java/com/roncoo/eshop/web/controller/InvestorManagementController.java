@@ -50,6 +50,10 @@ public class InvestorManagementController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
+        }
         User user = userResult.getData();
         InvestorManagementDTO investorManagementDTO = new InvestorManagementDTO();
         investorManagementDTO.setId(user.getId());
@@ -74,6 +78,10 @@ public class InvestorManagementController {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         Long id = userResult.getData().getId();
         List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
@@ -104,6 +112,10 @@ public class InvestorManagementController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
+        }
         User user = userResult.getData();
         if (user.getIdCardNumber()!=null||user.getIdCardPngDown()!=null||user.getIdCardPngUp()!=null){
             return MyResult.ofSuccess(1);
@@ -122,6 +134,10 @@ public class InvestorManagementController {
             userResult = userClient.getUserInfo(token);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         User user = userResult.getData();
         if (user.getBankCardNumber()!=null){
@@ -143,8 +159,9 @@ public class InvestorManagementController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userResult.getCode()==null){
-            return MyResult.ofError(4000,"非法登陆");
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         String fileName = null;
         try {
@@ -168,8 +185,9 @@ public class InvestorManagementController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userResult.getCode()==null){
-            return MyResult.ofError(4000,"非法登陆");
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         response.setContentType("image/jpeg");
         response.setHeader("Cache-Control", "max-age=604800");
@@ -197,7 +215,7 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return MyResult.ofError(4000,"无本用户");
+            return MyResult.ofError(4000,"未登陆");
         }
         if (investorManagementDTO.getIdCardNumber()==null||investorManagementDTO.getIdCardPngDown()==null||investorManagementDTO.getIdCardPngUp()==null){
             return MyResult.ofError(5002,"入参不完整!");
@@ -231,7 +249,7 @@ public class InvestorManagementController {
         }
         if (!userResult.isSuccess()||userResult.getData()==null)
         {
-            return MyResult.ofError(4000,"无本用户");
+            return MyResult.ofError(4000,"未登陆");
         }
         if (investorManagementDTO.getBankCardNumber()==null){
             return MyResult.ofError(5002,"入参不完整!");

@@ -41,8 +41,9 @@ public class ArticleController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userResult.getCode()==null){
-            return MyResult.ofError(4000,"非法登陆");
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         List<ArticleManagementDTO> list = articleManager.getArticleList();
         return MyResult.ofSuccess(list);

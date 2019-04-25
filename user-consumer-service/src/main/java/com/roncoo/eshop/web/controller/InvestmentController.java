@@ -41,8 +41,9 @@ public class InvestmentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userResult.getCode()==null){
-            return MyResult.ofError(4000,"非法登陆");
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         List<ProjectManagementDTO> list = investmentManager.getInvestmentProjectList();
         return MyResult.ofSuccess(list);
@@ -60,8 +61,9 @@ public class InvestmentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userResult.getCode()==null){
-            return MyResult.ofError(4000,"非法登陆");
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
         }
         ProjectManagementDTO investmentProject = investmentManager.getInvestmentProject(req.getId());
         return MyResult.ofSuccess(investmentProject);
