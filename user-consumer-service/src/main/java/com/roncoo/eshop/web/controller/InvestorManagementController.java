@@ -81,6 +81,18 @@ public class InvestorManagementController {
     }
 
     /**
+     * 获取用户投资详情
+     * todo 提供内部调用
+     * @return
+     */
+    @RequestMapping("/getMyInvestment")
+    public MyResult getMyInvestment(Long id){
+        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
+        return MyResult.ofSuccess(dtos);
+    }
+
+
+    /**
      * 获取实名认证状态
      * @return
      */
