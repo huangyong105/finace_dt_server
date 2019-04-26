@@ -378,19 +378,9 @@
                     alert(data.message);
                 }else{
                     $.each(data.value, function(i, item) {
-                        $("#ul_has_sub").append(
-              /*              "<div>" + item.id + "</div>" +
-                            "<div>" + item.nickname    + "</div>" +
-                            "<div>" + item.content + "</div><hr/>");*/
-                            "<li class=\"has_sub\">" +
-                            "<a href=\"" +
-                              item.url +
-                            "\" class=\"waves-effect\"><i class=\"mdi mdi-google-play\"></i>" +
-                            " <span>"+
-                            item.name
-                            +"</span></a>"
-                            +"</li>"
-                       );
+                        if (i === 0) {
+                            location.href=item.url;
+                        }
                     });
                 }
             },
@@ -401,111 +391,8 @@
     }
     $(document).ready(function () {
         showUI ();
-        $('#confirm-del').click(function(){
-            var id = $('#row-id').val();
-            $.ajax({
-                dataType : "json",
-                url: host+"/application/delete",
-                contentType: 'application/json;charset=UTF-8',
-                type: 'POST',
-                headers:{Authorization:token},
-                // 传给服务器的数据，可以添加我们自己的查询参数
-                data: '{"id":"'+id+'"}',
-                success:function(res){
-                    table.ajax.reload();
-                },
-                error: function(res){
-                    authorValidate(res);
-                }
-            });
-            Custombox.close();
-        });
-        table = $('#datatable').DataTable({
-            "processing" : false,
-            "serverSide": true,
-            "bLengthChange": false,     //关闭选择显示条数
-            "bSort": false,             //不能排序
-            "iDisplayLength": 10,
-            "searching" : false,
-            ajax(data, callback, settings){
-                //封装请求参数
-                var param = getFormData($("#search_form"));
-                param.pageSize = data.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
-                param.pageNo = (data.start / data.length)+1;   //开始的记录序号
-                $.ajax({
-                    dataType : "json",
-                    url: host+"/uc/findAllUsers",
-                    contentType: 'application/json;charset=UTF-8',
-                    type: 'POST',
-                    headers:{Authorization:token},
-                    // 传给服务器的数据，可以添加我们自己的查询参数
-                    data: JSON.stringify(param),
-                    success:function(res){
-                        setTimeout( function () {
-                            var out = {};
-                            out.draw = data.draw;
-                            out.recordsTotal = res.total;
-                            out.recordsFiltered = res.total;
-                            out.data =  res.list;
-                            callback( out );
-                        },50);
-                    },
-                    error: function(res){
-                        authorValidate(res);
-                    }
-                });
-            },
-            "columns": [
-                { data: 'id'},
-                { data : 'appid'},
-                { data: 'name'},
-                { data: 'security'},
-                { data : 'description'},
-                { data : 'createDate'},
-                { data : null}
-            ],
-            columnDefs: [{
-                targets: 3,
-                render: function(data, type, row, meta) {
-                    return '<span><a type="button" href="#" onclick="showSecurity(\''+row.security+'\',this)"><i class="glyphicon glyphicon-eye-open"></i></a><span>';
-                }
-            },{
-                targets: 6,
-                render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\')" >更新</a>';
-                }
-            }],
-            language: {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
-            }
-        });
+    });
 
-    });
-    TableManageButtons.init();
-    $("#but_search").click(function(){
-        table.ajax.reload();
-    });
 
 </script>
 

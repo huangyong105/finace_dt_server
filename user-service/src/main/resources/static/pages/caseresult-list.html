@@ -372,14 +372,12 @@
         $('#gmtCreated').val(gmtCreated);
         $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
         $("#myModalLabel").text("更新");
-        $("#btn_submit").attr("id","btn_submit_update");
         $('#myModal').modal();
     }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
     $("#btn_add").click(function () {
-        $("#btn_submit_update").attr("id","btn_submit");
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
@@ -545,35 +543,17 @@
     });
 
     $("#btn_submit").click(function(){
+        var id =  $('#row-id-1').val(id);
+        var url =null;
+        if (!id ) {
+            url=   host+"/investment/saveProject";
+        } else {
+            url=   host+"/investment/onlineOrOffline";
+        }
         var param = getFormData($("#search_form"));
         $.ajax({
             dataType : "json",
-            url : host+"/investment/saveProject",
-            contentType: 'application/json;charset=UTF-8',
-            type : "post",
-            data : JSON.stringify(param),
-            success : function(data) {
-                if(!data.success){
-                    alert(data.message);
-                }else{
-                    table.ajax.reload();
-                }
-            },
-            error : function (e){
-                var d = e.responseJSON;
-                if(d){
-                    alert(d.message);
-                }
-            }
-        });
-
-    });
-
-    $("#btn_submit_update").click(function(){
-        var param = getFormData($("#search_form"));
-        $.ajax({
-            dataType : "json",
-            url : host+"/investment/onlineOrOffline",
+            url : url,
             contentType: 'application/json;charset=UTF-8',
             type : "post",
             data : JSON.stringify(param),
