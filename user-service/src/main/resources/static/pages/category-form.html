@@ -190,15 +190,15 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_1">
                                                 <label for="articleName">文章名称</label>
                                                 <input type="text" name="articleName" class="form-control" id="articleName" placeholder="文章名称">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_2">
                                                 <label for="articleDesc">文章描述</label>
                                                 <input type="text" name="articleDesc" class="form-control" id="articleDesc" placeholder="文章描述">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_3">
                                                 <label for="link">跳转地址</label>
                                                 <input type="text" name="link" class="form-control" id="link" placeholder="跳转地址">
                                             </div>
@@ -354,6 +354,7 @@
         showCustombox("确认删除应用："+name,false);
     }
     function update(id,articleName,articleDesc,link,gmtCreated,isOnline){
+        showOrHide(1);
         $('#row-id-1').val(id);
         $('#articleName').val(articleName);
         $('#articleDesc').val(articleDesc);
@@ -363,10 +364,32 @@
         $("#myModalLabel").text("更新");
         $('#myModal').modal();
     }
+
+    function online(id ,isOnline){
+        showOrHide(0);
+        $('#row-id-1').val(id);
+        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
+    }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
+
+    function showOrHide (state) {
+        if (state && state === 1) {
+            $('#dc_1').show();
+            $('#dc_2').show();
+            $('#dc_3').show();
+        } else {
+            $('#dc_1').hide();
+            $('#dc_2').hide();
+            $('#dc_3').hide();
+        }
+    }
+
     $("#btn_add").click(function () {
+        showOrHide(1);
         $('#row-id-1').val("");
         $('#articleName').val("");
         $('#articleDesc').val("");
@@ -500,15 +523,19 @@
                 targets: 5,
                 render: function(data, type, row, meta) {
                     if(row.isOnline && row.isOnline === 1){
-                        return '上线';
+                        return '上架';
                     }else{
-                        return '下线';
+                        return '下架';
                     }
                 }
             },{
                 targets: 6,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.articleName + '\',\'' + row.articleDesc + '\',\'' + row.link + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >更新</a>';
+                    if( row.isOnline &&  row.isOnline === 1 ) {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.articleName + '\',\'' + row.articleDesc + '\',\'' + row.link + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    } else {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 上架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.articleName + '\',\'' + row.articleDesc + '\',\'' + row.link + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    }
                 }
             }],
             language: {
@@ -545,11 +572,14 @@
 
     $("#btn_submit").click(function(){
         var id =  $('#row-id-1').val();
-        alert(id);
+        var node = $('#dc_1') ;
         var url =null;
         if (!id ) {
             url=   host+"/article/addArticleList";
-        } else {
+        }  else if (node.is(':hidden')) {
+            url=   host+"/article/onlineOrOffline";
+        }
+        else {
             url=   host+"/article/updateArticle";
         }
         var param = getFormData($("#search_form"));

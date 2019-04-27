@@ -190,25 +190,25 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_1">
                                                 <label for="projectName">项目名称</label>
                                                 <input type="text" name="projectName" class="form-control" id="projectName" placeholder="项目名称">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_2">
                                                 <label for="monthEarnings">预期月收益</label>
                                                 <input type="text" name="monthEarnings" class="form-control" id="monthEarnings" placeholder="预期月收益">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_3">
                                                 <label for="expectedRiskTolerance">最低承受风险</label>
                                                 <input type="text" name="expectedRiskTolerance" class="form-control" id="expectedRiskTolerance" placeholder="最低承受风险">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id ="dc_4">
                                                 <label for="minMargin">最低保证金</label>
                                                 <input type="text" name="minMargin" class="form-control" id="minMargin" placeholder="最低保证金">
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="moneyProportion">资金配比</label>
+                                            <div class="form-group" id ="dc_5">
+                                                <label for="moneyProportion" >资金配比</label>
                                                 <input type="text" name="moneyProportion" class="form-control" id="moneyProportion" placeholder="资金配比">
                                             </div>
 
@@ -363,6 +363,7 @@
         showCustombox("确认删除应用："+name,false);
     }
     function update(id,projectName,monthEarnings,expectedRiskTolerance,minMargin,moneyProportion,gmtCreated,isOnline){
+        showOrHide(1);
         $('#row-id-1').val(id);
         $('#projectName').val(projectName);
         $('#monthEarnings').val(monthEarnings);
@@ -378,9 +379,38 @@
         $(obj).parents('span').html(security);
     }
     $("#btn_add").click(function () {
+        showOrHide(1);
+        $('#projectName').val("");
+        $('#monthEarnings').val("");
+        $('#expectedRiskTolerance').val("");
+        $('#minMargin').val("");
+        $('#moneyProportion').val("");
+        $('#gmtCreated').val("");
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
+    function online(id ,isOnline){
+        showOrHide(0);
+        $('#row-id-1').val(id);
+        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
+    }
+    function showOrHide (state) {
+        if (state && state === 1) {
+            $('#dc_1').show();
+            $('#dc_2').show();
+            $('#dc_3').show();
+            $('#dc_4').show();
+            $('#dc_5').show();
+        } else {
+            $('#dc_1').hide();
+            $('#dc_2').hide();
+            $('#dc_3').hide();
+            $('#dc_4').hide();
+            $('#dc_5').hide();
+        }
+    }
     function formatDate(inputTime){
         var date = new Date(inputTime);
         var y = date.getFullYear();
@@ -507,7 +537,11 @@
             },{
                 targets: 8,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >更新</a>';
+                    if( row.isOnline &&  row.isOnline === 1 ) {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    } else {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 上架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    }
                 }
             }],
             language: {
@@ -544,10 +578,14 @@
 
     $("#btn_submit").click(function(){
         var id =  $('#row-id-1').val(id);
+        var node = $('#dc_1') ;
         var url =null;
         if (!id ) {
             url=   host+"/investment/saveProject";
-        } else {
+        }  else if (node.is(':hidden')) {
+            url=   host+"/article/onlineOrOffline";
+        }
+        else {
             url=   host+"/investment/onlineOrOffline";
         }
         var param = getFormData($("#search_form"));
