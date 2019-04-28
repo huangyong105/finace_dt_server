@@ -2,6 +2,9 @@ package com.roncoo.eshop.manager;
 
 
 import cn.com.taiji.DTO.ProjectManagementDTO;
+import cn.com.taiji.page.PageInfo;
+import cn.com.taiji.page.PageResult;
+import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.ProjectManagementMapper;
 import com.roncoo.eshop.model.ProjectManagementDO;
@@ -38,10 +41,18 @@ public class InvestmentManager {
         projectManagementMapper.insertInvestment(projectManagementDO);
     }
 
-    public List<ProjectManagementDTO> getAllInvestmentProject(){
+    public PageResult<ProjectManagementDTO> getAllInvestmentProject(Integer currentPage,Integer pageSize){
+        PageHelper.startPage(currentPage, pageSize);
         List<ProjectManagementDO> list = projectManagementMapper.selectAllPrimary();
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(list);
         List<ProjectManagementDTO> projectManagementDTOS = BeanConverter.batchConvert(list, ProjectManagementDTO.class);
-        return projectManagementDTOS;
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setCurrentPage(currentPage);
+        pageInfo1.setPageSize(pageSize);
+        pageInfo1.setTotalCount(pageInfo.getTotal());
+        pageInfo1.setTotalPage(pageInfo.getPages());
+        PageResult<ProjectManagementDTO> pageResult = new PageResult<>(projectManagementDTOS, pageInfo1);
+        return pageResult;
     }
 
     public void setLine(ProjectManagementDTO projectManagementDTO){

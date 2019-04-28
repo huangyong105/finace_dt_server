@@ -2,6 +2,9 @@ package com.roncoo.eshop.manager;
 
 
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
+import cn.com.taiji.page.PageInfo;
+import cn.com.taiji.page.PageResult;
+import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.model.InvestmentDetailsDO;
@@ -41,6 +44,20 @@ public class InvestorManager {
 
     public void downloadIdPhoto(String fileName,OutputStream ops){
         ftpUtil.downloadFile(fileName,ops);
+    }
+
+    public PageResult<InvestmentDetailsDTO> getInvestmentDetailsDOSByuserId(Long userID,Integer currentPage,Integer pageSize){
+        PageHelper.startPage(currentPage, pageSize);
+        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByPrimaryKey(userID);
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(investmentDetailsDOS);
+        List<InvestmentDetailsDTO> dtos = BeanConverter.batchConvert(investmentDetailsDOS, InvestmentDetailsDTO.class);
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setCurrentPage(currentPage);
+        pageInfo1.setPageSize(pageSize);
+        pageInfo1.setTotalCount(pageInfo.getTotal());
+        pageInfo1.setTotalPage(pageInfo.getPages());
+        PageResult<InvestmentDetailsDTO> pageResult = new PageResult<>(dtos, pageInfo1);
+        return pageResult;
     }
 
     public List<InvestmentDetailsDTO> getInvestmentDetailsDOSByuserId(Long userID){

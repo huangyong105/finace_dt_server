@@ -2,6 +2,7 @@ package com.jit.wxs.web;
 
 
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
+import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageInfoDTO;
 import cn.com.taiji.page.PageResult;
 import com.github.pagehelper.PageHelper;
@@ -48,9 +49,13 @@ public class InvestorManagementController {
         }
         PageHelper.startPage(currentPage, pageSize);
         List<CUser> userList = cuserService.getUserList(user);
-        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
-        pageInfo.setPageInfoData(userList);
-        PageResult<CUser> pageResult = new PageResult<>(userList, pageInfo);
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(userList);
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setCurrentPage(currentPage);
+        pageInfo1.setPageSize(pageSize);
+        pageInfo1.setTotalCount(pageInfo.getTotal());
+        pageInfo1.setTotalPage(pageInfo.getPages());
+        PageResult<CUser> pageResult = new PageResult<>(userList, pageInfo1);
         return Result.ofSuccess(pageResult);
     }
 

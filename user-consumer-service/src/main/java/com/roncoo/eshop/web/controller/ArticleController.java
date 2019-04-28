@@ -79,11 +79,7 @@ public class ArticleController {
         if (pageSize == null) {
             pageSize = 100000;
         }
-        PageHelper.startPage(currentPage, pageSize);
-        List<ArticleManagementDTO> list = articleManager.getAllArticle();
-        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
-        pageInfo.setPageInfoData(list);
-        PageResult<ArticleManagementDTO> pageResult = new PageResult<>(list, pageInfo);
+        PageResult<ArticleManagementDTO> pageResult = articleManager.getAllArticle(currentPage,pageSize);
         return MyResult.ofSuccess(pageResult);
     }
 
