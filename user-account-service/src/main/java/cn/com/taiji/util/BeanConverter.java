@@ -41,7 +41,7 @@ public class BeanConverter {
                 T target = clz.newInstance();
                 copier.copy(source, target, null);
                 return target;
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (Exception e) {
                 LOGGER.error("对象转换异常:{}", e);
             }
         }

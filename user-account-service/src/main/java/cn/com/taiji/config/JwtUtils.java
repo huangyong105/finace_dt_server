@@ -70,11 +70,11 @@ public class JwtUtils {
     }
 
     public static void main(String[] args) {
-        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<String,Object>();
         map.put("userName","admin");
         map.put("userId","001");
 
-        String token = JwtUtils.sign(map, 3600_000);
+        String token = JwtUtils.sign(map, 3600000);
 //        String token = JwtUtils.sign(map, "jitwxs","普通用户",3600_000);
         System.out.println(JwtUtils.unSign(token));
     }
