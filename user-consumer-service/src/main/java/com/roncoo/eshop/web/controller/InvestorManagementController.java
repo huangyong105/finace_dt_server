@@ -8,15 +8,28 @@ import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
 import cn.com.taiji.data.UserEntity;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.roncoo.eshop.client.UserClient;
+import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.manager.InvestorManager;
 
 
 import cn.com.taiji.result.MyResult;
+import com.roncoo.eshop.manager.PayOrderManager;
+import com.roncoo.eshop.mapper.PayOrderMapper;
+import com.roncoo.eshop.model.PayOrderDO;
+import com.roncoo.eshop.util.OrderCodeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,12 +45,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/investor")
 public class InvestorManagementController {
+    private static Logger LOG= LoggerFactory.getLogger(InvestorManagementController.class);
     @Autowired
     private InvestorManager investorManager;
+    @Autowired
+    private PayOrderManager payOrderManager;
+    @Autowired
+    private AlipayClient alipayClient;
     @Autowired
     private UserClient userClient;
     @Value("${image_path_url}")
     String imagePathUrl;
+    @Value("${notifyUrl}")
+    String notifyUrl;
     /**
      * 获取用户基础信息
      * @return
@@ -86,6 +106,59 @@ public class InvestorManagementController {
         Long id = userResult.getData().getId();
         List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
         return MyResult.ofSuccess(dtos);
+    }
+
+    @RequestMapping("/payProject")
+    public MyResult payProject(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        String infoStr = null;
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
+        }
+        //生成唯一支付订单id
+        Long userId = userResult.getData().getId();
+        String orderCode = OrderCodeUtil.getOrderCode(userId);
+        PayOrderDO payOrderDO = payOrderManager.savePayOrder(orderCode, investmentDetailsDTO, userId);
+        if (payOrderDO == null){
+            return MyResult.ofError(4000,"预下单失败");
+        }
+        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
+        model.setBody(payOrderDO.getPayDescribe());
+        model.setSubject(payOrderDO.getPayTitle());
+        model.setOutTradeNo(payOrderDO.getOrderId());
+        model.setTimeoutExpress("30m");
+        model.setTotalAmount(payOrderDO.getInputMargin().toString());
+        model.setProductCode("QUICK_MSECURITY_PAY");
+        request.setBizModel(model);
+        request.setNotifyUrl(notifyUrl);
+        try {
+        //这里和普通的接口调用不同，使用的是sdkExecute
+        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+        infoStr = response.getBody();
+        LOG.info(response.getBody());
+    } catch (AlipayApiException e) {
+        e.printStackTrace();
+        }
+        return MyResult.ofSuccess(infoStr);
+
+    }
+
+    /**
+     * 用户投资项目
+     * @param token
+     * @param investmentDetailsDTO
+     * @return
+     */
+    @RequestMapping("/addMyInvestment")
+    public MyResult addMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        return MyResult.ofSuccess();
     }
 
     /**
