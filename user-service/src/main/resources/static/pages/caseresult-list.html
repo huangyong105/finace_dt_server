@@ -110,7 +110,7 @@
                                 <h5>Hi, John</h5>
                             </li>
                             <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
-                            <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                            <li><a href="javascript:void(0)" id="logout"><i class="ti-power-off m-r-5"></i> Logout</a></li>
                         </ul>
                     </li>
 
@@ -531,7 +531,7 @@
                     if(row.isOnline && row.isOnline === 1){
                         return '上架';
                     }else{
-                        return '下架';
+                        return '正常';
                     }
                 }
             },{
@@ -575,15 +575,17 @@
     $("#but_search").click(function(){
         table.ajax.reload();
     });
-
+    $("#logout").click(function(){
+        location.href="/logout"
+    });
     $("#btn_submit").click(function(){
-        var id =  $('#row-id-1').val(id);
+        var id =  $('#row-id-1').val();
         var node = $('#dc_1') ;
         var url =null;
         if (!id ) {
             url=   host+"/investment/saveProject";
         }  else if (node.is(':hidden')) {
-            url=   host+"/article/onlineOrOffline";
+            url=   host+"/investment/onlineOrOffline";
         }
         else {
             url=   host+"/investment/onlineOrOffline";
