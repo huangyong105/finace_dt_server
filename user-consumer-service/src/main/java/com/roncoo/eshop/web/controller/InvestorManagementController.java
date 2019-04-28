@@ -1,7 +1,6 @@
 package com.roncoo.eshop.web.controller;
 
 
-import cn.com.taiji.DTO.ArticleManagementDTO;
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.InvestorManagementDTO;
 import cn.com.taiji.data.Result;
@@ -9,6 +8,8 @@ import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
 import cn.com.taiji.data.UserEntity;
 
+import cn.com.taiji.page.PageInfoDTO;
+import cn.com.taiji.page.PageResult;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
@@ -16,16 +17,12 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
-import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.manager.InvestorManager;
 
 
 import cn.com.taiji.result.MyResult;
 import com.roncoo.eshop.manager.PayOrderManager;
-import com.roncoo.eshop.mapper.PayOrderMapper;
 import com.roncoo.eshop.model.PayOrderDO;
-import com.roncoo.eshop.page.PageInfoDTO;
-import com.roncoo.eshop.page.PageResult;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

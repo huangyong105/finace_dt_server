@@ -2,15 +2,14 @@ package com.jit.wxs.web;
 
 
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
-import cn.com.taiji.result.MyResult;
+import cn.com.taiji.page.PageInfoDTO;
+import cn.com.taiji.page.PageResult;
 import com.github.pagehelper.PageHelper;
 import com.jit.wxs.Enum.StateEnum;
 import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.CUser;
-import com.jit.wxs.entity.Page;
+;
 import com.jit.wxs.entity.Result;
-import com.jit.wxs.page.PageInfoDTO;
-import com.jit.wxs.page.PageResult;
 import com.jit.wxs.service.CuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
