@@ -1,4 +1,4 @@
-package com.jit.wxs.page;
+package cn.com.taiji.page;
 
 import java.io.Serializable;
 import java.util.List;
