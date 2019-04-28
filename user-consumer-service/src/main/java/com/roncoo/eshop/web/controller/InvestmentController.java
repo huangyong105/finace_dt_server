@@ -49,6 +49,7 @@ public class InvestmentController {
         return MyResult.ofSuccess(list);
     }
 
+
     /**
      * 根据id获取项目详情
      * @return

@@ -12,27 +12,49 @@ public class InvestmentDetailsDTO {
      * 主键自增id
      */
     private Long id;
-
+    /**
+     * 项目id
+     */
     private Long projectId;
-
+    /**
+     * 投资人id
+     */
     private Long investmenterId;
-
+    /**
+     * 项目名称
+     */
     private String projectName;
-
+    /**
+     * 预期月收益
+     */
     private Integer monthEarnings;
-
+    /**
+     * 预期承受风险
+     */
     private Integer expectedRiskTolerance;
-
+    /**
+     * 投入保证金
+     */
     private BigDecimal inputMargin;
-
+    /**
+     * 资金配比
+     */
     private String moneyProportion;
-
+    /**
+     * 入金时间
+     */
     private Date inputMarginTime;
-
+    /**
+     * 当前投资状态
+     */
     private Integer state;
-
+    /**
+     * 创建时间
+     */
     private Date gmtCreated;
-
+    /**
+     * 更新时间
+     */
     private Date gmtUpdated;
 
     public Long getId() {
