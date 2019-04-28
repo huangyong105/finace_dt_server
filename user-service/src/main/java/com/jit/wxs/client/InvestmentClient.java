@@ -47,6 +47,16 @@ public interface InvestmentClient {
     @RequestMapping("/investment/onlineOrOffline")
     public Result online(@RequestBody ProjectManagementDTO req);
 
+    /**
+     * 更新项目内容
+     * todo 内部调用
+     * @param req
+     * @return
+     */
+    @RequestMapping("/investment/updateProject")
+    public Result updateProject(@RequestBody ProjectManagementDTO req);
+
+
 
 
 

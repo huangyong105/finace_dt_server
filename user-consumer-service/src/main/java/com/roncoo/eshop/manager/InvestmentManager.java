@@ -48,4 +48,9 @@ public class InvestmentManager {
         ProjectManagementDO projectManagementDO = BeanConverter.convert(projectManagementDTO, ProjectManagementDO.class);
         projectManagementMapper.updateline(projectManagementDO);
     }
+
+    public void updateProject(ProjectManagementDTO projectManagementDTO){
+        ProjectManagementDO projectManagementDO = BeanConverter.convert(projectManagementDTO, ProjectManagementDO.class);
+        projectManagementMapper.updateProject(projectManagementDO);
+    }
 }

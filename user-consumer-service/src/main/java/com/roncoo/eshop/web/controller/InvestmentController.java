@@ -105,6 +105,18 @@ public class InvestmentController {
         return MyResult.ofSuccess();
     }
 
+    /**
+     * 更新项目内容
+     * todo 内部调用
+     * @param req
+     * @return
+     */
+    @RequestMapping("/updateProject")
+    public MyResult updateProject(@RequestBody ProjectManagementDTO req){
+        investmentManager.updateProject(req);
+        return MyResult.ofSuccess();
+    }
+
 
 
 

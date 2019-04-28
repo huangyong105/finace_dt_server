@@ -58,4 +58,17 @@ public class InvestmentController {
         return Result.ofSuccess();
     }
 
+    /**
+     * 更新项目内容
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "/updateProject")
+    public Result updateProject(@RequestBody ProjectManagementDTO req){
+        investmentClient.updateProject(req);
+        return Result.ofSuccess();
+    }
+
+
+
 }

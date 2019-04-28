@@ -29,4 +29,15 @@ public interface ProjectManagementMapper {
 
     @Update("update project_management set is_online=#{isOnline} where id=#{id}")
     void updateline(ProjectManagementDO projectManagementDO);
+
+    @Update("update project_management set " +
+            "project_name=#{projectName}," +
+            "month_earnings=#{monthEarnings}," +
+            "expected_risk_tolerance=#{expectedRiskTolerance}," +
+            "min_margin=#{minMargin}," +
+            "money_proportion=#{moneyProportion}," +
+            "gmt_created=now()," +
+            "gmt_updated=now()," +
+            "is_online=#{isOnline}")
+    void updateProject(ProjectManagementDO projectManagementDO);
 }

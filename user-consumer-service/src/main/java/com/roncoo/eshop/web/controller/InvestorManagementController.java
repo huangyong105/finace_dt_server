@@ -158,6 +158,7 @@ public class InvestorManagementController {
      */
     @RequestMapping("/addMyInvestment")
     public MyResult addMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+
         return MyResult.ofSuccess();
     }
 
