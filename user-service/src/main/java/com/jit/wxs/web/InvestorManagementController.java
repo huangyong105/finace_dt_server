@@ -72,13 +72,13 @@ public class InvestorManagementController {
 
     /**
      * 根据c端用户id获取投资项目列表
-     * @param id
+     * @param
      * @return
      */
     @RequestMapping("/getMyInvestment")
-    public Result getMyInvestment(Long id){
-        Result<InvestmentDetailsDTO> myInvestment = investmentClient.getMyInvestment(id);
-        return Result.ofSuccess(myInvestment);
+    public Result<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        Result<PageResult<InvestmentDetailsDTO>> myInvestment = investmentClient.getMyInvestment(investmentDetailsDTO);
+        return myInvestment;
     }
 
 

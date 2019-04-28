@@ -1,6 +1,7 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.DTO.ArticleManagementDTO;
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.InvestorManagementDTO;
 import cn.com.taiji.data.Result;
@@ -13,6 +14,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.manager.InvestorManager;
@@ -22,6 +24,8 @@ import cn.com.taiji.result.MyResult;
 import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.PayOrderMapper;
 import com.roncoo.eshop.model.PayOrderDO;
+import com.roncoo.eshop.page.PageInfoDTO;
+import com.roncoo.eshop.page.PageResult;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,9 +172,21 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/getMyInvestment")
-    public MyResult getMyInvestment(Long id){
-        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
-        return MyResult.ofSuccess(dtos);
+    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
+        PageHelper.startPage(currentPage, pageSize);
+        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getId());
+        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
+        pageInfo.setPageInfoData(dtos);
+        PageResult<InvestmentDetailsDTO> pageResult = new PageResult<>(dtos, pageInfo);
+        return MyResult.ofSuccess(pageResult);
     }
 
 

@@ -1,12 +1,16 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.DTO.ProjectManagementDTO;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
 import cn.com.taiji.DTO.ArticleManagementDTO;
+import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.manager.ArticleManager;
 import cn.com.taiji.result.MyResult;
+import com.roncoo.eshop.page.PageInfoDTO;
+import com.roncoo.eshop.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -67,9 +71,21 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getAllArticle")
-    public MyResult<List<ArticleManagementDTO>> getAllArticle(){
+    public MyResult<PageResult<ArticleManagementDTO>> getAllArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
+        Integer currentPage = articleManagementDTO.getCurrentPage();
+        Integer pageSize = articleManagementDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
+        PageHelper.startPage(currentPage, pageSize);
         List<ArticleManagementDTO> list = articleManager.getAllArticle();
-        return MyResult.ofSuccess(list);
+        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
+        pageInfo.setPageInfoData(list);
+        PageResult<ArticleManagementDTO> pageResult = new PageResult<>(list, pageInfo);
+        return MyResult.ofSuccess(pageResult);
     }
 
     /**

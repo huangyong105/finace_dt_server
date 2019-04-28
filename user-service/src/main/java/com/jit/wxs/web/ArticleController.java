@@ -6,6 +6,7 @@ import cn.com.taiji.DTO.ArticleManagementDTO;
 
 import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.Result;
+import com.jit.wxs.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +41,8 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getAllArticle")
-    public Result<List<ArticleManagementDTO>> getAllArticle(){
-        Result<List<ArticleManagementDTO>> allArticle = investmentClient.getAllArticle();
+    public Result<PageResult<ArticleManagementDTO>> getAllArticle(@RequestBody ArticleManagementDTO articleManagementDTO){
+        Result<PageResult<ArticleManagementDTO>> allArticle = investmentClient.getAllArticle(articleManagementDTO);
         return allArticle;
     }
 

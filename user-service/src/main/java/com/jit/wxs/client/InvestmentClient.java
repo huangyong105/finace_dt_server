@@ -4,6 +4,7 @@ import cn.com.taiji.DTO.ArticleManagementDTO;
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import com.jit.wxs.entity.Result;
+import com.jit.wxs.page.PageResult;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +33,12 @@ public interface InvestmentClient {
     public Result saveProject(@RequestBody ProjectManagementDTO req);
     /**
      * 获取全部项目列表（包括下架）
+     * 起始页，每页大小
      * todo 内部调用
      * @return
      */
     @RequestMapping("/investment/getAllProjectList")
-    public Result<List<ProjectManagementDTO>> getAllProjectList();
+    public Result<PageResult<ProjectManagementDTO>> getAllProjectList(@RequestBody ProjectManagementDTO req);
 
     /**
      * 更新项目上线状态
@@ -75,7 +77,7 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/article/getAllArticle")
-    public Result<List<ArticleManagementDTO>> getAllArticle();
+    public Result<PageResult<ArticleManagementDTO>> getAllArticle(@RequestBody ArticleManagementDTO articleManagementDTO);
 
     /**
      * 设置上下架
@@ -110,6 +112,6 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/investor/getMyInvestment")
-    public Result<InvestmentDetailsDTO> getMyInvestment(Long id);
+    public Result<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO);
 }
 

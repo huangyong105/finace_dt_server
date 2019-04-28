@@ -4,6 +4,7 @@ import com.jit.wxs.client.InvestmentClient;
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import cn.com.taiji.result.MyResult;
 import com.jit.wxs.entity.Result;
+import com.jit.wxs.page.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,8 +43,8 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping(value = "/getAllProjectList")
-    public Result<List<ProjectManagementDTO>> getAllProjectList(){
-        Result<List<ProjectManagementDTO>> listMyResult = investmentClient.getAllProjectList();
+    public Result<PageResult<ProjectManagementDTO>> getAllProjectList(@RequestBody ProjectManagementDTO req){
+        Result<PageResult<ProjectManagementDTO>> listMyResult = investmentClient.getAllProjectList(req);
         return listMyResult;
     }
 
