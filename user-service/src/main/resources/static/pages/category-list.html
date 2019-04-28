@@ -380,22 +380,108 @@
         //弹出提示框
         showCustombox("确认删除应用："+name,false);
     }
-
-    function update(id){
-        window.location.href='application-form.html?id='+id;
+    function update(id,projectName,monthEarnings,expectedRiskTolerance,minMargin,moneyProportion,gmtCreated,isOnline){
+        showOrHide(1);
+        $('#row-id-1').val(id);
+        $('#projectName').val(projectName);
+        $('#monthEarnings').val(monthEarnings);
+        $('#expectedRiskTolerance').val(expectedRiskTolerance);
+        $('#minMargin').val(minMargin);
+        $('#moneyProportion').val(moneyProportion);
+        $('#gmtCreated').val(gmtCreated);
+        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
     }
     function showSecurity(security,obj){
         $(obj).parents('span').html(security);
     }
+    $("#btn_add").click(function () {
+        showOrHide(1);
+        $('#projectName').val("");
+        $('#monthEarnings').val("");
+        $('#expectedRiskTolerance').val("");
+        $('#minMargin').val("");
+        $('#moneyProportion').val("");
+        $('#gmtCreated').val("");
+        $("#myModalLabel").text("新增");
+        $('#myModal').modal();
+    });
+    function online(id ,isOnline){
+        showOrHide(0);
+        $('#row-id-1').val(id);
+        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
+        $("#myModalLabel").text("更新");
+        $('#myModal').modal();
+    }
+    function showOrHide (state) {
+        if (state && state === 1) {
+            $('#dc_1').show();
+            $('#dc_2').show();
+            $('#dc_3').show();
+            $('#dc_4').show();
+            $('#dc_5').show();
+        } else {
+            $('#dc_1').hide();
+            $('#dc_2').hide();
+            $('#dc_3').hide();
+            $('#dc_4').hide();
+            $('#dc_5').hide();
+        }
+    }
+    function formatDate(inputTime){
+        var date = new Date(inputTime);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    }
+    function showUI () {
+        $.ajax({
+            dataType : "json",
+            url: host+"/loadUrls",
+            contentType: 'application/json;charset=UTF-8',
+            type: 'POST',
+            success:function(data){
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    $.each(data.value, function(i, item) {
+                        $("#ul_has_sub").append(
+                            "<li class=\"has_sub\">" +
+                            "<a href=\"" +
+                            item.url +
+                            "\" class=\"waves-effect\"><i class=\"mdi mdi-google-play\"></i>" +
+                            " <span>"+
+                            item.name
+                            +"</span></a>"
+                            +"</li>"
+                        );
+                    });
+                }
+            },
+            error: function(res){
+                authorValidate(res);
+            }
+        });
+    }
     $(document).ready(function () {
+        showUI ();
         $('#confirm-del').click(function(){
             var id = $('#row-id').val();
             $.ajax({
                 dataType : "json",
-                url: host+"/application/delete",
+                url: host+"/uc/deleteSysUser",
                 contentType: 'application/json;charset=UTF-8',
                 type: 'POST',
-                headers:{Authorization:token},
                 // 传给服务器的数据，可以添加我们自己的查询参数
                 data: '{"id":"'+id+'"}',
                 success:function(res){
@@ -421,19 +507,16 @@
                 param.pageNo = (data.start / data.length)+1;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
-                    url: host+"/application/page/list",
+                    url: host+"/investment/getAllProjectList",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
-                    headers:{Authorization:token},
-                    // 传给服务器的数据，可以添加我们自己的查询参数
-                    data: JSON.stringify(param),
                     success:function(res){
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
                             out.recordsTotal = res.total;
                             out.recordsFiltered = res.total;
-                            out.data =  res.list;
+                            out.data =  res.value;
                             callback( out );
                         },50);
                     },
@@ -444,22 +527,39 @@
             },
             "columns": [
                 { data: 'id'},
-                { data : 'appid'},
-                { data: 'name'},
-                { data: 'security'},
-                { data : 'description'},
-                { data : 'createDate'},
+                { data: 'projectName'},
+                { data : 'monthEarnings'},
+                { data: 'expectedRiskTolerance'},
+                { data: 'minMargin'},
+                { data: 'moneyProportion'},
+                { data : 'gmtCreated'},
+                { data : 'isOnline'},
                 { data : null}
             ],
             columnDefs: [{
-                targets: 3,
-                render: function(data, type, row, meta) {
-                    return '<span><a type="button" href="#" onclick="showSecurity(\''+row.security+'\',this)"><i class="glyphicon glyphicon-eye-open"></i></a><span>';
-                }
-            },{
                 targets: 6,
                 render: function(data, type, row, meta) {
-                    return '<a type="button"  href="#" onclick="del(\'' + row.id + '\',\'' + row.name + '\')" >删除</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.name + '\')" >更新</a>';
+                    if(row.gmtCreated ){
+                        return formatDate(row.gmtCreated);
+                    }
+                }
+            },{
+                targets: 7,
+                render: function(data, type, row, meta) {
+                    if(row.isOnline && row.isOnline === 1){
+                        return '上架';
+                    }else{
+                        return '下架';
+                    }
+                }
+            },{
+                targets: 8,
+                render: function(data, type, row, meta) {
+                    if( row.isOnline &&  row.isOnline === 1 ) {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    } else {
+                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 上架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
+                    }
                 }
             }],
             language: {
@@ -492,6 +592,42 @@
     TableManageButtons.init();
     $("#but_search").click(function(){
         table.ajax.reload();
+    });
+
+    $("#btn_submit").click(function(){
+        var id =  $('#row-id-1').val(id);
+        var node = $('#dc_1') ;
+        var url =null;
+        if (!id ) {
+            url=   host+"/investment/saveProject";
+        }  else if (node.is(':hidden')) {
+            url=   host+"/article/onlineOrOffline";
+        }
+        else {
+            url=   host+"/investment/onlineOrOffline";
+        }
+        var param = getFormData($("#search_form"));
+        $.ajax({
+            dataType : "json",
+            url : url,
+            contentType: 'application/json;charset=UTF-8',
+            type : "post",
+            data : JSON.stringify(param),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    table.ajax.reload();
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
+
     });
 
 </script>
