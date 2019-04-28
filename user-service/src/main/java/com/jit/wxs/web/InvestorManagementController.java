@@ -8,7 +8,6 @@ import com.github.pagehelper.PageHelper;
 import com.jit.wxs.Enum.StateEnum;
 import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.CUser;
-;
 import com.jit.wxs.entity.Result;
 import com.jit.wxs.service.CuserService;
 import org.springframework.beans.factory.annotation.Autowired;
