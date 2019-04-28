@@ -58,8 +58,24 @@ public class DefaultUserDetailsService implements UserDetailsService {
             SysRole role = roleService.getById(userRole.getRoleId());
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
+        Boolean accountNonExpired = true;
+
+        /**
+         * 用户的账户是否被锁定,被锁定的账户无法通过授权验证. true 账号未锁定
+         */
+         Boolean accountNonLocked = true;
+         if (user.getState() == 1) {
+             accountNonLocked =false ;
+         }
+
+        /**
+         * 用户的凭据(pasword) 是否过期,过期的凭据不能通过验证. true 没有过期,false 已过期
+         */
+         Boolean credentialsNonExpired = true;
+
 
         // 返回UserDetails实现类
-        return new User(user.getName(), user.getPassword(), authorities);
+        User userDetails = new User(user.getName(),user.getPassword(), true,accountNonExpired,accountNonLocked,credentialsNonExpired, authorities);
+        return userDetails;
     }
 }

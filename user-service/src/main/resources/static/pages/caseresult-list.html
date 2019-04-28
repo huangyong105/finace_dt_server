@@ -486,19 +486,20 @@
                 //封装请求参数
                 var param = getFormData($("#search_form"));
                 param.pageSize = data.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
-                param.pageNo = (data.start / data.length)+1;   //开始的记录序号
+                param.currentPage = (data.start / data.length)+1;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
                     url: host+"/investment/getAllProjectList",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
+                    data :JSON.stringify(param),
                     success:function(res){
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
-                            out.recordsTotal = res.total;
-                            out.recordsFiltered = res.total;
-                            out.data =  res.value;
+                            out.recordsTotal = res.pageInfo.totalCount;
+                            out.recordsFiltered = res.pageInfo.totalCount;
+                            out.data =  res.value.data;
                             callback( out );
                         },50);
                     },
