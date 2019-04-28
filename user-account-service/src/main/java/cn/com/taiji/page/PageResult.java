@@ -17,6 +17,9 @@ public class PageResult<T> implements Serializable {
      */
     private PageInfo pageInfo;
 
+    public PageResult() {
+    }
+
     public PageResult(List<T> data, PageInfo pageInfo){
         this.data = data;
         this.pageInfo = pageInfo;

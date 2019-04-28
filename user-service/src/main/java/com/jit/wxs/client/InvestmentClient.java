@@ -38,7 +38,7 @@ public interface InvestmentClient {
      * @return
      */
     @RequestMapping("/investment/getAllProjectList")
-    public Result<PageResult<ProjectManagementDTO>> getAllProjectList(@RequestBody ProjectManagementDTO req);
+    public Result getAllProjectList(@RequestBody ProjectManagementDTO req);
 
     /**
      * 更新项目上线状态
