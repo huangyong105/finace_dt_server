@@ -463,13 +463,11 @@
         });
         table = $('#datatable').DataTable({
             "processing" : false,
-            "serverSide": true,
-            //"sPaginationType" : "full_numbers",//分页工具条样式
-            "bStateSave" : true, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
-            "bScrollCollapse" : true, //当显示的数据不足以支撑表格的默认的高度
+            "serverSide": false,
+            "bLengthChange": false,     //关闭选择显示条数
             "bSort": false,             //不能排序
-            "searching" : false,
             "iDisplayLength": 10,
+            "searching" : false,
             ajax(data, callback, settings){
                 //封装请求参数
                 var param = getFormData($("#search_form"));
