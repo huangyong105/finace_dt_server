@@ -483,9 +483,9 @@
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
-                            out.recordsTotal = res.total;
-                            out.recordsFiltered = res.total;
-                            out.data =  res.value;
+                            out.recordsTotal = res.value.pageInfo.totalCount;
+                            out.recordsFiltered = res.value.pageInfo.pageSize;
+                            out.data =  res.value.data;
                             callback( out );
                         },50);
                     },

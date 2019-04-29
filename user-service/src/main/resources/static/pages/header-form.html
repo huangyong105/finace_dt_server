@@ -454,7 +454,7 @@
         });
         table = $('#datatable').DataTable({
             "processing" : false,
-            "serverSide": true,
+            "serverSide": false,
             "bLengthChange": false,     //关闭选择显示条数
             "bSort": false,             //不能排序
             "iDisplayLength": 10,
@@ -474,9 +474,9 @@
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
-                            out.recordsTotal = res.pageInfo.totalCount;
-                            out.recordsFiltered = res.pageInfo.totalCount;
-                            out.data =  res.value.data;
+                            out.recordsTotal = res.value.length;
+                            out.recordsFiltered =  res.value.length;
+                            out.data =  res.value;
                             callback( out );
                         },50);
                     },

@@ -482,6 +482,7 @@
             "bSort": false,             //不能排序
             "iDisplayLength": 10,
             "searching" : false,
+            "sPaginationType": "full_numbers",
             ajax(data, callback, settings){
                 //封装请求参数
                 var param = getFormData($("#search_form"));
@@ -497,8 +498,8 @@
                         setTimeout( function () {
                             var out = {};
                             out.draw = data.draw;
-                            out.recordsTotal = res.pageInfo.totalCount;
-                            out.recordsFiltered = res.pageInfo.totalCount;
+                            out.recordsTotal = res.value.pageInfo.totalCount;
+                            out.recordsFiltered = res.value.pageInfo.pageSize;
                             out.data =  res.value.data;
                             callback( out );
                         },50);
