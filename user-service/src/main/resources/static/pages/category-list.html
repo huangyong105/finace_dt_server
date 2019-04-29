@@ -260,7 +260,7 @@
                                     <th>投入保证金</th>
                                     <th>资金配比</th>
                                     <th>入金时间</th>
-                                    <th>状态</th>
+                                    <th>投资状态</th>
                                     <th style="width: 50px">操作</th>
                                 </tr>
                                 </thead>
@@ -496,6 +496,7 @@
                     $('#bankCardNumber').text(data.value.bankCardNumber);
                     $('#idCardPngUp').attr("src",data.value.idCardPngUp);
                     $('#idCardPngDown').attr("src",data.value.idCardPngDown);
+                    showTable(data.value.id);
                 }
             },
             error : function (e){
@@ -506,10 +507,7 @@
             }
         });
     }
-    $(document).ready(function () {
-        showUI ();
-        var value = getvalue("id");
-        getUserInfo(value)
+    function  showTable(investmenterId) {
         table = $('#datatable').DataTable({
             "processing" : false,
             "serverSide": true,
@@ -519,12 +517,19 @@
             "searching" : false,
             ajax(data, callback, settings){
                 //封装请求参数
-                var param = getFormData($("#search_form"));
-                param.pageSize = data.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
-                param.currentPage = (data.start / data.length)+1;   //开始的记录序号
+                var param = {};
+                param.investmenterId = investmenterId;
+                var info = $('#datatable').DataTable().page.info();
+                var oTable = $("#datatable").dataTable(); //table1为表格的id
+                var tableSetings=oTable.fnSettings();
+                var paging_length=tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start=tableSetings._iDisplayStart;//当前页开始
+                var page=(page_start / paging_length)+1;
+                param.pageSize =info.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
+                param.currentPage = page;   //开始的记录序号
                 $.ajax({
                     dataType : "json",
-                    url: host+"/investment/getAllProjectList",
+                    url: host+"/investor/getMyInvestment",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
                     data :JSON.stringify(param),
@@ -551,7 +556,7 @@
                 { data: 'minMargin'},
                 { data: 'moneyProportion'},
                 { data : 'gmtCreated'},
-                { data : 'isOnline'},
+                { data : 'state'},
                 { data : null}
             ],
             columnDefs: [{
@@ -564,20 +569,20 @@
             },{
                 targets: 7,
                 render: function(data, type, row, meta) {
-                    if(row.isOnline && row.isOnline === 1){
-                        return '上架';
-                    }else{
-                        return '下架';
+                    if(row.state && row.state === 100){
+                        return '未实名未绑卡';
+                    }else if(row.state && row.state === 110){
+                        return '已实名未绑卡';
+                    }else if(row.state && row.state === 111){
+                        return '实名绑卡';
+                    }else if(row.state && row.state === 101){
+                        return '未实名已绑卡';
                     }
                 }
             },{
                 targets: 8,
                 render: function(data, type, row, meta) {
-                    if( row.isOnline &&  row.isOnline === 1 ) {
-                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
-                    } else {
-                        return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 上架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
-                    }
+                    return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>';
                 }
             }],
             language: {
@@ -605,7 +610,11 @@
                 }
             }
         });
-
+    }
+    $(document).ready(function () {
+        showUI ();
+        var value = getvalue("id");
+        getUserInfo(value);
     });
     TableManageButtons.init();
     $("#but_search").click(function(){
