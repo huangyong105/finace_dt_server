@@ -176,10 +176,11 @@
                 </div>
                 <!-- end row -->
                     <div class="col-sm-12">
+                        <form class="form-horizontal" id="search_form" action="#">
                         <div class="card-box table-responsive">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" name="name" value="" placeholder="请输入手机号或邮箱">
+                                    <input type="text" class="form-control" name="account" value="" placeholder="请输入手机号或邮箱">
                                 </div>
                                 <div class="col-md-1">
                                     <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="but_search">&nbsp;&nbsp;查&nbsp;&nbsp;询&nbsp;&nbsp;</button>
@@ -193,6 +194,7 @@
                                     <th>手机号</th>
                                     <th>邮箱</th>
                                     <th>状态</th>
+                                    <th style="width: 50px">操作</th>
                                 </tr>
                                 </thead>
 
@@ -202,6 +204,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        </form>
                     </div>
                 </div>
 
@@ -292,10 +295,27 @@
 <script>
     var table;
     var token = $.cookie('token');
-    function del(id,name){
-        $('#row-id').val(id);
-        //弹出提示框
-        showCustombox("确认删除应用："+name,false);
+    function detail(account,email){
+        $.ajax({
+            dataType : "json",
+            url : url,
+            contentType: 'application/json;charset=UTF-8',
+            type : "post",
+            data : JSON.stringify(param),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    table.ajax.reload();
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
     }
     function update(id,articleName,articleDesc,link,gmtCreated,isOnline){
         showOrHide(1);
@@ -423,7 +443,7 @@
                 var page=(page_start / paging_length)+1;
                 param.pageSize =info.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
                 param.currentPage = page;   //开始的记录序号
-
+                param.email=param.account
                 $.ajax({
                     dataType : "json",
                     url: host+"/investor/getUserList",
@@ -450,21 +470,27 @@
                 { data: 'account'},
                 { data : 'email'},
                 { data : 'state'},
+                { data : null}
             ],
             columnDefs: [{
                     targets: 3,
                     render: function(data, type, row, meta) {
                         if(row.state && row.state === 100){
-                            return '100未实名未绑卡';
+                            return '未实名未绑卡';
                         }else if(row.state && row.state === 110){
-                            return '110已实名未绑卡';
+                            return '已实名未绑卡';
                         }else if(row.state && row.state === 111){
-                            return '111实名绑卡';
+                            return '实名绑卡';
                         }else if(row.state && row.state === 101){
-                            return '101未实名已绑卡';
+                            return '未实名已绑卡';
                         }
                     }
-                }],
+                },{
+                targets: 4,
+                render: function(data, type, row, meta) {
+                    return '<a type="button"  href="#" onclick="detail(\'' + row.account + '\',\'' + row.email + '\')" >详情</a>';
+                }
+            }],
             language: {
                 "sProcessing": "处理中...",
                 "sLengthMenu": "显示 _MENU_ 项结果",
