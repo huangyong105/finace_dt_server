@@ -10,13 +10,16 @@ import cn.com.taiji.data.UserEntity;
 
 import cn.com.taiji.page.PageInfoDTO;
 import cn.com.taiji.page.PageResult;
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
+import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.manager.InvestorManager;
 
 
@@ -32,10 +35,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.rmi.runtime.Log;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户相关接口
@@ -55,6 +60,8 @@ public class InvestorManagementController {
     private AlipayClient alipayClient;
     @Autowired
     private UserClient userClient;
+    @Autowired
+    private AliPayConfig aliPayConfig;
     @Value("${image_path_url}")
     String imagePathUrl;
     @Value("${notifyUrl}")
@@ -152,14 +159,25 @@ public class InvestorManagementController {
     }
 
     /**
-     * 用户投资项目
+     * 支付宝回调，确认订单支付
      * @param token
-     * @param investmentDetailsDTO
+     * @param
      * @return
      */
-    @RequestMapping("/addMyInvestment")
-    public MyResult addMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+    @RequestMapping("/alipayCallback")
+    public MyResult addMyInvestment(@RequestHeader("token")String token, HttpServletRequest request){
+        Map<String, String> params = investorManager.convertRequestParamsToMap(request);
+        String paramsJson = JSON.toJSONString(params);
+        LOG.info("支付宝回调,{}",paramsJson);
+        try {
+            boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
+            if (signVerified){
+                LOG.info("支付宝回调签名认证成功");
 
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
         return MyResult.ofSuccess();
     }
 

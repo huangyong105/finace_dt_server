@@ -24,4 +24,44 @@ public class AliPayConfig {
         AlipayClient alipayClient = new DefaultAlipayClient(serverUrl,appid,privateKey,"json","utf-8",publicKey,"RSA2");
         return alipayClient;
     }
+
+    public static Logger getLOG() {
+        return LOG;
+    }
+
+    public static void setLOG(Logger LOG) {
+        AliPayConfig.LOG = LOG;
+    }
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
 }
