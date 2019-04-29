@@ -257,7 +257,7 @@ public class InvestorManagementController {
         if (pageSize == null) {
             pageSize = 100000;
         }
-        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getId(),currentPage,pageSize);
+        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getInvestmenterId(),currentPage,pageSize);
 
         return MyResult.ofSuccess(dtos);
     }
