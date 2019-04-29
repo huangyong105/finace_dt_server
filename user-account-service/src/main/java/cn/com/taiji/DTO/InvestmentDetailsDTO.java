@@ -48,6 +48,11 @@ public class InvestmentDetailsDTO {
      * 当前投资状态
      */
     private Integer state;
+
+    /**
+     * 状态描述
+     */
+    private String stateDesc;
     /**
      * 创建时间
      */
@@ -176,5 +181,13 @@ public class InvestmentDetailsDTO {
 
     public void setGmtUpdated(Date gmtUpdated) {
         this.gmtUpdated = gmtUpdated;
+    }
+
+    public String getStateDesc() {
+        return stateDesc;
+    }
+
+    public void setStateDesc(String stateDesc) {
+        this.stateDesc = stateDesc;
     }
 }

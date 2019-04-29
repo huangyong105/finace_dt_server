@@ -12,13 +12,14 @@ public class PayOrderManager {
     PayOrderMapper payOrderMapper;
     public PayOrderDO savePayOrder(String orderCode, InvestmentDetailsDTO investmentDetailsDTO,Long userId){
         PayOrderDO payOrderDO = new PayOrderDO();
-        payOrderDO.setOrderId(orderCode);
+        payOrderDO.setPayOrderId(orderCode);
         payOrderDO.setUserId(userId);
         payOrderDO.setInputMargin(investmentDetailsDTO.getInputMargin());
         payOrderDO.setProjectName(investmentDetailsDTO.getProjectName());
         payOrderDO.setPayDescribe(investmentDetailsDTO.getProjectName());
         payOrderDO.setPayTitle("项目投资");
         payOrderDO.setPayState(0);
+        payOrderDO.setProjectId(investmentDetailsDTO.getProjectId());
         payOrderMapper.insertPayOrder(payOrderDO);
         PayOrderDO payOrder = payOrderMapper.selectByOrderId(orderCode);
         return payOrder;

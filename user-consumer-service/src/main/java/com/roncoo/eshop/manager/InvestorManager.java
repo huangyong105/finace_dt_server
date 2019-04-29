@@ -4,11 +4,14 @@ package com.roncoo.eshop.manager;
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageResult;
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.github.pagehelper.PageHelper;
+import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.mapper.PayOrderMapper;
+import com.roncoo.eshop.model.AlipayNotifyParam;
 import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.model.PayOrderDO;
 import com.roncoo.eshop.util.FtpUtil;
@@ -39,6 +42,8 @@ public class InvestorManager {
     InvestmentDetailsMapper investmentDetailsMapper;
     @Autowired
     PayOrderMapper payOrderMapper;
+    @Autowired
+    AliPayConfig aliPayConfig;
 
     public String uploadIdPhoto(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -107,8 +112,18 @@ public class InvestorManager {
             throw new AlipayApiException("out_trade_no错误");
         }
         //判断total_amount是否确实为该订单的实际金额
-        new BigDecimal(params.get("total_amount")).multiply(new BigDecimal(100));
+        BigDecimal totalAmount=new BigDecimal(params.get("total_amount")).multiply(new BigDecimal(100));
+        if (totalAmount.compareTo(payOrderDO.getInputMargin())!=0){
+            throw new AlipayApiException("total_amount错误");
+        }
+        if (!params.get("app_id").equals(aliPayConfig.getAppid())){
+            throw new AlipayApiException("app_id不一致");
+        }
     }
 
+    public AlipayNotifyParam buildAlipayNotifyParam(Map<String, String> params) {
+        String json = JSON.toJSONString(params);
+        return JSON.parseObject(json, AlipayNotifyParam.class);
+    }
 
 }

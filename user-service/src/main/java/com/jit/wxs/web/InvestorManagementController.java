@@ -6,6 +6,7 @@ import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageInfoDTO;
 import cn.com.taiji.page.PageResult;
 import com.github.pagehelper.PageHelper;
+import com.jit.wxs.Enum.PayStateEnum;
 import com.jit.wxs.Enum.StateEnum;
 import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.CUser;
@@ -81,7 +82,12 @@ public class InvestorManagementController {
     @RequestMapping("/getMyInvestment")
     public Result<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         Result<PageResult<InvestmentDetailsDTO>> myInvestment = investmentClient.getMyInvestment(investmentDetailsDTO);
-        return myInvestment;
+        PageResult<InvestmentDetailsDTO> value = myInvestment.getValue();
+        for (InvestmentDetailsDTO dto:value.getData()){
+            dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
+        }
+
+        return Result.ofSuccess(value);
     }
 
 

@@ -25,7 +25,13 @@ import com.roncoo.eshop.manager.InvestorManager;
 
 import cn.com.taiji.result.MyResult;
 import com.roncoo.eshop.manager.PayOrderManager;
+import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
+import com.roncoo.eshop.mapper.PayOrderMapper;
+import com.roncoo.eshop.mapper.ProjectManagementMapper;
+import com.roncoo.eshop.model.AlipayNotifyParam;
+import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.model.PayOrderDO;
+import com.roncoo.eshop.model.ProjectManagementDO;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +47,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 用户相关接口
@@ -52,6 +60,7 @@ import java.util.Map;
 @RequestMapping("/investor")
 public class InvestorManagementController {
     private static Logger LOG= LoggerFactory.getLogger(InvestorManagementController.class);
+    private ExecutorService executorService = Executors.newFixedThreadPool(20);
     @Autowired
     private InvestorManager investorManager;
     @Autowired
@@ -62,6 +71,12 @@ public class InvestorManagementController {
     private UserClient userClient;
     @Autowired
     private AliPayConfig aliPayConfig;
+    @Autowired
+    ProjectManagementMapper projectManagementMapper;
+    @Autowired
+    InvestmentDetailsMapper investmentDetailsMapper;
+    @Autowired
+    PayOrderMapper payOrderMapper;
     @Value("${image_path_url}")
     String imagePathUrl;
     @Value("${notifyUrl}")
@@ -116,6 +131,12 @@ public class InvestorManagementController {
         return MyResult.ofSuccess(investmentDetailsDOSByuserId);
     }
 
+    /**
+     * 预下单
+     * @param token
+     * @param investmentDetailsDTO
+     * @return
+     */
     @RequestMapping("/payProject")
     public MyResult payProject(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         String infoStr = null;
@@ -140,7 +161,7 @@ public class InvestorManagementController {
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
         model.setBody(payOrderDO.getPayDescribe());
         model.setSubject(payOrderDO.getPayTitle());
-        model.setOutTradeNo(payOrderDO.getOrderId());
+        model.setOutTradeNo(payOrderDO.getPayOrderId());
         model.setTimeoutExpress("30m");
         model.setTotalAmount(payOrderDO.getInputMargin().toString());
         model.setProductCode("QUICK_MSECURITY_PAY");
@@ -160,12 +181,11 @@ public class InvestorManagementController {
 
     /**
      * 支付宝回调，确认订单支付
-     * @param token
      * @param
      * @return
      */
     @RequestMapping("/alipayCallback")
-    public MyResult addMyInvestment(@RequestHeader("token")String token, HttpServletRequest request){
+    public String addMyInvestment(HttpServletRequest request){
         Map<String, String> params = investorManager.convertRequestParamsToMap(request);
         String paramsJson = JSON.toJSONString(params);
         LOG.info("支付宝回调,{}",paramsJson);
@@ -173,12 +193,53 @@ public class InvestorManagementController {
             boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
             if (signVerified){
                 LOG.info("支付宝回调签名认证成功");
+                investorManager.check(params);
+                //另起线程处理
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
+                        String trade_status = param.getTradeStatus();
+                        // 支付成功
+                        if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+                            // 处理支付成功逻辑
+                            try {
+                                String outTradeNo = param.getOutTradeNo();
+                                PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
+                                ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
+                                InvestmentDetailsDO investmentDetailsDO = new InvestmentDetailsDO();
+                                investmentDetailsDO.setProjectId(projectManagementDO.getId());
+                                investmentDetailsDO.setInvestmenterId(payOrderDO.getUserId());
+                                investmentDetailsDO.setProjectName(projectManagementDO.getProjectName());
+                                investmentDetailsDO.setMonthEarnings(projectManagementDO.getMonthEarnings());
+                                investmentDetailsDO.setExpectedRiskTolerance(projectManagementDO.getExpectedRiskTolerance());
+                                investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
+                                investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
+                                investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
+                                Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
+                                payOrderDO.setOrderId(orderId);
+                                payOrderDO.setPayState(1);
+                                payOrderMapper.updateOrderIdAndState(payOrderDO);
+                            } catch (Exception e) {
+                                LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+                            }
+                        }else if(trade_status.equals("TRADE_CLOSED")){
+                            PayOrderDO payOrderDO = new PayOrderDO();
+                            payOrderDO.setPayState(2);
+                            payOrderDO.setPayOrderId(param.getOutTradeNo());
+                            payOrderMapper.updateState(payOrderDO);
+                        }else {
+                            LOG.error("没有处理支付宝回调业务，支付宝交易状态：{},params:{}",trade_status,paramsJson);
+                        }
+                    }
+                });
+                return "success";
 
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        return MyResult.ofSuccess();
+       return null;
     }
 
     /**

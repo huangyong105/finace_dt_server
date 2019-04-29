@@ -3,19 +3,22 @@ package com.roncoo.eshop.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 public class PayOrderDO {
     private Long id;
-    private String orderId;
+    private String payOrderId;
     private Long userId;
     private BigDecimal inputMargin;
     private String projectName;
     private String payDescribe;
     private String payTitle;
-    private Data gmtCreated;
-    private Data gmtUpdated;
+    private Date gmtCreated;
+    private Date gmtUpdated;
     private Integer payState;
+    private Long projectId;
+    private Long orderId;
 
     public Long getId() {
         return id;
@@ -25,12 +28,12 @@ public class PayOrderDO {
         this.id = id;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getPayOrderId() {
+        return payOrderId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setPayOrderId(String payOrderId) {
+        this.payOrderId = payOrderId;
     }
 
     public Long getUserId() {
@@ -73,19 +76,19 @@ public class PayOrderDO {
         this.payTitle = payTitle;
     }
 
-    public Data getGmtCreated() {
+    public Date getGmtCreated() {
         return gmtCreated;
     }
 
-    public void setGmtCreated(Data gmtCreated) {
+    public void setGmtCreated(Date gmtCreated) {
         this.gmtCreated = gmtCreated;
     }
 
-    public Data getGmtUpdated() {
+    public Date getGmtUpdated() {
         return gmtUpdated;
     }
 
-    public void setGmtUpdated(Data gmtUpdated) {
+    public void setGmtUpdated(Date gmtUpdated) {
         this.gmtUpdated = gmtUpdated;
     }
 
@@ -95,5 +98,21 @@ public class PayOrderDO {
 
     public void setPayState(Integer payState) {
         this.payState = payState;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }
