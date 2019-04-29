@@ -105,8 +105,8 @@ public class InvestorManagementController {
             return MyResult.ofError(4000,"未登陆");
         }
         Long id = userResult.getData().getId();
-        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(id);
-        return MyResult.ofSuccess(dtos);
+        List<InvestmentDetailsDTO> investmentDetailsDOSByuserId = investorManager.getInvestmentDetailsDOSByuserId(id);
+        return MyResult.ofSuccess(investmentDetailsDOSByuserId);
     }
 
     @RequestMapping("/payProject")
@@ -178,12 +178,9 @@ public class InvestorManagementController {
         if (pageSize == null) {
             pageSize = 100000;
         }
-        PageHelper.startPage(currentPage, pageSize);
-        List<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getId());
-        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
-        pageInfo.setPageInfoData(dtos);
-        PageResult<InvestmentDetailsDTO> pageResult = new PageResult<>(dtos, pageInfo);
-        return MyResult.ofSuccess(pageResult);
+        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getId(),currentPage,pageSize);
+
+        return MyResult.ofSuccess(dtos);
     }
 
 

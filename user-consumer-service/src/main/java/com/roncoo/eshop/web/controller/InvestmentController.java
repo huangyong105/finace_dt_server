@@ -100,11 +100,7 @@ public class InvestmentController {
         if (pageSize == null) {
             pageSize = 100000;
         }
-        PageHelper.startPage(currentPage, pageSize);
-        List<ProjectManagementDTO> list = investmentManager.getAllInvestmentProject();
-        PageInfoDTO pageInfo = new PageInfoDTO(currentPage, pageSize);
-        pageInfo.setPageInfoData(list);
-        PageResult<ProjectManagementDTO> pageResult = new PageResult<>(list, pageInfo);
+        PageResult<ProjectManagementDTO> pageResult = investmentManager.getAllInvestmentProject(currentPage,pageSize);
         return MyResult.ofSuccess(pageResult);
     }
 
