@@ -473,6 +473,7 @@
             ajax(data, callback, settings){
                 //封装请求参数
                 var param = getFormData($("#search_form"));
+                var info = $('#datatable').DataTable().page.info();
                 var oTable = $("#datatable").dataTable(); //table1为表格的id
                 var tableSetings=oTable.fnSettings();
                 var paging_length=tableSetings._iDisplayLength;//当前每页显示多少
