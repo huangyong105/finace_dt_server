@@ -84,7 +84,16 @@ public class InvestorManagementController {
         Result<PageResult<InvestmentDetailsDTO>> myInvestment = investmentClient.getMyInvestment(investmentDetailsDTO);
         PageResult<InvestmentDetailsDTO> value = myInvestment.getValue();
         for (InvestmentDetailsDTO dto:value.getData()){
-            dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
+            //dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
+            if(dto.getState()==1){
+                dto.setStateDesc("正常");
+            }
+            if (dto.getState()==2){
+                dto.setStateDesc("已退款");
+            }
+            if (dto.getState()==3){
+                dto.setStateDesc("申请退款");
+            }
         }
 
         return Result.ofSuccess(value);
