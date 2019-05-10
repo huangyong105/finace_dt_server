@@ -553,10 +553,10 @@
                 { data: 'projectName'},
                 { data : 'monthEarnings'},
                 { data: 'expectedRiskTolerance'},
-                { data: 'minMargin'},
+                { data: 'inputMargin'},
                 { data: 'moneyProportion'},
                 { data : 'gmtCreated'},
-                { data : 'state'},
+                { data : 'stateDesc'},
                 { data : null}
             ],
             columnDefs: [{
@@ -564,19 +564,6 @@
                 render: function(data, type, row, meta) {
                     if(row.gmtCreated ){
                         return formatDate(row.gmtCreated);
-                    }
-                }
-            },{
-                targets: 7,
-                render: function(data, type, row, meta) {
-                    if(row.state && row.state === 100){
-                        return '未实名未绑卡';
-                    }else if(row.state && row.state === 110){
-                        return '已实名未绑卡';
-                    }else if(row.state && row.state === 111){
-                        return '实名绑卡';
-                    }else if(row.state && row.state === 101){
-                        return '未实名已绑卡';
                     }
                 }
             },{
