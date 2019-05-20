@@ -15,6 +15,9 @@ import com.roncoo.eshop.model.AlipayNotifyParam;
 import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.model.PayOrderDO;
 import com.roncoo.eshop.util.FtpUtil;
+import com.roncoo.eshop.web.controller.InvestorManagementController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -36,6 +39,7 @@ import java.util.Map;
  **/
 @Service
 public class InvestorManager {
+    private static Logger LOG= LoggerFactory.getLogger(InvestorManager.class);
     @Autowired
     FtpUtil ftpUtil;
     @Autowired
@@ -82,6 +86,16 @@ public class InvestorManager {
         return dtos;
     }
 
+    public InvestmentDetailsDO getInvestmentDetailsDOSById(Long id){
+        InvestmentDetailsDO investmentDetailsDO = investmentDetailsMapper.selectById(id);
+        return investmentDetailsDO;
+    }
+
+    public Long updateState(Long id,Integer state){
+        Long aLong = investmentDetailsMapper.updateState(id, state);
+        return aLong;
+    }
+
     public Map<String,String> convertRequestParamsToMap(HttpServletRequest request){
         Map<String,String> params = new HashMap<String,String>();
         Map requestParams  = request.getParameterMap();
@@ -104,7 +118,7 @@ public class InvestorManager {
         return params;
     }
 
-    public void check(Map<String,String> params)throws AlipayApiException{
+    public void aliCheck(Map<String,String> params)throws AlipayApiException{
         String outTradeNo = params.get("out_trade_no");
         //商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号.
         PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
@@ -120,6 +134,25 @@ public class InvestorManager {
             throw new AlipayApiException("app_id不一致");
         }
     }
+
+    public boolean wxCheck(Map<String,String> params){
+        String out_trade_no = params.get("out_trade_no");
+        PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(out_trade_no);
+        if (payOrderDO == null){
+            LOG.info("out_trade_no错误");
+            return false;
+        }
+        //判断total_amount是否确实为该订单的实际金额
+        BigDecimal totalAmount=new BigDecimal(params.get("total_fee")).multiply(new BigDecimal(100));
+        if (totalAmount.compareTo(payOrderDO.getInputMargin())!=0){
+            LOG.info("金额不一致");
+            return false;
+        }
+        return true;
+
+    }
+
+
 
     public AlipayNotifyParam buildAlipayNotifyParam(Map<String, String> params) {
         String json = JSON.toJSONString(params);

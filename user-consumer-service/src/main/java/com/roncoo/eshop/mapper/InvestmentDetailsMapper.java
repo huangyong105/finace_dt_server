@@ -3,10 +3,7 @@ package com.roncoo.eshop.mapper;
 
 
 import com.roncoo.eshop.model.InvestmentDetailsDO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,6 +19,13 @@ public interface InvestmentDetailsMapper {
 
     @Select("select * from investment_details where investmenter_id=#{userId}")
     List<InvestmentDetailsDO> selectByPrimaryKey(Long userId);
+
+    @Select("select * from investment_details where id=#{id}")
+    InvestmentDetailsDO selectById(Long id);
+
+    @Update("update investment_details set state = #{state} where id = #{id}")
+    @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
+    Long updateState(Long id,Integer state);
 
 
     int updateByPrimaryKeySelective(InvestmentDetailsDO record);

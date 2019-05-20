@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AliPayConfig {
     private static Logger LOG= LoggerFactory.getLogger(AliPayConfig.class);
-    @Value("${privateKey}")
+    @Value("${ali.privateKey}")
     private String privateKey;
-    @Value("${publicKey}")
+    @Value("${ali.publicKey}")
     private String publicKey;
-    @Value("${serverUrl}")
+    @Value("${ali.serverUrl}")
     private String serverUrl;
-    @Value("${appid}")
+    @Value("${ali.appid}")
     private String appid;
     @Bean
     public AlipayClient AlipayClientFactory(){

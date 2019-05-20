@@ -1,6 +1,7 @@
 package com.roncoo.eshop.web.controller;
 
 
+
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.InvestorManagementDTO;
 import cn.com.taiji.data.Result;
@@ -11,6 +12,7 @@ import cn.com.taiji.data.UserEntity;
 import cn.com.taiji.page.PageInfoDTO;
 import cn.com.taiji.page.PageResult;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
@@ -33,6 +35,9 @@ import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.model.PayOrderDO;
 import com.roncoo.eshop.model.ProjectManagementDO;
 import com.roncoo.eshop.util.OrderCodeUtil;
+import com.roncoo.eshop.util.PayCommonUtil;
+import org.jdom.JDOMException;
+import org.redisson.misc.Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +46,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sun.rmi.runtime.Log;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,7 +68,6 @@ import java.util.concurrent.Executors;
 @RequestMapping("/investor")
 public class InvestorManagementController {
     private static Logger LOG= LoggerFactory.getLogger(InvestorManagementController.class);
-    private ExecutorService executorService = Executors.newFixedThreadPool(20);
     @Autowired
     private InvestorManager investorManager;
     @Autowired
@@ -79,8 +86,10 @@ public class InvestorManagementController {
     PayOrderMapper payOrderMapper;
     @Value("${image_path_url}")
     String imagePathUrl;
-    @Value("${notifyUrl}")
+    @Value("${ali.notifyUrl}")
     String notifyUrl;
+
+
     /**
      * 获取用户基础信息
      * @return
@@ -132,13 +141,41 @@ public class InvestorManagementController {
     }
 
     /**
-     * 预下单
+     * 用户投资项目申请退款
+     * @param token
+     * @return
+     */
+    @RequestMapping("/applyRefund")
+    public MyResult applyRefund(@RequestHeader("token")String token,@RequestParam Long id){
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
+        }
+        InvestmentDetailsDO investmentDetailsDOSById = investorManager.getInvestmentDetailsDOSById(id);
+        if (investmentDetailsDOSById==null){
+            return MyResult.ofError(5000,"未找到该投资记录");
+        }
+        Long aLong = investorManager.updateState(id, 3);
+        if (null == aLong){
+            return MyResult.ofError(5000,"申请失败");
+        }
+        return MyResult.ofSuccess("申请退款成功");
+    }
+
+    /**
+     * 支付宝预下单
      * @param token
      * @param investmentDetailsDTO
      * @return
      */
-    @RequestMapping("/payProject")
-    public MyResult payProject(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+    @RequestMapping("/payProjectForAli")
+    public MyResult payProjectForAli(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         String infoStr = null;
         Result<User> userResult = null;
         try {
@@ -150,33 +187,72 @@ public class InvestorManagementController {
         {
             return MyResult.ofError(4000,"未登陆");
         }
-        //生成唯一支付订单id
         Long userId = userResult.getData().getId();
+        //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
-        PayOrderDO payOrderDO = payOrderManager.savePayOrder(orderCode, investmentDetailsDTO, userId);
-        if (payOrderDO == null){
-            return MyResult.ofError(4000,"预下单失败");
-        }
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
         AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-        model.setBody(payOrderDO.getPayDescribe());
-        model.setSubject(payOrderDO.getPayTitle());
-        model.setOutTradeNo(payOrderDO.getPayOrderId());
+        model.setBody(investmentDetailsDTO.getProjectName());
+        model.setSubject("项目投资");
+        model.setOutTradeNo(orderCode);
         model.setTimeoutExpress("30m");
-        model.setTotalAmount(payOrderDO.getInputMargin().toString());
+        model.setTotalAmount(investmentDetailsDTO.getInputMargin().toString());
         model.setProductCode("QUICK_MSECURITY_PAY");
         request.setBizModel(model);
         request.setNotifyUrl(notifyUrl);
         try {
-        //这里和普通的接口调用不同，使用的是sdkExecute
-        AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-        infoStr = response.getBody();
-        LOG.info(response.getBody());
+            //这里和普通的接口调用不同，使用的是sdkExecute
+            LOG.info("预下单开始，orderCode:{}",orderCode);
+            AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
+            infoStr = response.getBody();
+            LOG.info(response.getBody());
+            PayOrderDO payOrderDO = payOrderManager.saveAliPayOrder(orderCode, investmentDetailsDTO, userId,1,response.getTradeNo());
+            if (payOrderDO == null){
+                return MyResult.ofError(4000,"预下单存储失败");
+            }
+            return MyResult.ofSuccess(infoStr);
     } catch (AlipayApiException e) {
-        e.printStackTrace();
+            LOG.error("支付宝预下单失败:{}",orderCode);
+            e.printStackTrace();
         }
-        return MyResult.ofSuccess(infoStr);
+        return MyResult.ofError(4000,"支付宝预下单失败");
 
+    }
+
+    /**
+     * 微信预下单
+     * @param token
+     * @param investmentDetailsDTO
+     * @return
+     */
+    @RequestMapping("/payProjectForWx")
+    public MyResult<Map<String,Object>> payProjectForWx(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO,HttpServletRequest request){
+        String infoStr = null;
+        Result<User> userResult = null;
+        try {
+            userResult = userClient.getUserInfo(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!userResult.isSuccess()||userResult.getData()==null)
+        {
+            return MyResult.ofError(4000,"未登陆");
+        }
+        Long userId = userResult.getData().getId();
+        //生成唯一支付订单id
+        String orderCode = OrderCodeUtil.getOrderCode(userId);
+        String sym = request.getRequestURL().toString().split("/investor/")[0];
+        String notifyUrl = sym + "/investor/wxpayCallback";
+        JSONObject jsAtt = new JSONObject();
+        jsAtt.put("uid", userId);
+        String attach = jsAtt.toJSONString();
+        LOG.info("微信预下单开始:{}",orderCode);
+        SortedMap<String, Object> map = PayCommonUtil.WxPublicPay(orderCode, investmentDetailsDTO.getInputMargin(), investmentDetailsDTO.getProjectName(), attach, notifyUrl, request);
+        PayOrderDO payOrderDO = payOrderManager.saveWxPayOrder(orderCode, investmentDetailsDTO, userId,2);
+        if (payOrderDO == null){
+            return MyResult.ofError(4000,"预下单存储失败");
+        }
+        return MyResult.ofSuccess(map);
     }
 
     /**
@@ -193,35 +269,34 @@ public class InvestorManagementController {
             boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
             if (signVerified){
                 LOG.info("支付宝回调签名认证成功");
-                investorManager.check(params);
-                //另起线程处理
-                executorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
-                        String trade_status = param.getTradeStatus();
-                        // 支付成功
-                        if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
-                            // 处理支付成功逻辑
+                investorManager.aliCheck(params);
+                AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
+                String trade_status = param.getTradeStatus();
+                // 支付成功
+                if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+                    // 处理支付成功逻辑
+                    String outTradeNo = param.getOutTradeNo();
+                    PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
+                    if (payOrderDO.getPayState()==0){
                             try {
-                                String outTradeNo = param.getOutTradeNo();
-                                PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
-                                ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
-                                InvestmentDetailsDO investmentDetailsDO = new InvestmentDetailsDO();
-                                investmentDetailsDO.setProjectId(projectManagementDO.getId());
-                                investmentDetailsDO.setInvestmenterId(payOrderDO.getUserId());
-                                investmentDetailsDO.setProjectName(projectManagementDO.getProjectName());
-                                investmentDetailsDO.setMonthEarnings(projectManagementDO.getMonthEarnings());
-                                investmentDetailsDO.setExpectedRiskTolerance(projectManagementDO.getExpectedRiskTolerance());
-                                investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
-                                investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
-                                investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
-                                Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
-                                payOrderDO.setOrderId(orderId);
-                                payOrderDO.setPayState(1);
-                                payOrderMapper.updateOrderIdAndState(payOrderDO);
-                            } catch (Exception e) {
-                                LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+                                    ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
+                                    InvestmentDetailsDO investmentDetailsDO = new InvestmentDetailsDO();
+                                    investmentDetailsDO.setProjectId(projectManagementDO.getId());
+                                    investmentDetailsDO.setInvestmenterId(payOrderDO.getUserId());
+                                    investmentDetailsDO.setProjectName(projectManagementDO.getProjectName());
+                                    investmentDetailsDO.setMonthEarnings(projectManagementDO.getMonthEarnings());
+                                    investmentDetailsDO.setExpectedRiskTolerance(projectManagementDO.getExpectedRiskTolerance());
+                                    investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
+                                    investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
+                                    investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
+                                    Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
+                                    payOrderDO.setOrderId(orderId);
+                                    payOrderDO.setPayState(1);
+                                    payOrderMapper.updateOrderIdAndState(payOrderDO);
+                                    return "success";
+                                } catch (Exception e) {
+                                    LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
+                                }
                             }
                         }else if(trade_status.equals("TRADE_CLOSED")){
                             PayOrderDO payOrderDO = new PayOrderDO();
@@ -231,15 +306,72 @@ public class InvestorManagementController {
                         }else {
                             LOG.error("没有处理支付宝回调业务，支付宝交易状态：{},params:{}",trade_status,paramsJson);
                         }
-                    }
-                });
-                return "success";
-
             }
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
        return null;
+    }
+
+    /**
+     * 微信支付回调
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/wxpayCallback")
+    public String wxpayCallback(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        BufferedReader reader = null;
+        reader = request.getReader();
+        String line = "";
+        String xmlString = null;
+        StringBuffer inputString = new StringBuffer();
+        while((line = reader.readLine())!=null){
+            inputString.append(line);
+        }
+        xmlString = inputString.toString();
+        request.getReader().close();
+        LOG.info("收到微信支付回调信息:"+xmlString);
+        Map<String,String> map = new HashMap<String,String>();
+        try {
+            map = PayCommonUtil.doXMLParse(xmlString);
+        } catch (JDOMException e) {
+            e.printStackTrace();
+        }
+        String result_code =map.get("result_code");
+        //验证sign是否正确
+        if (!PayCommonUtil.isTenpaySign(map)) {
+            LOG.info("支付失败！");
+            return returnXML("FAIL");
+        } else {
+           if (investorManager.wxCheck(map)){
+               PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(map.get("out_trade_no"));
+               if (payOrderDO.getPayState()==0){
+                   ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
+                   InvestmentDetailsDO investmentDetailsDO = new InvestmentDetailsDO();
+                   investmentDetailsDO.setProjectId(projectManagementDO.getId());
+                   investmentDetailsDO.setInvestmenterId(payOrderDO.getUserId());
+                   investmentDetailsDO.setProjectName(projectManagementDO.getProjectName());
+                   investmentDetailsDO.setMonthEarnings(projectManagementDO.getMonthEarnings());
+                   investmentDetailsDO.setExpectedRiskTolerance(projectManagementDO.getExpectedRiskTolerance());
+                   investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
+                   investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
+                   investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
+                   Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
+                   payOrderDO.setOrderId(orderId);
+                   payOrderDO.setPayState(1);
+                   payOrderMapper.updateOrderIdAndState(payOrderDO);
+                   LOG.info("支付成功！支付订单id:{}",payOrderDO.getPayOrderId());
+                   return returnXML(result_code);
+               }else{
+                    LOG.info("推送消息重复!支付订单id:{}",payOrderDO.getPayOrderId());
+                    return returnXML(result_code);
+               }
+           }
+            LOG.info("接收消息无效!");
+            return null;
+        }
     }
 
     /**
@@ -561,6 +693,16 @@ public class InvestorManagementController {
             return MyResult.ofSuccess(res.getData());
         }
         return MyResult.ofError(4000,res.getMessage());
+    }
+
+
+    private String returnXML(String return_code) {
+
+        return "<xml><return_code><![CDATA["
+
+                + return_code
+
+                + "]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
     }
 
 

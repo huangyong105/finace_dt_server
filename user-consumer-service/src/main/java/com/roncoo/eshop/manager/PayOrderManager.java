@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class PayOrderManager {
     @Autowired
     PayOrderMapper payOrderMapper;
-    public PayOrderDO savePayOrder(String orderCode, InvestmentDetailsDTO investmentDetailsDTO,Long userId){
+    public PayOrderDO saveAliPayOrder(String orderCode, InvestmentDetailsDTO investmentDetailsDTO,Long userId,Integer payWay,String tradeNo){
         PayOrderDO payOrderDO = new PayOrderDO();
         payOrderDO.setPayOrderId(orderCode);
         payOrderDO.setUserId(userId);
@@ -20,6 +20,24 @@ public class PayOrderManager {
         payOrderDO.setPayTitle("项目投资");
         payOrderDO.setPayState(0);
         payOrderDO.setProjectId(investmentDetailsDTO.getProjectId());
+        payOrderDO.setPayWay(payWay);
+        payOrderDO.setTradeNo(tradeNo);
+        payOrderMapper.insertPayOrder(payOrderDO);
+        PayOrderDO payOrder = payOrderMapper.selectByOrderId(orderCode);
+        return payOrder;
+    }
+
+    public PayOrderDO saveWxPayOrder(String orderCode, InvestmentDetailsDTO investmentDetailsDTO,Long userId,Integer payWay){
+        PayOrderDO payOrderDO = new PayOrderDO();
+        payOrderDO.setPayOrderId(orderCode);
+        payOrderDO.setUserId(userId);
+        payOrderDO.setInputMargin(investmentDetailsDTO.getInputMargin());
+        payOrderDO.setProjectName(investmentDetailsDTO.getProjectName());
+        payOrderDO.setPayDescribe(investmentDetailsDTO.getProjectName());
+        payOrderDO.setPayTitle("项目投资");
+        payOrderDO.setPayState(0);
+        payOrderDO.setProjectId(investmentDetailsDTO.getProjectId());
+        payOrderDO.setPayWay(payWay);
         payOrderMapper.insertPayOrder(payOrderDO);
         PayOrderDO payOrder = payOrderMapper.selectByOrderId(orderCode);
         return payOrder;

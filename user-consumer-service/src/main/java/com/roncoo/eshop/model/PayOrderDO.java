@@ -19,6 +19,24 @@ public class PayOrderDO {
     private Integer payState;
     private Long projectId;
     private Long orderId;
+    private Integer payWay;
+    private String tradeNo;
+
+    public String getTradeNo() {
+        return tradeNo;
+    }
+
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
+    }
+
+    public Integer getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(Integer payWay) {
+        this.payWay = payWay;
+    }
 
     public Long getId() {
         return id;
