@@ -8,10 +8,10 @@ zuul:
   routes:
     edge-service:
       path: /api/**
-      url: http://47.101.147.30:9999
+      url: http://47.112.123.113:9999
     auth-service:
       path: /service/**
-      url: http://47.101.147.30:8181/auth/service
+      url: http://47.112.123.113:8181/auth/service
 # 忽略的资源在WebSecurityConfigurer.configure方法里面配置，即OnlineStoreApplication.configure方法。因为在这里配置不够灵活
 #  ignored: /assets/**
 eureka:
@@ -22,7 +22,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://47.101.147.30:8761/eureka/
+      defaultZone: http://47.112.123.113:8761/eureka/
 # 提高延时设置 elevate timeout settings, 避免因为延时造成失败
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 ribbon:
