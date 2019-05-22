@@ -23,4 +23,7 @@ public interface PayOrderMapper {
     @Update("update pay_order set pay_state = #{payState} where pay_order_id = #{payOrderId}")
     void updateState(PayOrderDO payOrderDO);
 
+    @Select("select * from pay_order where order_id = #{id}")
+    PayOrderDO selectById(Long id);
+
 }

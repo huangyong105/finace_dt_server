@@ -5,13 +5,18 @@ import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageResult;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.mapper.PayOrderMapper;
 import com.roncoo.eshop.model.AlipayNotifyParam;
+import com.roncoo.eshop.model.AlipayRefund;
 import com.roncoo.eshop.model.InvestmentDetailsDO;
 import com.roncoo.eshop.model.PayOrderDO;
 import com.roncoo.eshop.util.FtpUtil;
@@ -48,6 +53,8 @@ public class InvestorManager {
     PayOrderMapper payOrderMapper;
     @Autowired
     AliPayConfig aliPayConfig;
+    @Autowired
+    private AlipayClient alipayClient;
 
     public String uploadIdPhoto(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -150,6 +157,30 @@ public class InvestorManager {
         }
         return true;
 
+    }
+
+    public boolean aliRefund(PayOrderDO payOrderDO){
+        AlipayTradeRefundRequest alipayTradeRefundRequest = new AlipayTradeRefundRequest();
+        AlipayRefund alipayRefund= new AlipayRefund();
+        alipayRefund.setOut_trade_no(payOrderDO.getPayOrderId());
+        alipayRefund.setTrade_no(payOrderDO.getTradeNo());
+        alipayRefund.setRefund_amount(payOrderDO.getInputMargin().toString());
+        alipayRefund.setRefund_reason("正常退款");
+        alipayTradeRefundRequest.setBizContent(JSONObject.toJSONString(alipayRefund));
+        try {
+            AlipayTradeRefundResponse refundResponse = alipayClient.execute(alipayTradeRefundRequest);
+            if (refundResponse.isSuccess()){
+                LOG.info("退款成功");
+                return true;
+            }else{
+                LOG.info("退款失败");
+                return false;
+            }
+
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
 
