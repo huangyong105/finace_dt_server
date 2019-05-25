@@ -18,7 +18,7 @@ import java.util.List;
  * @Date: 2019/4/10 22:04
  */
 
-@FeignClient(value = "user-consumer-service",url="http://47.101.147.30:8772/")
+@FeignClient(value = "user-consumer-service",url="http://47.112.123.113:8772/")
 public interface InvestmentClient {
 
 
