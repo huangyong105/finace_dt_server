@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM gmaslowski/jdk
 VOLUME /tmp
 ADD service-api-0.0.1-SNAPSHOT.jar app.jar
 #RUN bash -c 'touch /app.jar'
