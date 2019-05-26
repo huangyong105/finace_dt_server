@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepository;
     }
 
+
     /**
      * 将 DefaultPermissionEvaluator 配置进 DefaultWebSecurityExpressionHandler 中
      */
@@ -88,6 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return s.equals(charSequence.toString());
             }
         });
+        auth.eraseCredentials(false);
     }
 
     @Override
@@ -122,7 +124,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                     .tokenRepository(persistentTokenRepository())
                     // 有效时间：单位s
-                    .tokenValiditySeconds(60)
+                    .tokenValiditySeconds(1209600)
                     .userDetailsService(userDetailService).and()
                 .authorizeRequests()
                     // 如果有允许匿名的url，填在下面
