@@ -71,7 +71,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
         /**
          * 用户的凭据(pasword) 是否过期,过期的凭据不能通过验证. true 没有过期,false 已过期
          */
-         Boolean credentialsNonExpired = true;
+         Boolean credentialsNonExpired = false;
 
 
         // 返回UserDetails实现类
