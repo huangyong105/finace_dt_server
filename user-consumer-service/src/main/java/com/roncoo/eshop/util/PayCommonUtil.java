@@ -49,7 +49,7 @@ public class PayCommonUtil {
         finalpackage.put("partnerid",PayCommonUtil.MCH_ID);
         finalpackage.put("package","Sign=WXPay");
         finalpackage.put("timeStamp", System.currentTimeMillis() / 1000);
-        finalpackage.put("nonceStr", getRandomString(32));
+        finalpackage.put("nonce_str", nonce_str);
         finalpackage.put("prepay_id", map.get("prepay_id"));
         finalpackage.put("signType", "MD5");
         String sign = PayCommonUtil.createSign(finalpackage);
