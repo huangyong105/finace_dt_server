@@ -46,6 +46,8 @@ public class PayCommonUtil {
         Map<String, String> map = weixinPrePay(trade_no,totalAmount,description,attach,wxnotify,request,nonce_str);
         SortedMap<String, Object> finalpackage = new TreeMap<>();
         finalpackage.put("appId", PayCommonUtil.APPID);
+        finalpackage.put("partnerid",PayCommonUtil.MCH_ID);
+        finalpackage.put("package","Sign=WXPay");
         finalpackage.put("timeStamp", System.currentTimeMillis() / 1000);
         finalpackage.put("nonceStr", getRandomString(32));
         finalpackage.put("prepay_id", map.get("prepay_id"));
