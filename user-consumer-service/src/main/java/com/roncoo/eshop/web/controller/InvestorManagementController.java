@@ -266,7 +266,7 @@ public class InvestorManagementController {
         String paramsJson = JSON.toJSONString(params);
         LOG.info("支付宝回调,{}",paramsJson);
         try {
-            boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
+            boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getAlikey(), "UTF-8", "RSA2");
             if (signVerified){
                 LOG.info("支付宝回调签名认证成功");
                 investorManager.aliCheck(params);
