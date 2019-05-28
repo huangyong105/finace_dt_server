@@ -271,12 +271,15 @@ public class InvestorManagementController {
                 LOG.info("支付宝回调签名认证成功");
                 investorManager.aliCheck(params);
                 AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
+                LOG.info("组装完成:{}",param);
                 String trade_status = param.getTrade_status();
                 // 支付成功
                 if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+                    LOG.info("验证完成");
                     // 处理支付成功逻辑
                     String outTradeNo = param.getOut_trade_no();
                     PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
+                    LOG.info("获取支付订单:{}",payOrderDO);
                     if (payOrderDO.getPayState()==0){
                             try {
                                     ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
