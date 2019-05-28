@@ -133,7 +133,7 @@ public class InvestorManager {
             throw new AlipayApiException("out_trade_no错误");
         }
         //判断total_amount是否确实为该订单的实际金额
-        BigDecimal totalAmount=new BigDecimal(params.get("total_amount")).multiply(new BigDecimal(100));
+        BigDecimal totalAmount=new BigDecimal(params.get("total_amount"));
         if (totalAmount.compareTo(payOrderDO.getInputMargin())!=0){
             throw new AlipayApiException("total_amount错误");
         }
