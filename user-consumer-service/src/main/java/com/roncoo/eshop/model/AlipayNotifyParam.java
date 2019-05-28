@@ -11,16 +11,15 @@ import java.util.Date;
  * @date 2019-04-29 23:53
  **/
 public class AlipayNotifyParam implements Serializable {
-
     private String appId;
     private String tradeNo; // 支付宝交易凭证号
-    private String outTradeNo; // 原支付请求的商户订单号
+    private String out_trade_no; // 原支付请求的商户订单号
     private String outBizNo; // 商户业务ID，主要是退款通知中返回退款申请的流水号
     private String buyerId; // 买家支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字
     private String buyerLogonId; // 买家支付宝账号
     private String sellerId; // 卖家支付宝用户号
     private String sellerEmail; // 卖家支付宝账号
-    private String tradeStatus; // 交易目前所处的状态，见交易状态说明
+    private String trade_status; // 交易目前所处的状态，见交易状态说明
     private BigDecimal totalAmount; // 本次交易支付的订单金额
     private BigDecimal receiptAmount; // 商家在交易中实际收到的款项
     private BigDecimal buyerPayAmount; // 用户在交易中支付的金额
@@ -33,6 +32,9 @@ public class AlipayNotifyParam implements Serializable {
     private Date gmtClose; // 该笔交易结束时间。格式为yyyy-MM-dd HH:mm:ss
     private String fundBillList; // 支付成功的各个渠道金额信息,array
     private String passbackParams; // 公共回传参数，如果请求时传递了该参数，则返回给商户时会在异步通知时将该参数原样返回。
+
+
+
 
     public String getAppId() {
         return appId;
@@ -50,12 +52,12 @@ public class AlipayNotifyParam implements Serializable {
         this.tradeNo = tradeNo;
     }
 
-    public String getOutTradeNo() {
-        return outTradeNo;
+    public String getOut_trade_no() {
+        return out_trade_no;
     }
 
-    public void setOutTradeNo(String outTradeNo) {
-        this.outTradeNo = outTradeNo;
+    public void setOut_trade_no(String outTradeNo) {
+        this.out_trade_no = outTradeNo;
     }
 
     public String getOutBizNo() {
@@ -98,12 +100,12 @@ public class AlipayNotifyParam implements Serializable {
         this.sellerEmail = sellerEmail;
     }
 
-    public String getTradeStatus() {
-        return tradeStatus;
+    public String getTrade_status() {
+        return trade_status;
     }
 
-    public void setTradeStatus(String tradeStatus) {
-        this.tradeStatus = tradeStatus;
+    public void setTrade_status(String tradeStatus) {
+        this.trade_status = tradeStatus;
     }
 
     public BigDecimal getTotalAmount() {
