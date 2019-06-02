@@ -45,7 +45,7 @@ public class PayCommonUtil {
         String nonce_str = getRandomString(32);
         Map<String, String> map = weixinPrePay(trade_no,totalAmount,description,attach,wxnotify,request,nonce_str);
         SortedMap<String, Object> finalpackage = new TreeMap<>();
-        finalpackage.put("appId", PayCommonUtil.APPID);
+        finalpackage.put("appid", PayCommonUtil.APPID);
         finalpackage.put("partnerid",PayCommonUtil.MCH_ID);
         finalpackage.put("package","Sign=WXPay");
         finalpackage.put("timeStamp", System.currentTimeMillis() / 1000);
@@ -82,6 +82,7 @@ public class PayCommonUtil {
         parameterMap.put("spbill_create_ip", request.getRemoteAddr());
         parameterMap.put("notify_url", wxnotify);
         parameterMap.put("trade_type", "APP");
+        parameterMap.put("sign_type", "MD5");
         String sign = PayCommonUtil.createSign(parameterMap);
         parameterMap.put("sign", sign);
         String requestXML = PayCommonUtil.getRequestXml(parameterMap);
