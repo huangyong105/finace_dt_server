@@ -47,13 +47,12 @@ public class PayCommonUtil {
         SortedMap<String, Object> finalpackage = new TreeMap<>();
         finalpackage.put("appid", PayCommonUtil.APPID);
         finalpackage.put("partnerid",PayCommonUtil.MCH_ID);
+        finalpackage.put("prepayid", map.get("prepay_id"));
+        finalpackage.put("noncestr", nonce_str);
+        finalpackage.put("timestamp", System.currentTimeMillis() / 1000);
         finalpackage.put("package","Sign=WXPay");
-        finalpackage.put("timeStamp", System.currentTimeMillis() / 1000);
-        finalpackage.put("nonce_str", nonce_str);
-        finalpackage.put("prepay_id", map.get("prepay_id"));
-        finalpackage.put("signType", "MD5");
         String sign = PayCommonUtil.createSign(finalpackage);
-        finalpackage.put("paySign", sign);
+        finalpackage.put("sign", sign);
         return finalpackage;
     }
 
@@ -79,7 +78,7 @@ public class PayCommonUtil {
         BigDecimal total = totalAmount.multiply(new BigDecimal(100));
         java.text.DecimalFormat df = new java.text.DecimalFormat("0");
         parameterMap.put("total_fee", df.format(total));
-        parameterMap.put("spbill_create_ip", request.getRemoteAddr());
+        parameterMap.put("spbill_create_ip", "47.112.123.113");
         parameterMap.put("notify_url", wxnotify);
         parameterMap.put("trade_type", "APP");
         parameterMap.put("sign_type", "MD5");
