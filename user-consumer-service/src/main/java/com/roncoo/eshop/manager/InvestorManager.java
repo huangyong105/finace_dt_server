@@ -150,7 +150,7 @@ public class InvestorManager {
             return false;
         }
         //判断total_amount是否确实为该订单的实际金额
-        BigDecimal totalAmount=new BigDecimal(params.get("total_fee")).multiply(new BigDecimal(100));
+        BigDecimal totalAmount=new BigDecimal(params.get("total_fee"));
         if (totalAmount.compareTo(payOrderDO.getInputMargin())!=0){
             LOG.info("金额不一致");
             return false;
