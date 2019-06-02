@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -150,7 +151,7 @@ public class InvestorManager {
             return false;
         }
         //判断total_amount是否确实为该订单的实际金额
-        BigDecimal totalAmount=new BigDecimal(params.get("total_fee")).multiply(new BigDecimal(100));
+        BigDecimal totalAmount=new BigDecimal(params.get("total_fee")).divide(new BigDecimal(100),2,RoundingMode.HALF_UP);
         LOG.info("预下单金额:{}",payOrderDO.getInputMargin());
         LOG.info("处理前回传金额:{}",params.get("total_fee"));
         LOG.info("处理后回传金额:{}",totalAmount);
