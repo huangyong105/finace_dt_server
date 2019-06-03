@@ -19,12 +19,10 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.config.AliPayConfig;
+import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.manager.InvestorManager;
-
-
 import cn.com.taiji.result.MyResult;
 import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
@@ -37,27 +35,17 @@ import com.roncoo.eshop.model.ProjectManagementDO;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import com.roncoo.eshop.util.PayCommonUtil;
 import org.jdom.JDOMException;
-import org.redisson.misc.Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.rmi.runtime.Log;
-
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * 用户相关接口
  *
@@ -381,6 +369,7 @@ public class InvestorManagementController {
         if (payWay==1){
             investorManager.aliRefund(payOrderDO);
         }
+        BeanConverter
         return MyResult.ofSuccess();
     }
 
