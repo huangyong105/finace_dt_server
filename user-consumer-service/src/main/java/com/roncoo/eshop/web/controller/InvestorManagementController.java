@@ -365,17 +365,6 @@ public class InvestorManagementController {
         }
     }
 
-    @RequestMapping("/refund")
-    public MyResult refund(@RequestParam Long id){
-        PayOrderDO payOrderDO = payOrderMapper.selectById(id);
-        Integer payWay = payOrderDO.getPayWay();
-        if (payWay==1){
-            investorManager.aliRefund(payOrderDO);
-        }
-        BeanConverter
-        return MyResult.ofSuccess();
-    }
-
     /**
      * 获取用户投资详情
      * todo 提供内部调用
