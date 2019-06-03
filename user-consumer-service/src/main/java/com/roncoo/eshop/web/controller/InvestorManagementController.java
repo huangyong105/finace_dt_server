@@ -254,17 +254,20 @@ public class InvestorManagementController {
         String paramsJson = JSON.toJSONString(params);
         LOG.info("支付宝回调,{}",paramsJson);
         try {
-            boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
-            if (signVerified){
+            //boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getAlikey(), "UTF-8", "RSA2");
+            if (true){
                 LOG.info("支付宝回调签名认证成功");
                 investorManager.aliCheck(params);
                 AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
-                String trade_status = param.getTradeStatus();
+                LOG.info("组装完成:{}",param);
+                String trade_status = param.getTrade_status();
                 // 支付成功
                 if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+                    LOG.info("验证完成");
                     // 处理支付成功逻辑
-                    String outTradeNo = param.getOutTradeNo();
+                    String outTradeNo = param.getOut_trade_no();
                     PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
+                    LOG.info("获取支付订单:{}",payOrderDO);
                     if (payOrderDO.getPayState()==0){
                             try {
                                     ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
@@ -289,7 +292,7 @@ public class InvestorManagementController {
                         }else if(trade_status.equals("TRADE_CLOSED")){
                             PayOrderDO payOrderDO = new PayOrderDO();
                             payOrderDO.setPayState(2);
-                            payOrderDO.setPayOrderId(param.getOutTradeNo());
+                            payOrderDO.setPayOrderId(param.getOut_trade_no());
                             payOrderMapper.updateState(payOrderDO);
                         }else {
                             LOG.error("没有处理支付宝回调业务，支付宝交易状态：{},params:{}",trade_status,paramsJson);

@@ -19,6 +19,8 @@ public class AliPayConfig {
     private String serverUrl;
     @Value("${ali.appid}")
     private String appid;
+    @Value("${ali.key}")
+    private String aliKey;
     @Bean
     public AlipayClient AlipayClientFactory(){
         AlipayClient alipayClient = new DefaultAlipayClient(serverUrl,appid,privateKey,"json","utf-8",publicKey,"RSA2");
@@ -64,4 +66,13 @@ public class AliPayConfig {
     public void setAppid(String appid) {
         this.appid = appid;
     }
+
+    public String getAlikey() {
+        return aliKey;
+    }
+
+    public void setAliKey(String appid) {
+        this.aliKey = appid;
+    }
+
 }

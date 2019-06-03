@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2019/4/10 22:04
  */
 
-@FeignClient(value = "service-api",url="http://47.101.147.30:8181/")
+@FeignClient(value = "service-api",url="http://47.112.123.113:8181/")
 public interface UserClient {
     @PostMapping("/auth/getUserInfo")
     public Result<User> getUserInfo(@RequestHeader("token") String token) throws Exception ;
