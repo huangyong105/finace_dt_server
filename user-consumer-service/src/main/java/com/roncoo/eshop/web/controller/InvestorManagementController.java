@@ -112,7 +112,7 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/myInvestment")
-    public MyResult getMyInvestment(@RequestHeader("token")String token){
+    public MyResult getMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
@@ -123,8 +123,16 @@ public class InvestorManagementController {
         {
             return MyResult.ofError(4000,"未登陆");
         }
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
         Long id = userResult.getData().getId();
-        List<InvestmentDetailsDTO> investmentDetailsDOSByuserId = investorManager.getInvestmentDetailsDOSByuserId(id);
+        PageResult<InvestmentDetailsDTO> investmentDetailsDOSByuserId = investorManager.getInvestmentDetailsDOSByuserId(id, currentPage, pageSize);
         return MyResult.ofSuccess(investmentDetailsDOSByuserId);
     }
 

@@ -2,6 +2,7 @@ package com.roncoo.eshop.manager;
 
 
 import cn.com.taiji.DTO.ArticleManagementDTO;
+import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageResult;
 import com.github.pagehelper.PageHelper;
@@ -22,10 +23,18 @@ public class ArticleManager {
     @Autowired
     ArticleManagementMapper articleManagementMapper;
 
-    public List<ArticleManagementDTO> getArticleList(){
+    public PageResult<ArticleManagementDTO> getArticleList(Integer currentPage,Integer pageSize){
+        PageHelper.startPage(currentPage, pageSize);
         List<ArticleManagementDO> list = articleManagementMapper.getArticleList();
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(list);
         List<ArticleManagementDTO> articleManagementDTOS = BeanConverter.batchConvert(list, ArticleManagementDTO.class);
-        return articleManagementDTOS;
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setCurrentPage(currentPage);
+        pageInfo1.setPageSize(pageSize);
+        pageInfo1.setTotalCount(pageInfo.getTotal());
+        pageInfo1.setTotalPage(pageInfo.getPages());
+        PageResult<ArticleManagementDTO> pageResult = new PageResult<>(articleManagementDTOS, pageInfo1);
+        return pageResult;
     }
 
     public PageResult<ArticleManagementDTO> getAllArticle(Integer currentPage,Integer pageSize){
