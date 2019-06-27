@@ -1,6 +1,7 @@
 package com.roncoo.eshop.web.controller;
 
 
+import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.User;
 import cn.com.taiji.DTO.ArticleManagementDTO;
@@ -37,7 +38,7 @@ public class ArticleController {
      * @return
      */
     @RequestMapping("/getArticleList")
-    public MyResult<List<ArticleManagementDTO>> getArticleList(@RequestHeader("token")String token){
+    public MyResult<PageResult<ArticleManagementDTO>> getArticleList(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
@@ -48,8 +49,16 @@ public class ArticleController {
         {
             return MyResult.ofError(4000,"未登陆");
         }
-        List<ArticleManagementDTO> list = articleManager.getArticleList();
-        return MyResult.ofSuccess(list);
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
+        PageResult<ArticleManagementDTO> articleList = articleManager.getArticleList(currentPage, pageSize);
+        return MyResult.ofSuccess(articleList);
     }
 
     /**

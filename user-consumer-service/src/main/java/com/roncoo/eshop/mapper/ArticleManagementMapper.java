@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface ArticleManagementMapper {
 
-    @Select("select * from article_management where is_online = 1 and deleted = 0")
+    @Select("select * from article_management where is_online = 1 and deleted = 0 order by gmt_created desc")
     List<ArticleManagementDO> getArticleList();
 
     @Select("select * from article_management where deleted = 0")

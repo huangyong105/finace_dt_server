@@ -16,7 +16,7 @@ public interface ProjectManagementMapper {
     @Select("select * from project_management where id = #{id} and is_online =1 and deleted =0")
     ProjectManagementDO selectByPrimaryKey(Long id);
 
-    @Select("select * from project_management where is_online=1 and deleted=0")
+    @Select("select * from project_management where is_online=1 and deleted=0 order by gmt_created desc")
     List<ProjectManagementDO> selectPrimaryList();
 
     @Insert("insert into project_management " +

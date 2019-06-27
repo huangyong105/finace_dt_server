@@ -24,10 +24,18 @@ public class InvestmentManager {
     @Autowired
     ProjectManagementMapper projectManagementMapper;
 
-    public List<ProjectManagementDTO> getInvestmentProjectList(){
+    public PageResult<ProjectManagementDTO> getInvestmentProjectList(Integer currentPage,Integer pageSize){
+        PageHelper.startPage(currentPage, pageSize);
         List<ProjectManagementDO> list = projectManagementMapper.selectPrimaryList();
+        com.github.pagehelper.PageInfo pageInfo = new com.github.pagehelper.PageInfo(list);
         List<ProjectManagementDTO> projectManagementDTOS = BeanConverter.batchConvert(list, ProjectManagementDTO.class);
-        return projectManagementDTOS;
+        PageInfo pageInfo1 = new PageInfo();
+        pageInfo1.setCurrentPage(currentPage);
+        pageInfo1.setPageSize(pageSize);
+        pageInfo1.setTotalCount(pageInfo.getTotal());
+        pageInfo1.setTotalPage(pageInfo.getPages());
+        PageResult<ProjectManagementDTO> pageResult = new PageResult<>(projectManagementDTOS, pageInfo1);
+        return pageResult;
     }
 
     public ProjectManagementDTO getInvestmentProject(Long id){

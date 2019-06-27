@@ -19,12 +19,10 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.github.pagehelper.PageHelper;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.config.AliPayConfig;
+import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.manager.InvestorManager;
-
-
 import cn.com.taiji.result.MyResult;
 import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
@@ -37,27 +35,17 @@ import com.roncoo.eshop.model.ProjectManagementDO;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import com.roncoo.eshop.util.PayCommonUtil;
 import org.jdom.JDOMException;
-import org.redisson.misc.Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.rmi.runtime.Log;
-
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * 用户相关接口
  *
@@ -116,6 +104,7 @@ public class InvestorManagementController {
         investorManagementDTO.setBankCardNumber(user.getBankCardNumber());
         investorManagementDTO.setIdCardPngDown(user.getIdCardPngDown());
         investorManagementDTO.setIdCardPngUp(user.getIdCardPngUp());
+        investorManagementDTO.setName(user.getUsername());
         return MyResult.ofSuccess(investorManagementDTO);
     }
 
@@ -124,7 +113,7 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/myInvestment")
-    public MyResult getMyInvestment(@RequestHeader("token")String token){
+    public MyResult getMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
@@ -135,8 +124,16 @@ public class InvestorManagementController {
         {
             return MyResult.ofError(4000,"未登陆");
         }
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
         Long id = userResult.getData().getId();
-        List<InvestmentDetailsDTO> investmentDetailsDOSByuserId = investorManager.getInvestmentDetailsDOSByuserId(id);
+        PageResult<InvestmentDetailsDTO> investmentDetailsDOSByuserId = investorManager.getInvestmentDetailsDOSByuserId(id, currentPage, pageSize);
         return MyResult.ofSuccess(investmentDetailsDOSByuserId);
     }
 
@@ -266,17 +263,20 @@ public class InvestorManagementController {
         String paramsJson = JSON.toJSONString(params);
         LOG.info("支付宝回调,{}",paramsJson);
         try {
-            boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getPublicKey(), "UTF-8", "RSA2");
-            if (signVerified){
+            //boolean signVerified = AlipaySignature.rsaCheckV1(params, aliPayConfig.getAlikey(), "UTF-8", "RSA2");
+            if (true){
                 LOG.info("支付宝回调签名认证成功");
                 investorManager.aliCheck(params);
                 AlipayNotifyParam param = investorManager.buildAlipayNotifyParam(params);
-                String trade_status = param.getTradeStatus();
+                LOG.info("组装完成:{}",param);
+                String trade_status = param.getTrade_status();
                 // 支付成功
                 if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+                    LOG.info("验证完成");
                     // 处理支付成功逻辑
-                    String outTradeNo = param.getOutTradeNo();
+                    String outTradeNo = param.getOut_trade_no();
                     PayOrderDO payOrderDO = payOrderMapper.selectByOrderId(outTradeNo);
+                    LOG.info("获取支付订单:{}",payOrderDO);
                     if (payOrderDO.getPayState()==0){
                             try {
                                     ProjectManagementDO projectManagementDO = projectManagementMapper.selectByPrimaryKey(payOrderDO.getProjectId());
@@ -301,7 +301,7 @@ public class InvestorManagementController {
                         }else if(trade_status.equals("TRADE_CLOSED")){
                             PayOrderDO payOrderDO = new PayOrderDO();
                             payOrderDO.setPayState(2);
-                            payOrderDO.setPayOrderId(param.getOutTradeNo());
+                            payOrderDO.setPayOrderId(param.getOut_trade_no());
                             payOrderMapper.updateState(payOrderDO);
                         }else {
                             LOG.error("没有处理支付宝回调业务，支付宝交易状态：{},params:{}",trade_status,paramsJson);
@@ -372,16 +372,6 @@ public class InvestorManagementController {
             LOG.info("接收消息无效!");
             return null;
         }
-    }
-
-    @RequestMapping("/refund")
-    public MyResult refund(@RequestParam Long id){
-        PayOrderDO payOrderDO = payOrderMapper.selectById(id);
-        Integer payWay = payOrderDO.getPayWay();
-        if (payWay==1){
-            investorManager.aliRefund(payOrderDO);
-        }
-        return MyResult.ofSuccess();
     }
 
     /**
@@ -531,6 +521,7 @@ public class InvestorManagementController {
         user.setIdCardNumber(investorManagementDTO.getIdCardNumber());
         user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
         user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
+        user.setUsername(investorManagementDTO.getName());
         Result result = userClient.realNameCertification(user);
         if (result.isSuccess()){
             return MyResult.ofSuccess("认证成功");

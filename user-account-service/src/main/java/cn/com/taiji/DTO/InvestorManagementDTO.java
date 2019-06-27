@@ -12,6 +12,10 @@ public class InvestorManagementDTO {
      */
     private Long id;
     /**
+     * 用户姓名
+     */
+    private String name;
+    /**
      * 电话
      */
     private String telNumber;
@@ -144,5 +148,13 @@ public class InvestorManagementDTO {
 
     public void setDeleted(Integer deleted) {
         this.deleted = deleted;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

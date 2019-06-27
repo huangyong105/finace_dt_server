@@ -17,7 +17,7 @@ public interface InvestmentDetailsMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     Long insert(InvestmentDetailsDO record);
 
-    @Select("select * from investment_details where investmenter_id=#{userId}")
+    @Select("select * from investment_details where investmenter_id=#{userId} order by gmt_created desc")
     List<InvestmentDetailsDO> selectByPrimaryKey(Long userId);
 
     @Select("select * from investment_details where id=#{id}")
@@ -25,7 +25,7 @@ public interface InvestmentDetailsMapper {
 
     @Update("update investment_details set state = #{state} where id = #{id}")
     @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
-    Long updateState(Long id,Integer state);
+    Long updateState(@Param("id") Long id,@Param("state") Integer state);
 
 
     int updateByPrimaryKeySelective(InvestmentDetailsDO record);

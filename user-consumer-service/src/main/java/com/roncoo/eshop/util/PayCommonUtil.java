@@ -42,15 +42,17 @@ public class PayCommonUtil {
      * @return              -
      */
     public static SortedMap<String, Object> WxPublicPay(String trade_no, BigDecimal totalAmount, String description, String attach, String wxnotify, HttpServletRequest request) {
-        Map<String, String> map = weixinPrePay(trade_no,totalAmount,description,attach,wxnotify,request);
+        String nonce_str = getRandomString(32);
+        Map<String, String> map = weixinPrePay(trade_no,totalAmount,description,attach,wxnotify,request,nonce_str);
         SortedMap<String, Object> finalpackage = new TreeMap<>();
-        finalpackage.put("appId", PayCommonUtil.APPID);
-        finalpackage.put("timeStamp", System.currentTimeMillis() / 1000);
-        finalpackage.put("nonceStr", getRandomString(32));
-        finalpackage.put("prepay_id", map.get("prepay_id"));
-        finalpackage.put("signType", "MD5");
+        finalpackage.put("appid", PayCommonUtil.APPID);
+        finalpackage.put("partnerid",PayCommonUtil.MCH_ID);
+        finalpackage.put("prepayid", map.get("prepay_id"));
+        finalpackage.put("noncestr", nonce_str);
+        finalpackage.put("timestamp", System.currentTimeMillis() / 1000);
+        finalpackage.put("package","Sign=WXPay");
         String sign = PayCommonUtil.createSign(finalpackage);
-        finalpackage.put("paySign", sign);
+        finalpackage.put("sign", sign);
         return finalpackage;
     }
 
@@ -64,11 +66,11 @@ public class PayCommonUtil {
      * @param request       -
      * @return              -
      */
-    private static Map<String, String> weixinPrePay(String trade_no, BigDecimal totalAmount, String description, String attach, String wxnotify, HttpServletRequest request) {
+    private static Map<String, String> weixinPrePay(String trade_no, BigDecimal totalAmount, String description, String attach, String wxnotify, HttpServletRequest request,String nonce_str) {
         SortedMap<String, Object> parameterMap = new TreeMap<>();
         parameterMap.put("appid", PayCommonUtil.APPID);
         parameterMap.put("mch_id", PayCommonUtil.MCH_ID);
-        parameterMap.put("nonce_str", getRandomString(32));
+        parameterMap.put("nonce_str", nonce_str);
         parameterMap.put("body", description);
         parameterMap.put("attach", attach);
         parameterMap.put("out_trade_no", trade_no);
@@ -76,9 +78,10 @@ public class PayCommonUtil {
         BigDecimal total = totalAmount.multiply(new BigDecimal(100));
         java.text.DecimalFormat df = new java.text.DecimalFormat("0");
         parameterMap.put("total_fee", df.format(total));
-        parameterMap.put("spbill_create_ip", request.getRemoteAddr());
+        parameterMap.put("spbill_create_ip", "47.112.123.113");
         parameterMap.put("notify_url", wxnotify);
         parameterMap.put("trade_type", "APP");
+        parameterMap.put("sign_type", "MD5");
         String sign = PayCommonUtil.createSign(parameterMap);
         parameterMap.put("sign", sign);
         String requestXML = PayCommonUtil.getRequestXml(parameterMap);
