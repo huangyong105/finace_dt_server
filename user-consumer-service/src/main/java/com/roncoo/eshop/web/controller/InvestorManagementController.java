@@ -104,6 +104,7 @@ public class InvestorManagementController {
         investorManagementDTO.setBankCardNumber(user.getBankCardNumber());
         investorManagementDTO.setIdCardPngDown(user.getIdCardPngDown());
         investorManagementDTO.setIdCardPngUp(user.getIdCardPngUp());
+        investorManagementDTO.setName(user.getUsername());
         return MyResult.ofSuccess(investorManagementDTO);
     }
 
@@ -520,6 +521,7 @@ public class InvestorManagementController {
         user.setIdCardNumber(investorManagementDTO.getIdCardNumber());
         user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
         user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
+        user.setUsername(investorManagementDTO.getName());
         Result result = userClient.realNameCertification(user);
         if (result.isSuccess()){
             return MyResult.ofSuccess("认证成功");

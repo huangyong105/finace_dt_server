@@ -112,6 +112,7 @@ public class LoginController {
         if (user ==null){
             return Result.failure("1","用户不存在");
         }
+        user.setUsername(userEntity.getUsername());
         user.setIdCardNumber(userEntity.getIdCardNumber());
         user.setIdCardPngUp(userEntity.getIdCardPngUp());
         user.setIdCardPngDown(userEntity.getIdCardPngDown());
