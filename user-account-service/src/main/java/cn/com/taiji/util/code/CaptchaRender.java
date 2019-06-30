@@ -17,6 +17,7 @@
 package cn.com.taiji.util.code;
 
 import java.awt.Font;
+import java.util.Calendar;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,7 @@ import  cn.com.taiji.util.sms.*;
 import cn.com.taiji.dao.RedisDao;
 import com.aliyuncs.exceptions.ClientException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,7 @@ public class CaptchaRender  {
 	protected static String captchaName = "_jfinal_captcha";
 
 	protected  static String  CODE ="redis.code";
+	protected  static String  CODE_COUNT ="redis.code.count";
 	protected static final Random random = new Random(System.nanoTime());
 	
 	// 默认的验证码大小
@@ -77,15 +80,24 @@ public class CaptchaRender  {
 	/**
 	 * 生成验证码
 	 */
-	public boolean render(String phone,int type) throws ClientException {
-		//Captcha captcha = createCaptcha();
-		/*CaptchaManager.me().getCaptchaCache().put(captcha);*/
-		String code = getRandomString();
+	public int  render(String phone,int type) throws ClientException {
 
+		Integer dailyTimes = NumberUtils.toInt((String)redisDao.get(genRedisSmsCountLimit(phone,type)));
+		if (dailyTimes >= 3) {
+			return  1;
+		}
+		dailyTimes++;
+		redisDao.set(genRedisSmsCountLimit(phone,type),dailyTimes,getSecondsNextEarlyMorning(),TimeUnit.SECONDS);
+		String code = (String)redisDao.get(genRedisCode(phone,type));
+		//验证码还未过期，两分钟后才能重发
+		if (StringUtils.isNotEmpty(code)) {
+			return 2;
+		}
 		String siginName=null;
 		String templateCode=null;
 		String templateJson=null;
-		redisDao.set(genRedisCode(phone,type),code,60*50,TimeUnit.SECONDS);
+		code = getRandomString();
+		redisDao.set(genRedisCode(phone,type),code,60*2,TimeUnit.SECONDS);
 		if (type == 1) {
 			siginName = "汇致旺";
 			templateCode="SMS_162635384";
@@ -100,12 +112,41 @@ public class CaptchaRender  {
 			templateCode="SMS_162635384";
 			templateJson="{\"code\":"+code+"}";
 		}
-		return SmsSendApi.sendSms(phone,siginName,templateCode,templateJson);
+		if (SmsSendApi.sendSms(phone,siginName,templateCode,templateJson)) {
+			return 3;
+		};
+		return 0 ;
 	}
+
+	private Long getSecondsNextEarlyMorning() {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		// 坑就在这里
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
+	}
+
 
 	private  String  genRedisCode (String phone ,int type) {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(CODE);
+		stringBuffer.append(".");
+		stringBuffer.append("type");
+		stringBuffer.append(".");
+		stringBuffer.append(type);
+		stringBuffer.append(".");
+		stringBuffer.append("phone");
+		stringBuffer.append(".");
+		stringBuffer.append(phone);
+		return stringBuffer.toString();
+	}
+
+	private  String  genRedisSmsCountLimit (String phone ,int type) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(CODE_COUNT);
 		stringBuffer.append(".");
 		stringBuffer.append("type");
 		stringBuffer.append(".");

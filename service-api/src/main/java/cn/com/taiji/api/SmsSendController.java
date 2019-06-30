@@ -33,7 +33,10 @@ public class SmsSendController {
     public Result sendRegisterSmsCode (@RequestParam(value ="mobile") String mobile)  {
         //注册账户
         try {
-            render.render(mobile,1);
+            Result result =  sendSms(mobile,1);
+            if (result != null) {
+                return result;
+            }
         } catch (ClientException e) {
             log.info("找回密码信息异常:{}",e);
             return Result.failure("-1","验证码发送失败");
@@ -45,7 +48,10 @@ public class SmsSendController {
     public Result sendChangePasswordSmsCode (@RequestParam(value ="mobile") String mobile) {
         //改变密码
         try {
-            render.render(mobile,2);
+            Result result =  sendSms(mobile,2);
+            if (result != null) {
+                return result;
+            }
         } catch (ClientException e) {
             log.info("找回密码信息异常:{}",e);
             return Result.failure("-1","验证码发送失败");
@@ -53,11 +59,26 @@ public class SmsSendController {
         return Result.success(null);
     }
 
+    private Result sendSms( String mobile ,int type) throws ClientException {
+        int code =   render.render(mobile,type);
+        if (code == 0 ) {
+            return Result.failure("-1","验证码发送失败");
+        } else if (code == 1 ) {
+            return Result.failure("-1","今日短信次数使用完成");
+        } else if  (code == 2 ) {
+            return Result.failure("-1","验证码还未过期，2分钟后重发");
+        }
+        return null;
+    }
+
     @PostMapping("/sendFindPasswordSmsCode")
     public Result sendFindPasswordSmsCode (@RequestParam(value ="mobile") String mobile)  {
         //找回密码
         try {
-            render.render(mobile,3);
+            Result result =  sendSms(mobile,3);
+            if (result != null) {
+                return result;
+            }
         } catch (ClientException e) {
             log.info("找回密码信息异常:{}",e);
             return Result.failure("-1","验证码发送失败");
