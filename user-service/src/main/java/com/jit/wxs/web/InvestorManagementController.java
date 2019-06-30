@@ -12,11 +12,15 @@ import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.CUser;
 import com.jit.wxs.entity.Result;
 import com.jit.wxs.service.CuserService;
+import com.jit.wxs.util.POIUtils;
+import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -99,5 +103,37 @@ public class InvestorManagementController {
         return Result.ofSuccess(value);
     }
 
+
+    /**
+     * 根据c端用户id获取投资项目列表
+     * @param
+     * @return
+     */
+    @RequestMapping("/exportMyInvestment")
+    public void  exportMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO, HttpServletResponse response){
+        investmentDetailsDTO.setCurrentPage(1);
+        investmentDetailsDTO.setPageSize(1000);
+        Result<PageResult<InvestmentDetailsDTO>> myInvestment = investmentClient.getMyInvestment(investmentDetailsDTO);
+        PageResult<InvestmentDetailsDTO> value = myInvestment.getValue();
+        List<InvestmentDetailsDTO> investmentDetailsDTOS = value.getData();
+        for (InvestmentDetailsDTO dto:investmentDetailsDTOS){
+            //dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
+            if(dto.getState()==1){
+                dto.setStateDesc("正常");
+            }
+            if (dto.getState()==2){
+                dto.setStateDesc("已退款");
+            }
+            if (dto.getState()==3){
+                dto.setStateDesc("申请退款");
+            }
+        }
+
+        POIUtils<InvestmentDetailsDTO,Object> ex = new POIUtils<InvestmentDetailsDTO,Object>();
+        String[] headers = new String[]{"主键自增id","项目ID","投资人id","项目名称","魔柜名称","所属店铺","魔柜类型","补货前商品数","上货商品数","下货商品数","补货后商品数"};
+        String fileName = "项目管理_"+DateUtils.formatDate(new Date(),"yyyyMMdd");
+        ex.exportToExcel(response,fileName,headers, investmentDetailsDTOS);
+        return ;
+    }
 
 }
