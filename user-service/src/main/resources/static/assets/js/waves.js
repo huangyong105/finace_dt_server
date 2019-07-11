@@ -1,5 +1,5 @@
-var host = "http://localhost:8770";
-//var host = "http://47.112.123.113:8770";
+//var host = "http://localhost:8770";
+var host = "http://47.112.123.113:8770";
 function getFormData($form) {
     var unindexed_array = $form.serializeArray();
     var indexed_array = {};
