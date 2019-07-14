@@ -104,11 +104,15 @@ public class InvestorManagementController {
     }
 
 
-    /**
-     * 根据c端用户id获取投资项目列表
-     * @param
-     * @return
-     */
+    @RequestMapping("/refunded")
+    public Result refunded(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        Result refunded = investmentClient.refunded(investmentDetailsDTO);
+        if (refunded.isSuccess()){
+            return Result.ofSuccess();
+        }
+        return Result.ofError(5000,refunded.getMessage());
+    }
+
     @RequestMapping("/exportMyInvestment")
     public void  exportMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO, HttpServletResponse response){
         investmentDetailsDTO.setCurrentPage(1);

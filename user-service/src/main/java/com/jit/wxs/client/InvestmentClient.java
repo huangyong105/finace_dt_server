@@ -113,5 +113,13 @@ public interface InvestmentClient {
      */
     @RequestMapping("/investor/getMyInvestment")
     public Result<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO);
+
+    /**
+     * 已退款操作
+     * @param investmentDetailsDTO
+     * @return
+     */
+    @RequestMapping("/investor/refunded")
+    public Result refunded(@RequestBody InvestmentDetailsDTO investmentDetailsDTO);
 }
 

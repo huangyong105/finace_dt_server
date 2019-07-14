@@ -166,6 +166,50 @@ public class InvestorManagementController {
     }
 
     /**
+     * 已退款操作
+     * todo 提供内部调用
+     * @param
+     * @return
+     */
+    @RequestMapping("/refunded")
+    public MyResult refunded(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        InvestmentDetailsDO investmentDetailsDOSById = investorManager.getInvestmentDetailsDOSById(investmentDetailsDTO.getId());
+        if (investmentDetailsDOSById==null){
+            return MyResult.ofError(5000,"未找到该投资记录");
+        }
+        if (investmentDetailsDOSById.getState()==2){
+            return MyResult.ofError(5000,"该订单已退款");
+        }
+        Long aLong = investorManager.updateState(investmentDetailsDTO.getId(), 2);
+        if (null == aLong){
+            return MyResult.ofError(5000,"操作失败");
+        }
+        return MyResult.ofSuccess("退款操作成功");
+    }
+
+
+
+    /**
+     * 获取用户投资详情
+     * todo 提供内部调用
+     * @return
+     */
+    @RequestMapping("/getMyInvestment")
+    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
+        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getInvestmenterId(),currentPage,pageSize);
+
+        return MyResult.ofSuccess(dtos);
+    }
+
+    /**
      * 支付宝预下单
      * @param token
      * @param investmentDetailsDTO
@@ -374,25 +418,7 @@ public class InvestorManagementController {
         }
     }
 
-    /**
-     * 获取用户投资详情
-     * todo 提供内部调用
-     * @return
-     */
-    @RequestMapping("/getMyInvestment")
-    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
-        Integer currentPage = investmentDetailsDTO.getCurrentPage();
-        Integer pageSize = investmentDetailsDTO.getPageSize();
-        if (currentPage == null) {
-            currentPage = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 100000;
-        }
-        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getInvestmenterId(),currentPage,pageSize);
 
-        return MyResult.ofSuccess(dtos);
-    }
 
 
     /**
