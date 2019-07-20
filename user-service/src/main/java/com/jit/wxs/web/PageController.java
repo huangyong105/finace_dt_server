@@ -1,6 +1,6 @@
 package com.jit.wxs.web;
 
-import com.jit.wxs.entity.Result;
+import cn.com.taiji.result.Result;
 import com.jit.wxs.entity.SysPermission;
 import com.jit.wxs.security.SecurityConstants;
 import com.jit.wxs.service.SysPermissionService;
@@ -9,9 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Controller

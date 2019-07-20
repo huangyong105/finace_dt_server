@@ -5,14 +5,12 @@ import cn.com.taiji.DTO.ArticleManagementDTO;
 
 
 import cn.com.taiji.page.PageResult;
+import cn.com.taiji.result.Result;
 import com.jit.wxs.client.InvestmentClient;
-import com.jit.wxs.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 文章接口

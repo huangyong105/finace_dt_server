@@ -4,11 +4,10 @@ import cn.com.taiji.DTO.ArticleManagementDTO;
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import cn.com.taiji.page.PageResult;
-import com.jit.wxs.entity.Result;
+import cn.com.taiji.result.Result;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
 
 /**
  * 功能描述: <br>

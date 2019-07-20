@@ -1,8 +1,6 @@
 package com.jit.wxs.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jit.wxs.entity.Result;
-import com.jit.wxs.security.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;

@@ -1,4 +1,4 @@
-package com.jit.wxs.entity;
+package cn.com.taiji.result;
 
 import java.io.Serializable;
 

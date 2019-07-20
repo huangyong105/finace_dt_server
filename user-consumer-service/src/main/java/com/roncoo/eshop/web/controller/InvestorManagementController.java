@@ -4,6 +4,7 @@ package com.roncoo.eshop.web.controller;
 
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.DTO.InvestorManagementDTO;
+import cn.com.taiji.DTO.SysUser;
 import cn.com.taiji.data.Result;
 import cn.com.taiji.data.Token;
 import cn.com.taiji.data.User;
@@ -19,11 +20,13 @@ import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.roncoo.eshop.client.BUserClient;
 import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.manager.InvestorManager;
 import cn.com.taiji.result.MyResult;
+import com.roncoo.eshop.manager.MailManager;
 import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.mapper.PayOrderMapper;
@@ -69,6 +72,10 @@ public class InvestorManagementController {
     InvestmentDetailsMapper investmentDetailsMapper;
     @Autowired
     PayOrderMapper payOrderMapper;
+    @Autowired
+    MailManager mailManager ;
+    @Autowired
+    private BUserClient bUserClient;
     @Value("${image_path_url}")
     String imagePathUrl;
     @Value("${ali.notifyUrl}")
@@ -354,12 +361,15 @@ public class InvestorManagementController {
                                     payOrderDO.setPayState(1);
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
 
-//                                    String[] to = new String[] {"huangyong@startdt.com"};
-//                                    String subject = "短信发送失败通知";
-//                                    EmailModelDTO email = new EmailModelDTO(from, to, null, subject, "xiaoming", null);
-//                                    mailManager.sendSimpleMail(email);
 
-
+                                cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
+                                List<SysUser> value = (List<SysUser>) result.getValue();
+                                for (SysUser sysUser:value) {
+                                    String[] to = new String[]{sysUser.getEmail()};
+                                    String subject = "用户支付成功通知";
+                                    EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, sysUser.getName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                                    mailManager.sendSimpleMail(email);
+                                }
                                     return "success";
                                 } catch (Exception e) {
                                     LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
@@ -431,6 +441,14 @@ public class InvestorManagementController {
                    payOrderDO.setPayState(1);
                    payOrderMapper.updateOrderIdAndState(payOrderDO);
                    LOG.info("支付成功！支付订单id:{}",payOrderDO.getPayOrderId());
+                   cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
+                   List<SysUser> value = (List<SysUser>) result.getValue();
+                   for (SysUser sysUser:value) {
+                       String[] to = new String[]{sysUser.getEmail()};
+                       String subject = "用户支付成功通知";
+                       EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, sysUser.getName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                       mailManager.sendSimpleMail(email);
+                   }
                    return returnXML(result_code);
                }else{
                     LOG.info("推送消息重复!支付订单id:{}",payOrderDO.getPayOrderId());
