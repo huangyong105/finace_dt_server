@@ -9,6 +9,7 @@ import cn.com.taiji.data.User;
 import cn.com.taiji.service.UserService;
 import cn.com.taiji.util.BeanConverter;
 import com.aliyuncs.exceptions.ClientException;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -75,6 +76,18 @@ public class UserController {
                 .map(result ->Result.success(result))
                 .orElse(Result.failure("-1","获取用户失败"));
     }
+
+
+
+    @RequestMapping(path = "users/{id}", method = RequestMethod.GET, name = "getUserById")
+    public Result<UserEntity> getUserById(@PathVariable("id") String id) {
+        User user = userService.findUserById(NumberUtils.toLong(id));
+        UserEntity userEntity = BeanConverter.convert(user,UserEntity.class);
+        return Optional.ofNullable(userEntity)
+                .map(result -> Result.success(result))
+                .orElse(Result.failure("-1","获取用户失败"));
+    }
+
 
 
     @PostMapping("/changePassword")
