@@ -13,6 +13,8 @@ public interface SysUserRoleMapper {
     @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
     public List<SysUserRole> listByUserId(Integer userId);
 
+    @Select("SELECT * FROM sys_user_role WHERE role_id = #{roleId}")
+    public List<SysUserRole> listByRoleId(Integer roleId);
 
     @Select("DELETE FROM sys_user_role WHERE user_id = #{userId}")
     public Long delete(Integer userId);
