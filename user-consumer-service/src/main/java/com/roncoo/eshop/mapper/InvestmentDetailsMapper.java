@@ -17,8 +17,14 @@ public interface InvestmentDetailsMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id",keyColumn = "id")
     Long insert(InvestmentDetailsDO record);
 
+    @Select("select id from investment_details where input_margin_time = #{inputMarginTime} and investmenter_id = #{investmenterId}")
+    Long selectId(InvestmentDetailsDO record);
+
     @Select("select * from investment_details where investmenter_id=#{userId} order by gmt_created desc")
     List<InvestmentDetailsDO> selectByPrimaryKey(Long userId);
+
+    @Select("select * from investment_details where state = 3 and gmt_created &lt; #{endTime} and gmt_created &gt; #{beginTime}")
+    List<InvestmentDetailsDO> selectByRefund(@Param("endTime") Long endTime, @Param("beginTime") Long beginTime);
 
     @Select("select * from investment_details where id=#{id}")
     InvestmentDetailsDO selectById(Long id);

@@ -2,6 +2,8 @@ package com.roncoo.eshop.manager;
 
 
 import cn.com.taiji.DTO.InvestmentDetailsDTO;
+import cn.com.taiji.data.Result;
+import cn.com.taiji.data.UserEntity;
 import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageResult;
 import com.alibaba.fastjson.JSON;
@@ -11,6 +13,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.github.pagehelper.PageHelper;
+import com.roncoo.eshop.client.UserClient;
 import com.roncoo.eshop.config.AliPayConfig;
 import com.roncoo.eshop.converter.BeanConverter;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
@@ -34,10 +37,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author dongyuan
@@ -56,6 +57,8 @@ public class InvestorManager {
     AliPayConfig aliPayConfig;
     @Autowired
     private AlipayClient alipayClient;
+    @Autowired
+    private UserClient userClient;
 
     public String uploadIdPhoto(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -86,6 +89,56 @@ public class InvestorManager {
         pageInfo1.setTotalPage(pageInfo.getPages());
         PageResult<InvestmentDetailsDTO> pageResult = new PageResult<>(dtos, pageInfo1);
         return pageResult;
+    }
+
+    public List<InvestmentDetailsDTO> getInvestmentDetailsDTOByPaySaccess(InvestmentDetailsDTO investmentDetailsDTO){
+        List<PayOrderDO> payOrderDOS = payOrderMapper.selectBySearchSuccess(investmentDetailsDTO.getEndTime(), investmentDetailsDTO.getBeginTime());
+        List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
+        for(PayOrderDO payOrderDO:payOrderDOS){
+            InvestmentDetailsDTO investmentDetails = new InvestmentDetailsDTO();
+            investmentDetails.setProjectName(payOrderDO.getProjectName());
+            investmentDetails.setProjectId(payOrderDO.getProjectId());
+            investmentDetails.setPayOrderId(payOrderDO.getPayOrderId());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd ");
+            investmentDetails.setPayTime(simpleDateFormat.format(payOrderDO.getGmtCreated()));
+            Result<UserEntity> result = userClient.getUserById(payOrderDO.getUserId().toString());
+            UserEntity userEntity = result.getData();
+            investmentDetails.setInvestmenterName(userEntity.getUsername());
+            investmentDetails.setInvestmenterEmail(userEntity.getEmail());
+            investmentDetails.setBankCardNumber(userEntity.getBankCardNumber());
+            investmentDetails.setIdCardNumber(userEntity.getIdCardNumber());
+            investmentDetails.setIdCardPngUp(userEntity.getIdCardPngUp());
+            investmentDetails.setIdCardPngDown(userEntity.getIdCardPngDown());
+            investmentDetailsDTOS.add(investmentDetails);
+        }
+        return investmentDetailsDTOS;
+    }
+
+    public List<InvestmentDetailsDTO> getInvestmentDetailsDTOByrefound(InvestmentDetailsDTO investmentDetailsDTO){
+        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByRefund(investmentDetailsDTO.getEndTime(), investmentDetailsDTO.getBeginTime());
+        List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
+        for (InvestmentDetailsDO investmentDetailsDO:investmentDetailsDOS){
+            PayOrderDO payOrderDO = payOrderMapper.selectById(investmentDetailsDO.getId());
+            if (payOrderDO==null){
+                continue;
+            }
+            InvestmentDetailsDTO investmentDetails = new InvestmentDetailsDTO();
+            investmentDetails.setProjectName(payOrderDO.getProjectName());
+            investmentDetails.setProjectId(payOrderDO.getProjectId());
+            investmentDetails.setPayOrderId(payOrderDO.getPayOrderId());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd ");
+            investmentDetails.setPayTime(simpleDateFormat.format(payOrderDO.getGmtCreated()));
+            Result<UserEntity> result = userClient.getUserById(payOrderDO.getUserId().toString());
+            UserEntity userEntity = result.getData();
+            investmentDetails.setInvestmenterName(userEntity.getUsername());
+            investmentDetails.setInvestmenterEmail(userEntity.getEmail());
+            investmentDetails.setBankCardNumber(userEntity.getBankCardNumber());
+            investmentDetails.setIdCardNumber(userEntity.getIdCardNumber());
+            investmentDetails.setIdCardPngUp(userEntity.getIdCardPngUp());
+            investmentDetails.setIdCardPngDown(userEntity.getIdCardPngDown());
+            investmentDetailsDTOS.add(investmentDetails);
+        }
+        return investmentDetailsDTOS;
     }
 
     public List<InvestmentDetailsDTO> getInvestmentDetailsDOSByuserId(Long userID){

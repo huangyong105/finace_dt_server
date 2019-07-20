@@ -1,12 +1,10 @@
 package com.roncoo.eshop.mapper;
 
 import com.roncoo.eshop.model.PayOrderDO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Mapper
 public interface PayOrderMapper {
@@ -23,7 +21,10 @@ public interface PayOrderMapper {
     @Update("update pay_order set pay_state = #{payState} where pay_order_id = #{payOrderId}")
     void updateState(PayOrderDO payOrderDO);
 
-    @Select("select * from pay_order where order_id = #{id}")
+    @Select("select * from pay_order where order_id = #{id} and pay_state = 1")
     PayOrderDO selectById(Long id);
+
+    @Select("select * from pay_order where pay_state = 1 and gmt_created &lt; #{endTime} and gmt_created &gt; #{beginTime}")
+    List<PayOrderDO> selectBySearchSuccess(@Param("endTime") Long endTime, @Param("beginTime") Long beginTime);
 
 }

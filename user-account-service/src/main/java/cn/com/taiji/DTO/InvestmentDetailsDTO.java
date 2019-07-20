@@ -46,6 +46,11 @@ public class InvestmentDetailsDTO {
     private String idCardPngDown;
 
     /**
+     * 身份证号码
+     */
+    private String idCardNumber;
+
+    /**
      * 项目名称
      */
     private String projectName;
@@ -103,6 +108,18 @@ public class InvestmentDetailsDTO {
      * 每页大小
      */
     private Integer pageSize;
+    /**
+     * 开始时间
+     */
+    private Long beginTime;
+    /**
+     * 结束时间
+     */
+    private Long endTime;
+    /**
+     * 搜索订单状态(1:支付成功，2：申请退款)
+     */
+    private Integer searchType;
 
     public Integer getCurrentPage() {
         return currentPage;
@@ -222,5 +239,101 @@ public class InvestmentDetailsDTO {
 
     public void setStateDesc(String stateDesc) {
         this.stateDesc = stateDesc;
+    }
+
+    public String getInvestmenterName() {
+        return investmenterName;
+    }
+
+    public void setInvestmenterName(String investmenterName) {
+        this.investmenterName = investmenterName;
+    }
+
+    public String getInvestmenterTel() {
+        return investmenterTel;
+    }
+
+    public void setInvestmenterTel(String investmenterTel) {
+        this.investmenterTel = investmenterTel;
+    }
+
+    public String getInvestmenterEmail() {
+        return investmenterEmail;
+    }
+
+    public void setInvestmenterEmail(String investmenterEmail) {
+        this.investmenterEmail = investmenterEmail;
+    }
+
+    public String getBankCardNumber() {
+        return bankCardNumber;
+    }
+
+    public void setBankCardNumber(String bankCardNumber) {
+        this.bankCardNumber = bankCardNumber;
+    }
+
+    public String getIdCardPngUp() {
+        return idCardPngUp;
+    }
+
+    public void setIdCardPngUp(String idCardPngUp) {
+        this.idCardPngUp = idCardPngUp;
+    }
+
+    public String getIdCardPngDown() {
+        return idCardPngDown;
+    }
+
+    public void setIdCardPngDown(String idCardPngDown) {
+        this.idCardPngDown = idCardPngDown;
+    }
+
+    public String getPayOrderId() {
+        return payOrderId;
+    }
+
+    public void setPayOrderId(String payOrderId) {
+        this.payOrderId = payOrderId;
+    }
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
+    }
+
+    public Long getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Long beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public Long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
     }
 }

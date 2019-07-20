@@ -48,5 +48,8 @@ public interface UserClient {
     @RequestMapping(path = "/auth/findPassword", name = "findPassword")
     public Result  findPassword (@RequestBody UserEntity userEntity);
 
+    @RequestMapping(path = "users/{id}", method = RequestMethod.GET, name = "getUserById")
+    public Result<UserEntity> getUserById(@PathVariable("id") String id);
+
 }
 

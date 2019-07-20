@@ -209,8 +209,20 @@ public class InvestorManagementController {
     }
 
 
-//    @RequestMapping("/getInvestmentProduct")
-//    public MyResult<>
+    @RequestMapping("/getInvestmentProduct")
+    public MyResult<List<InvestmentDetailsDTO>> getInvestmentProduct(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        if (investmentDetailsDTO.getSearchType()==null){
+            return MyResult.ofError(4000,"未选择筛选条件");
+        }
+        List<InvestmentDetailsDTO> investmentDetailsList = null;
+        if (investmentDetailsDTO.getSearchType()==1){
+            investmentDetailsList = investorManager.getInvestmentDetailsDTOByPaySaccess(investmentDetailsDTO);
+        }
+        if (investmentDetailsDTO.getSearchType()==2){
+            investmentDetailsList=investorManager.getInvestmentDetailsDTOByrefound(investmentDetailsDTO);
+        }
+        return MyResult.ofSuccess(investmentDetailsList);
+    }
 
     /**
      * 支付宝预下单
@@ -336,7 +348,8 @@ public class InvestorManagementController {
                                     investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
                                     investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
                                     investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
-                                    Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
+                                    investmentDetailsMapper.insert(investmentDetailsDO);
+                                    Long orderId = investmentDetailsMapper.selectId(investmentDetailsDO);
                                     payOrderDO.setOrderId(orderId);
                                     payOrderDO.setPayState(1);
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
@@ -412,7 +425,8 @@ public class InvestorManagementController {
                    investmentDetailsDO.setInputMargin(payOrderDO.getInputMargin());
                    investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
                    investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
-                   Long orderId = investmentDetailsMapper.insert(investmentDetailsDO);
+                   investmentDetailsMapper.insert(investmentDetailsDO);
+                   Long orderId = investmentDetailsMapper.selectId(investmentDetailsDO);
                    payOrderDO.setOrderId(orderId);
                    payOrderDO.setPayState(1);
                    payOrderMapper.updateOrderIdAndState(payOrderDO);
