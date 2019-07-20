@@ -28,10 +28,7 @@ import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.mapper.PayOrderMapper;
 import com.roncoo.eshop.mapper.ProjectManagementMapper;
-import com.roncoo.eshop.model.AlipayNotifyParam;
-import com.roncoo.eshop.model.InvestmentDetailsDO;
-import com.roncoo.eshop.model.PayOrderDO;
-import com.roncoo.eshop.model.ProjectManagementDO;
+import com.roncoo.eshop.model.*;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import com.roncoo.eshop.util.PayCommonUtil;
 import org.jdom.JDOMException;
@@ -76,6 +73,8 @@ public class InvestorManagementController {
     String imagePathUrl;
     @Value("${ali.notifyUrl}")
     String notifyUrl;
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
 
     /**
@@ -164,6 +163,54 @@ public class InvestorManagementController {
         }
         return MyResult.ofSuccess("申请退款成功");
     }
+
+    /**
+     * 已退款操作
+     * todo 提供内部调用
+     * @param
+     * @return
+     */
+    @RequestMapping("/refunded")
+    public MyResult refunded(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        InvestmentDetailsDO investmentDetailsDOSById = investorManager.getInvestmentDetailsDOSById(investmentDetailsDTO.getId());
+        if (investmentDetailsDOSById==null){
+            return MyResult.ofError(5000,"未找到该投资记录");
+        }
+        if (investmentDetailsDOSById.getState()==2){
+            return MyResult.ofError(5000,"该订单已退款");
+        }
+        Long aLong = investorManager.updateState(investmentDetailsDTO.getId(), 2);
+        if (null == aLong){
+            return MyResult.ofError(5000,"操作失败");
+        }
+        return MyResult.ofSuccess("退款操作成功");
+    }
+
+
+
+    /**
+     * 获取用户投资详情
+     * todo 提供内部调用
+     * @return
+     */
+    @RequestMapping("/getMyInvestment")
+    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+        Integer currentPage = investmentDetailsDTO.getCurrentPage();
+        Integer pageSize = investmentDetailsDTO.getPageSize();
+        if (currentPage == null) {
+            currentPage = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 100000;
+        }
+        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getInvestmenterId(),currentPage,pageSize);
+
+        return MyResult.ofSuccess(dtos);
+    }
+
+
+//    @RequestMapping("/getInvestmentProduct")
+//    public MyResult<>
 
     /**
      * 支付宝预下单
@@ -293,6 +340,13 @@ public class InvestorManagementController {
                                     payOrderDO.setOrderId(orderId);
                                     payOrderDO.setPayState(1);
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
+
+//                                    String[] to = new String[] {"huangyong@startdt.com"};
+//                                    String subject = "短信发送失败通知";
+//                                    EmailModelDTO email = new EmailModelDTO(from, to, null, subject, "xiaoming", null);
+//                                    mailManager.sendSimpleMail(email);
+
+
                                     return "success";
                                 } catch (Exception e) {
                                     LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
@@ -374,25 +428,7 @@ public class InvestorManagementController {
         }
     }
 
-    /**
-     * 获取用户投资详情
-     * todo 提供内部调用
-     * @return
-     */
-    @RequestMapping("/getMyInvestment")
-    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
-        Integer currentPage = investmentDetailsDTO.getCurrentPage();
-        Integer pageSize = investmentDetailsDTO.getPageSize();
-        if (currentPage == null) {
-            currentPage = 1;
-        }
-        if (pageSize == null) {
-            pageSize = 100000;
-        }
-        PageResult<InvestmentDetailsDTO> dtos = investorManager.getInvestmentDetailsDOSByuserId(investmentDetailsDTO.getInvestmenterId(),currentPage,pageSize);
 
-        return MyResult.ofSuccess(dtos);
-    }
 
 
     /**

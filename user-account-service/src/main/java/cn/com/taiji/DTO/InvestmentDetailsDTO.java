@@ -21,6 +21,31 @@ public class InvestmentDetailsDTO {
      */
     private Long investmenterId;
     /**
+     * 投资人名称
+     */
+    private String investmenterName;
+    /**
+     * 投资人手机号
+     */
+    private String investmenterTel;
+    /**
+     * 投资人邮箱
+     */
+    private String investmenterEmail;
+    /**
+     * 投资人银行卡号码
+     */
+    private String bankCardNumber;
+    /**
+     * 身份证正面
+     */
+    private String idCardPngUp;
+    /**
+     * 身份正反面
+     */
+    private String idCardPngDown;
+
+    /**
      * 项目名称
      */
     private String projectName;
@@ -44,6 +69,14 @@ public class InvestmentDetailsDTO {
      * 入金时间
      */
     private Date inputMarginTime;
+    /**
+     * 支付订单号
+     */
+    private String payOrderId;
+    /**
+     * 支付时间
+     */
+    private String payTime;
     /**
      * 当前投资状态
      */
