@@ -3,6 +3,7 @@ package com.jit.wxs.security.validate.code;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jit.wxs.security.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -12,6 +13,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.jit.wxs.entity.Result;
+import com.jit.wxs.entity.ResultMap;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

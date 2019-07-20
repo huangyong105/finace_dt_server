@@ -1,6 +1,6 @@
 package com.jit.wxs.web;
 
-import cn.com.taiji.result.Result;
+import com.jit.wxs.entity.Result;
 import com.jit.wxs.entity.SysPermission;
 import com.jit.wxs.security.SecurityConstants;
 import com.jit.wxs.service.SysPermissionService;

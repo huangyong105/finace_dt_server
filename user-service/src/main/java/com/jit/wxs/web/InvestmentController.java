@@ -1,9 +1,9 @@
 package com.jit.wxs.web;
 
 import cn.com.taiji.page.PageResult;
-import cn.com.taiji.result.Result;
 import com.jit.wxs.client.InvestmentClient;
 import cn.com.taiji.DTO.ProjectManagementDTO;
+import com.jit.wxs.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
