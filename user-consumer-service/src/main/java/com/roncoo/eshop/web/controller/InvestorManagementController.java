@@ -28,10 +28,7 @@ import com.roncoo.eshop.manager.PayOrderManager;
 import com.roncoo.eshop.mapper.InvestmentDetailsMapper;
 import com.roncoo.eshop.mapper.PayOrderMapper;
 import com.roncoo.eshop.mapper.ProjectManagementMapper;
-import com.roncoo.eshop.model.AlipayNotifyParam;
-import com.roncoo.eshop.model.InvestmentDetailsDO;
-import com.roncoo.eshop.model.PayOrderDO;
-import com.roncoo.eshop.model.ProjectManagementDO;
+import com.roncoo.eshop.model.*;
 import com.roncoo.eshop.util.OrderCodeUtil;
 import com.roncoo.eshop.util.PayCommonUtil;
 import org.jdom.JDOMException;
@@ -76,6 +73,8 @@ public class InvestorManagementController {
     String imagePathUrl;
     @Value("${ali.notifyUrl}")
     String notifyUrl;
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
 
     /**
@@ -209,6 +208,10 @@ public class InvestorManagementController {
         return MyResult.ofSuccess(dtos);
     }
 
+
+//    @RequestMapping("/getInvestmentProduct")
+//    public MyResult<>
+
     /**
      * 支付宝预下单
      * @param token
@@ -337,6 +340,13 @@ public class InvestorManagementController {
                                     payOrderDO.setOrderId(orderId);
                                     payOrderDO.setPayState(1);
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
+
+//                                    String[] to = new String[] {"huangyong@startdt.com"};
+//                                    String subject = "短信发送失败通知";
+//                                    EmailModelDTO email = new EmailModelDTO(from, to, null, subject, "xiaoming", null);
+//                                    mailManager.sendSimpleMail(email);
+
+
                                     return "success";
                                 } catch (Exception e) {
                                     LOG.error("支付宝回调业务处理报错,params:" + paramsJson, e);
