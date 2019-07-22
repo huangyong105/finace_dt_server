@@ -45,6 +45,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 /**
  * 用户相关接口
@@ -356,7 +358,12 @@ public class InvestorManagementController {
                                     investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
                                     investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
                                     investmentDetailsMapper.insert(investmentDetailsDO);
-                                    Long orderId = investmentDetailsMapper.selectId(investmentDetailsDO);
+
+                                String formatDate = null;
+                                DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
+                                formatDate = dFormat.format(investmentDetailsDO.getInputMarginTime());
+
+                                Long orderId = investmentDetailsMapper.selectId(formatDate,investmentDetailsDO.getInvestmenterId());
                                     payOrderDO.setOrderId(orderId);
                                     payOrderDO.setPayState(1);
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
@@ -436,7 +443,11 @@ public class InvestorManagementController {
                    investmentDetailsDO.setMoneyProportion(projectManagementDO.getMoneyProportion());
                    investmentDetailsDO.setInputMarginTime(payOrderDO.getGmtCreated());
                    investmentDetailsMapper.insert(investmentDetailsDO);
-                   Long orderId = investmentDetailsMapper.selectId(investmentDetailsDO);
+                   String formatDate = null;
+                   DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
+                   formatDate = dFormat.format(investmentDetailsDO.getInputMarginTime());
+
+                   Long orderId = investmentDetailsMapper.selectId(formatDate,investmentDetailsDO.getInvestmenterId());
                    payOrderDO.setOrderId(orderId);
                    payOrderDO.setPayState(1);
                    payOrderMapper.updateOrderIdAndState(payOrderDO);
