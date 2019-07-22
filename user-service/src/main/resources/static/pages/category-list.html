@@ -348,6 +348,7 @@
 <script>
     var table;
     var token = $.cookie('token');
+    var userId ;
     function getvalue(name) {
 
         var str = window.location.search;   //location.search是从当前URL的?号开始的字符串
@@ -389,12 +390,30 @@
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
-    function online(id ,isOnline){
-        showOrHide(0);
-        $('#row-id-1').val(id);
-        $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
-        $("#myModalLabel").text("更新");
-        $('#myModal').modal();
+    function refunded(id ){
+        var param ={};
+        param.id = id;
+        $.ajax({
+            dataType : "json",
+            url : host+"/investor/refunded",
+            contentType: 'application/json;charset=UTF-8',
+            type : "post",
+            data : JSON.stringify(param),
+            success : function(data) {
+                if(!data.success){
+                    alert(data.message);
+                }else{
+                    showUI ();
+                    getUserInfo(userId);
+                }
+            },
+            error : function (e){
+                var d = e.responseJSON;
+                if(d){
+                    alert(d.message);
+                }
+            }
+        });
     }
     function showOrHide (state) {
         if (state && state === 1) {
@@ -556,7 +575,11 @@
             },{
                 targets: 8,
                 render: function(data, type, row, meta) {
-                    return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 已退款</a>';
+
+                    if(row.state === 3) {
+
+                        return '<a   type="button"  href="#" onclick="refunded(\'' + row.id + '\')" > 已退款</a>';
+                    }
                 }
             }],
             language: {
@@ -588,6 +611,7 @@
     $(document).ready(function () {
         showUI ();
         var value = getvalue("id");
+        userId = value;
         getUserInfo(value);
     });
     TableManageButtons.init();
