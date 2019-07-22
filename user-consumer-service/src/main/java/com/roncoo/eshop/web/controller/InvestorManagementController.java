@@ -448,6 +448,7 @@ public class InvestorManagementController {
                    formatDate = dFormat.format(investmentDetailsDO.getInputMarginTime());
 
                    Long orderId = investmentDetailsMapper.selectId(formatDate,investmentDetailsDO.getInvestmenterId());
+                   LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<"+formatDate+"<<<<<<<<<"+investmentDetailsDO.getInvestmenterId()+"<<<<<<<<<<<<<<<<<<<<"+orderId);
                    payOrderDO.setOrderId(orderId);
                    payOrderDO.setPayState(1);
                    payOrderMapper.updateOrderIdAndState(payOrderDO);
