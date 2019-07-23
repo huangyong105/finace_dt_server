@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "user-service",url="http://47.112.123.113:8770/")
 public interface BUserClient {
-    @PostMapping("/uc//findAllUsersByPerm")
+    @PostMapping("/uc/findAllUsersByPerm")
     public Result findAllUsersByPerm();
 
 }

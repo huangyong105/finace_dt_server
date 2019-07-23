@@ -15,7 +15,7 @@ public interface PayOrderMapper {
     @Select("select * from pay_order where pay_order_id = #{payOrderId}")
     PayOrderDO selectByOrderId(String payOrderId);
 
-    @Update("update pay_order set order_id = #{orderId} and pay_state = #{payState} where pay_order_id = #{payOrderId}")
+    @Update("update pay_order set order_id = #{orderId},pay_state = #{payState} where pay_order_id = #{payOrderId}")
     void updateOrderIdAndState(PayOrderDO payOrderDO);
 
     @Update("update pay_order set pay_state = #{payState} where pay_order_id = #{payOrderId}")
