@@ -121,7 +121,7 @@ public class InvestorManagementController {
      * @return
      */
     @RequestMapping("/myInvestment")
-    public MyResult getMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
+    public MyResult<PageResult<InvestmentDetailsDTO>> getMyInvestment(@RequestHeader("token")String token,@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         Result<User> userResult = null;
         try {
             userResult = userClient.getUserInfo(token);
