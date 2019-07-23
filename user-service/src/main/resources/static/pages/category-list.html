@@ -393,6 +393,7 @@
     function refunded(id ){
         var param ={};
         param.id = id;
+        showCustombox("请确保资金已经通过线下转到用户账上",true);
         $.ajax({
             dataType : "json",
             url : host+"/investor/refunded",
@@ -401,7 +402,7 @@
             data : JSON.stringify(param),
             success : function(data) {
                 if(!data.success){
-                    alert(data.message);
+                    showCustombox(data.message,true);
                 }else{
                     showUI ();
                     getUserInfo(userId);

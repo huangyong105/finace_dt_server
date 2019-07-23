@@ -141,7 +141,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 设置拦截忽略文件夹，可以对静态资源放行
         // 忽略URL
         web.ignoring().antMatchers("/assets/fonts/**", "/assets/images/**", "/assets/css/*.css", "/assets/js/*.js", "/assets/pages/*.js",
-                "/**/*.png","/assets/**","/pages/assets.css/**","/plugins/**");
+                "/**/*.png","/assets/**","/pages/assets.css/**","/plugins/**","/uc/findAllUsersByPerm");
 
     }
 }
