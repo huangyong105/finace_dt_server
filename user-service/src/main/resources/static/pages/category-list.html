@@ -404,8 +404,7 @@
                 if(!data.success){
                     showCustombox(data.message,true);
                 }else{
-                    showUI ();
-                    getUserInfo(userId);
+                    showTable(userId);
                 }
             },
             error : function (e){

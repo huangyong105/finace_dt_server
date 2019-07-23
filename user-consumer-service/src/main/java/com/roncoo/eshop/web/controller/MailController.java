@@ -29,7 +29,7 @@ public class MailController {
     @RequestMapping("/sendMail")
     public MyResult sendMail () {
 // 发送邮件
-        String[] to = new String[] {"hzwjrq@163.com"};
+        String[] to = new String[] {"huangyong@startdt.com"};
         String subject = "短信发送失败通知";
         EmailModelDTO email = new EmailModelDTO(from, to, null, subject, "hzwjrq@163.com", null);
         mailManager.sendSimpleMail(email);
