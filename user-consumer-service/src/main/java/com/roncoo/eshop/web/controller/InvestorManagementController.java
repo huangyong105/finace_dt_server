@@ -475,6 +475,21 @@ public class InvestorManagementController {
 
 
 
+    @RequestMapping("/test")
+    public MyResult test(){
+        cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
+
+        List<SysUser> value = (List<SysUser>) result.getValue();
+        for (SysUser sysUser:value) {
+            LOG.info(sysUser.getEmail());
+            String[] to = new String[]{sysUser.getEmail()};
+            String subject = "用户支付成功通知";
+            EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, sysUser.getName()+"支付了"+1+"元购买了"+"测试服务", null);
+            mailManager.sendSimpleMail(email);
+        }
+        return null;
+    }
+
     /**
      * 获取实名认证状态
      * @return
