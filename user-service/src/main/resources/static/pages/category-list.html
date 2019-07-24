@@ -286,7 +286,7 @@
                 <span id="box-message"></span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info waves-effect waves-light" id="confirm-del">&nbsp;确&nbsp;&nbsp;认&nbsp;</button>
+                <button type="button" class="btn btn-info waves-effect waves-light" id="confirm-del"  onclick="Custombox.close();refunded();">&nbsp;确&nbsp;&nbsp;认&nbsp;</button>
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" onclick="Custombox.close();">&nbsp;取&nbsp;&nbsp;消&nbsp;</button>
             </div>
         </div>
@@ -349,6 +349,8 @@
     var table;
     var token = $.cookie('token');
     var userId ;
+
+    var refundedId=0;
     function getvalue(name) {
 
         var str = window.location.search;   //location.search是从当前URL的?号开始的字符串
@@ -390,10 +392,9 @@
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
-    function refunded(id ){
+    function refunded() {
         var param ={};
-        param.id = id;
-        showCustombox("请确保资金已经通过线下转到用户账上",true);
+        param.id = refundedId;
         $.ajax({
             dataType : "json",
             url : host+"/investor/refunded",
@@ -402,9 +403,9 @@
             data : JSON.stringify(param),
             success : function(data) {
                 if(!data.success){
-                    showCustombox(data.message,true);
+                    alert(data.message,true);
                 }else{
-                    showTable(userId);
+                    location.href="/pages/category-list.html?id="+userId;
                 }
             },
             error : function (e){
@@ -414,6 +415,12 @@
                 }
             }
         });
+    }
+    function refundedMakeSure(id ){
+
+        refundedId = id ;
+        showCustombox("请确保资金已经通过线下转到用户账上",true);
+
     }
     function showOrHide (state) {
         if (state && state === 1) {
@@ -517,10 +524,14 @@
         table = $('#datatable').DataTable({
             "processing" : false,
             "serverSide": true,
-            "bLengthChange": false,     //关闭选择显示条数
+            //"sPaginationType" : "full_numbers",//分页工具条样式
+            "bStateSave" : false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "bScrollCollapse" : false, //当显示的数据不足以支撑表格的默认的高度
             "bSort": false,             //不能排序
-            "iDisplayLength": 10,
             "searching" : false,
+            "iDisplayLength": 10,
+            "bLengthChange": false,
+            "sPaginationType": "full_numbers",
             ajax(data, callback, settings){
                 //封装请求参数
                 var param = {};
@@ -578,7 +589,7 @@
 
                     if(row.state === 3) {
 
-                        return '<a   type="button"  href="#" onclick="refunded(\'' + row.id + '\')" > 已退款</a>';
+                        return '<a   type="button"  href="#" onclick="refundedMakeSure(\'' + row.id + '\')" > 已退款</a>';
                     }
                 }
             }],
