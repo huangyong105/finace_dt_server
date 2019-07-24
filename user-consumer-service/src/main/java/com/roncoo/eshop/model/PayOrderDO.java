@@ -10,6 +10,7 @@ public class PayOrderDO {
     private Long id;
     private String payOrderId;
     private Long userId;
+    private String userName;
     private BigDecimal inputMargin;
     private String projectName;
     private String payDescribe;

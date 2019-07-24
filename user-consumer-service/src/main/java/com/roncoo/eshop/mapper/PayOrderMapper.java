@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface PayOrderMapper {
-    @Insert("insert into pay_order (pay_order_id,userId,input_margin,project_name,pay_describe,pay_title,gmt_created,gmt_updated,pay_state,project_id,pay_way)" +
-            "values (#{payOrderId},#{userId},#{inputMargin},#{projectName},#{payDescribe},#{payTitle},now(),now(),#{payState},#{projectId},#{payWay})")
+    @Insert("insert into pay_order (pay_order_id,userId,userName,input_margin,project_name,pay_describe,pay_title,gmt_created,gmt_updated,pay_state,project_id,pay_way)" +
+            "values (#{payOrderId},#{userId},#{userName},#{inputMargin},#{projectName},#{payDescribe},#{payTitle},now(),now(),#{payState},#{projectId},#{payWay})")
     void insertPayOrder(PayOrderDO payOrderDO);
 
     @Select("select * from pay_order where pay_order_id = #{payOrderId}")

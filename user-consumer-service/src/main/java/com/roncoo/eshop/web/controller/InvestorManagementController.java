@@ -218,6 +218,12 @@ public class InvestorManagementController {
     }
 
 
+    /**
+     * 通过筛选条件获取投资详情信息
+     * todo 提供内部调用
+     * @param investmentDetailsDTO
+     * @return
+     */
     @RequestMapping("/getInvestmentProduct")
     public MyResult<List<InvestmentDetailsDTO>> getInvestmentProduct(@RequestBody InvestmentDetailsDTO investmentDetailsDTO){
         if (investmentDetailsDTO.getSearchType()==null){
@@ -253,6 +259,7 @@ public class InvestorManagementController {
             return MyResult.ofError(4000,"未登陆");
         }
         Long userId = userResult.getData().getId();
+        String userName = userResult.getData().getUsername();
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
@@ -271,7 +278,7 @@ public class InvestorManagementController {
             AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
             infoStr = response.getBody();
             LOG.info(response.getBody());
-            PayOrderDO payOrderDO = payOrderManager.saveAliPayOrder(orderCode, investmentDetailsDTO, userId,1,response.getTradeNo());
+            PayOrderDO payOrderDO = payOrderManager.saveAliPayOrder(orderCode, investmentDetailsDTO, userId,userName,1,response.getTradeNo());
             if (payOrderDO == null){
                 return MyResult.ofError(4000,"预下单存储失败");
             }
@@ -304,6 +311,7 @@ public class InvestorManagementController {
             return MyResult.ofError(4000,"未登陆");
         }
         Long userId = userResult.getData().getId();
+        String userName = userResult.getData().getUsername();
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         String sym = request.getRequestURL().toString().split("/investor/")[0];
@@ -313,7 +321,7 @@ public class InvestorManagementController {
         String attach = jsAtt.toJSONString();
         LOG.info("微信预下单开始:{}",orderCode);
         SortedMap<String, Object> map = PayCommonUtil.WxPublicPay(orderCode, investmentDetailsDTO.getInputMargin(), investmentDetailsDTO.getProjectName(), attach, notifyUrl, request);
-        PayOrderDO payOrderDO = payOrderManager.saveWxPayOrder(orderCode, investmentDetailsDTO, userId,2);
+        PayOrderDO payOrderDO = payOrderManager.saveWxPayOrder(orderCode, investmentDetailsDTO, userId,userName,2);
         if (payOrderDO == null){
             return MyResult.ofError(4000,"预下单存储失败");
         }
@@ -369,12 +377,12 @@ public class InvestorManagementController {
                                     payOrderMapper.updateOrderIdAndState(payOrderDO);
 
 
-                                cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
-                                List<SysUser> value = (List<SysUser>) result.getValue();
+                                cn.com.taiji.result.Result<List<SysUser>> result = bUserClient.findAllUsersByPerm();
+                                List<SysUser> value = result.getValue();
                                 for (SysUser sysUser:value) {
                                     String[] to = new String[]{sysUser.getEmail()};
                                     String subject = "用户支付成功通知";
-                                    EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, sysUser.getName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                                    EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, payOrderDO.getUserName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
                                     mailManager.sendSimpleMail(email);
                                 }
                                     return "success";
@@ -448,17 +456,16 @@ public class InvestorManagementController {
                    formatDate = dFormat.format(investmentDetailsDO.getInputMarginTime());
 
                    Long orderId = investmentDetailsMapper.selectId(formatDate,investmentDetailsDO.getInvestmenterId());
-                   LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<"+formatDate+"<<<<<<<<<"+investmentDetailsDO.getInvestmenterId()+"<<<<<<<<<<<<<<<<<<<<"+orderId);
                    payOrderDO.setOrderId(orderId);
                    payOrderDO.setPayState(1);
                    payOrderMapper.updateOrderIdAndState(payOrderDO);
                    LOG.info("支付成功！支付订单id:{}",payOrderDO.getPayOrderId());
-                   cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
-                   List<SysUser> value = (List<SysUser>) result.getValue();
+                   cn.com.taiji.result.Result<List<SysUser>> result = bUserClient.findAllUsersByPerm();
+                   List<SysUser> value = result.getValue();
                    for (SysUser sysUser:value) {
                        String[] to = new String[]{sysUser.getEmail()};
                        String subject = "用户支付成功通知";
-                       EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, sysUser.getName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                       EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, payOrderDO.getUserName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
                        mailManager.sendSimpleMail(email);
                    }
                    return returnXML(result_code);
@@ -477,9 +484,9 @@ public class InvestorManagementController {
 
     @RequestMapping("/test")
     public MyResult test(){
-        cn.com.taiji.result.Result result = bUserClient.findAllUsersByPerm();
+        cn.com.taiji.result.Result<List<SysUser>> result = bUserClient.findAllUsersByPerm();
 
-        List<SysUser> value = (List<SysUser>) result.getValue();
+        List<SysUser> value = result.getValue();
         for (SysUser sysUser:value) {
             LOG.info(sysUser.getEmail());
             String[] to = new String[]{sysUser.getEmail()};
