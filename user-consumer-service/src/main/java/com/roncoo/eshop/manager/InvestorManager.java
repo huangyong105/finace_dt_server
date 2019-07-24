@@ -92,7 +92,11 @@ public class InvestorManager {
     }
 
     public List<InvestmentDetailsDTO> getInvestmentDetailsDTOByPaySaccess(InvestmentDetailsDTO investmentDetailsDTO){
-        List<PayOrderDO> payOrderDOS = payOrderMapper.selectBySearchSuccess(investmentDetailsDTO.getEndTime(), investmentDetailsDTO.getBeginTime());
+        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
+        String timeEnd=format.format(investmentDetailsDTO.getEndTime());
+        String timeBegin=format.format(investmentDetailsDTO.getBeginTime());
+
+        List<PayOrderDO> payOrderDOS = payOrderMapper.selectBySearchSuccess(timeEnd, timeBegin);
         List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
         for(PayOrderDO payOrderDO:payOrderDOS){
             InvestmentDetailsDTO investmentDetails = new InvestmentDetailsDTO();

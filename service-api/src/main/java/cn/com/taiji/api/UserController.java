@@ -79,7 +79,7 @@ public class UserController {
 
 
 
-    @RequestMapping(path = "users/{id}", method = RequestMethod.GET, name = "getUserById")
+    @RequestMapping(path = "/usersById/{id}", method = RequestMethod.GET, name = "getUserById")
     public Result<UserEntity> getUserById(@PathVariable("id") String id) {
         User user = userService.findUserById(NumberUtils.toLong(id));
         UserEntity userEntity = BeanConverter.convert(user,UserEntity.class);
