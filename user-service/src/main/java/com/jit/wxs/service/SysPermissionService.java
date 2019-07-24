@@ -1,5 +1,6 @@
 package com.jit.wxs.service;
 
+import com.jit.wxs.entity.Result;
 import com.jit.wxs.entity.SysPermission;
 import com.jit.wxs.mapper.SysPermissionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +22,8 @@ public class SysPermissionService {
     public List<SysPermission> listByRoleId( Integer roleId) {
         return permissionMapper.listByRoleId(roleId);
     }
+
+//    public Result numberJudge(){
+//
+//    }
 }
