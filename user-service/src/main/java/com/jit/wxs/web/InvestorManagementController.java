@@ -138,4 +138,22 @@ public class InvestorManagementController {
         return ;
     }
 
+    /**
+     * 根据条件筛选数据
+     * @param beginTime  起始时间戳
+     * @param endTime   结束时间戳
+     * @param searchType  1：支付成功，2：申请退款
+     * @return
+     */
+    public List<InvestmentDetailsDTO> getInvestmentDetailsList(Long beginTime,Long endTime,Integer searchType){
+        InvestmentDetailsDTO investmentDetailsDTO = new InvestmentDetailsDTO();
+        investmentDetailsDTO.setBeginTime(beginTime);
+        investmentDetailsDTO.setEndTime(endTime);
+        investmentDetailsDTO.setSearchType(searchType);
+        Result<List<InvestmentDetailsDTO>> result = investmentClient.getInvestmentProduct(investmentDetailsDTO);
+        if (result.isSuccess()){
+            return result.getValue();
+        }
+        return null;
+    }
 }

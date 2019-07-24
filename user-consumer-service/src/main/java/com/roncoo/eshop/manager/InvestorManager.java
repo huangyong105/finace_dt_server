@@ -103,7 +103,7 @@ public class InvestorManager {
             investmentDetails.setProjectName(payOrderDO.getProjectName());
             investmentDetails.setProjectId(payOrderDO.getProjectId());
             investmentDetails.setPayOrderId(payOrderDO.getPayOrderId());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd ");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             investmentDetails.setPayTime(simpleDateFormat.format(payOrderDO.getGmtCreated()));
             Result<UserEntity> result = userClient.getUserById(payOrderDO.getUserId().toString());
             UserEntity userEntity = result.getData();
@@ -119,7 +119,12 @@ public class InvestorManager {
     }
 
     public List<InvestmentDetailsDTO> getInvestmentDetailsDTOByrefound(InvestmentDetailsDTO investmentDetailsDTO){
-        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByRefund(investmentDetailsDTO.getEndTime(), investmentDetailsDTO.getBeginTime());
+
+        SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
+        String timeEnd=format.format(investmentDetailsDTO.getEndTime());
+        String timeBegin=format.format(investmentDetailsDTO.getBeginTime());
+
+        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByRefund(timeEnd, timeBegin);
         List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
         for (InvestmentDetailsDO investmentDetailsDO:investmentDetailsDOS){
             PayOrderDO payOrderDO = payOrderMapper.selectById(investmentDetailsDO.getId());
@@ -130,7 +135,7 @@ public class InvestorManager {
             investmentDetails.setProjectName(payOrderDO.getProjectName());
             investmentDetails.setProjectId(payOrderDO.getProjectId());
             investmentDetails.setPayOrderId(payOrderDO.getPayOrderId());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd ");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             investmentDetails.setPayTime(simpleDateFormat.format(payOrderDO.getGmtCreated()));
             Result<UserEntity> result = userClient.getUserById(payOrderDO.getUserId().toString());
             UserEntity userEntity = result.getData();

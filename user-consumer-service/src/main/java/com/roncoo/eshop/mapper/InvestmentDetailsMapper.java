@@ -23,8 +23,8 @@ public interface InvestmentDetailsMapper {
     @Select("select * from investment_details where investmenter_id=#{userId} order by gmt_created desc")
     List<InvestmentDetailsDO> selectByPrimaryKey(Long userId);
 
-    @Select("select * from investment_details where state = 3 and gmt_created &lt; #{endTime} and gmt_created &gt; #{beginTime}")
-    List<InvestmentDetailsDO> selectByRefund(@Param("endTime") Long endTime, @Param("beginTime") Long beginTime);
+    @Select("select * from investment_details where state = 3 and gmt_created < #{endTime} and gmt_created > #{beginTime}")
+    List<InvestmentDetailsDO> selectByRefund(@Param("endTime") String endTime, @Param("beginTime") String beginTime);
 
     @Select("select * from investment_details where id=#{id}")
     InvestmentDetailsDO selectById(Long id);

@@ -10,6 +10,8 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 /**
  * 功能描述: <br>
  *
@@ -121,5 +123,13 @@ public interface InvestmentClient {
      */
     @RequestMapping("/investor/refunded")
     public Result refunded(@RequestBody InvestmentDetailsDTO investmentDetailsDTO);
+
+    /**
+     * 通过筛选条件查询投资详情
+     * @param investmentDetailsDTO
+     * @return
+     */
+    @RequestMapping("/investor/getInvestmentProduct")
+    public Result<List<InvestmentDetailsDTO>> getInvestmentProduct(@RequestBody InvestmentDetailsDTO investmentDetailsDTO);
 }
 
