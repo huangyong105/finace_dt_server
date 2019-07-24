@@ -7,7 +7,7 @@ import java.util.Date;
  * @author dongyuan
  * @date 2019-03-22 14:22
  **/
-public class ProjectManagementDTO {
+public class ProjectManagementCopyDTO {
     /**
      * 项目id
      */
@@ -19,12 +19,12 @@ public class ProjectManagementDTO {
     /**
      * 预期月收益
      */
-    private Integer monthEarnings;
+    private String monthEarnings;
 
     /**
      * 最低承受风险
      */
-    private Integer expectedRiskTolerance;
+    private String expectedRiskTolerance;
     /**
      * 最低保证金
      */
@@ -87,19 +87,19 @@ public class ProjectManagementDTO {
         this.projectName = projectName;
     }
 
-    public Integer getMonthEarnings() {
+    public String getMonthEarnings() {
         return monthEarnings;
     }
 
-    public void setMonthEarnings(Integer monthEarnings) {
+    public void setMonthEarnings(String monthEarnings) {
         this.monthEarnings = monthEarnings;
     }
 
-    public Integer getExpectedRiskTolerance() {
+    public String getExpectedRiskTolerance() {
         return expectedRiskTolerance;
     }
 
-    public void setExpectedRiskTolerance(Integer expectedRiskTolerance) {
+    public void setExpectedRiskTolerance(String expectedRiskTolerance) {
         this.expectedRiskTolerance = expectedRiskTolerance;
     }
 

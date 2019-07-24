@@ -29,6 +29,9 @@ public class UserController {
     @Autowired
     private SysPermissionService permissionService;
 
+    @Autowired
+    private SysPermissionService sysPermissionService;
+
     @RequestMapping("/findAllUsers")
     public Result findAllUsers(Authentication authentication) {
         List<SysUser> sysUsers = userService.loadUsers();
@@ -101,6 +104,14 @@ public class UserController {
 
     @RequestMapping("/createUser")
     public Result createUser(SysUserReq sysUserReq) {
+        Result emailResult = sysPermissionService.emailJudge(sysUserReq.getEmail());
+        if (!emailResult.isSuccess()){
+            return emailResult;
+        }
+        Result mobilResult = sysPermissionService.telNumberJudge(sysUserReq.getMobile());
+        if (!mobilResult.isSuccess()){
+            return mobilResult;
+        }
         SysUser sysUser = BeanConverter.convert(sysUserReq, SysUser.class);
         if (Objects.nonNull(sysUser.getId())) {
             sysUser.setUpdateTime(new Date());

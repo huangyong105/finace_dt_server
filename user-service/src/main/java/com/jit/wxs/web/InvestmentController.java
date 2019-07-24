@@ -1,9 +1,11 @@
 package com.jit.wxs.web;
 
+import cn.com.taiji.DTO.ProjectManagementCopyDTO;
 import cn.com.taiji.page.PageResult;
 import com.jit.wxs.client.InvestmentClient;
 import cn.com.taiji.DTO.ProjectManagementDTO;
 import com.jit.wxs.entity.Result;
+import com.jit.wxs.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class InvestmentController {
 
     @Autowired
     InvestmentClient investmentClient;
+    @Autowired
+    SysPermissionService sysPermissionService;
 
     /**
      * 添加投资项目
@@ -29,8 +33,29 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping(value = "/saveProject")
-    public Result saveProject(@RequestBody ProjectManagementDTO req){
-        Result result = investmentClient.saveProject(req);
+    public Result saveProject(@RequestBody ProjectManagementCopyDTO req){
+        Result monthEarnResult = sysPermissionService.percentJudge(req.getMonthEarnings());
+        if (!monthEarnResult.isSuccess()){
+            return monthEarnResult;
+        }
+
+        Result expectedRequest = sysPermissionService.percentJudge(req.getExpectedRiskTolerance());
+        if (!expectedRequest.isSuccess()){
+            return expectedRequest;
+        }
+        ProjectManagementDTO projectManagementDTO = new ProjectManagementDTO();
+        projectManagementDTO.setId(req.getId());
+        projectManagementDTO.setProjectName(req.getProjectName());
+        projectManagementDTO.setMonthEarnings(Integer.parseInt(req.getMonthEarnings()));
+        projectManagementDTO.setExpectedRiskTolerance(Integer.parseInt(req.getExpectedRiskTolerance()));
+        projectManagementDTO.setMinMargin(req.getMinMargin());
+        projectManagementDTO.setMoneyProportion(req.getMoneyProportion());
+        projectManagementDTO.setGmtCreated(req.getGmtCreated());
+        projectManagementDTO.setGmtUpdated(req.getGmtUpdated());
+        projectManagementDTO.setIsOnline(req.getIsOnline());
+        projectManagementDTO.setCurrentPage(req.getCurrentPage());
+        projectManagementDTO.setPageSize(req.getPageSize());
+        Result result = investmentClient.saveProject(projectManagementDTO);
         return result;
     }
 
@@ -61,8 +86,29 @@ public class InvestmentController {
      * @return
      */
     @RequestMapping(value = "/updateProject")
-    public Result updateProject(@RequestBody ProjectManagementDTO req){
-        investmentClient.updateProject(req);
+    public Result updateProject(@RequestBody ProjectManagementCopyDTO req){
+        Result monthEarnResult = sysPermissionService.percentJudge(req.getMonthEarnings());
+        if (!monthEarnResult.isSuccess()){
+            return monthEarnResult;
+        }
+
+        Result expectedRequest = sysPermissionService.percentJudge(req.getExpectedRiskTolerance());
+        if (!expectedRequest.isSuccess()){
+            return expectedRequest;
+        }
+        ProjectManagementDTO projectManagementDTO = new ProjectManagementDTO();
+        projectManagementDTO.setId(req.getId());
+        projectManagementDTO.setProjectName(req.getProjectName());
+        projectManagementDTO.setMonthEarnings(Integer.parseInt(req.getMonthEarnings()));
+        projectManagementDTO.setExpectedRiskTolerance(Integer.parseInt(req.getExpectedRiskTolerance()));
+        projectManagementDTO.setMinMargin(req.getMinMargin());
+        projectManagementDTO.setMoneyProportion(req.getMoneyProportion());
+        projectManagementDTO.setGmtCreated(req.getGmtCreated());
+        projectManagementDTO.setGmtUpdated(req.getGmtUpdated());
+        projectManagementDTO.setIsOnline(req.getIsOnline());
+        projectManagementDTO.setCurrentPage(req.getCurrentPage());
+        projectManagementDTO.setPageSize(req.getPageSize());
+        investmentClient.updateProject(projectManagementDTO);
         return Result.ofSuccess();
     }
 
