@@ -259,7 +259,7 @@ public class InvestorManagementController {
             return MyResult.ofError(4000,"未登陆");
         }
         Long userId = userResult.getData().getId();
-        String userName = userResult.getData().getUsername();
+        String userName = userResult.getData().getAccount();
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
@@ -311,7 +311,7 @@ public class InvestorManagementController {
             return MyResult.ofError(4000,"未登陆");
         }
         Long userId = userResult.getData().getId();
-        String userName = userResult.getData().getUsername();
+        String userName = userResult.getData().getAccount();
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         String sym = request.getRequestURL().toString().split("/investor/")[0];
@@ -382,7 +382,7 @@ public class InvestorManagementController {
                                 for (SysUser sysUser:value) {
                                     String[] to = new String[]{sysUser.getEmail()};
                                     String subject = "用户支付成功通知";
-                                    EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, payOrderDO.getUserName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                                    EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, "用户："+payOrderDO.getUserName()+"使用支付宝成功支付了"+payOrderDO.getInputMargin()+"元购买了项目("+projectManagementDO.getProjectName()+"),请及时处理!", null);
                                     mailManager.sendSimpleMail(email);
                                 }
                                     return "success";
@@ -465,7 +465,7 @@ public class InvestorManagementController {
                    for (SysUser sysUser:value) {
                        String[] to = new String[]{sysUser.getEmail()};
                        String subject = "用户支付成功通知";
-                       EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, payOrderDO.getUserName()+"支付了"+payOrderDO.getInputMargin()+"元购买了"+projectManagementDO.getProjectName(), null);
+                       EmailModelDTO email = new EmailModelDTO(fromEmail, to, null, subject, "用户："+payOrderDO.getUserName()+"使用微信成功支付了"+payOrderDO.getInputMargin()+"元购买了项目("+projectManagementDO.getProjectName()+"),请及时处理!", null);
                        mailManager.sendSimpleMail(email);
                    }
                    return returnXML(result_code);
