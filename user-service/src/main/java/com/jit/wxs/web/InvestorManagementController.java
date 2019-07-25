@@ -5,6 +5,7 @@ import cn.com.taiji.DTO.InvestmentDetailsDTO;
 import cn.com.taiji.page.PageInfo;
 import cn.com.taiji.page.PageResult;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.jit.wxs.Enum.StateEnum;
 import com.jit.wxs.client.InvestmentClient;
 import com.jit.wxs.entity.CUser;
@@ -111,14 +112,21 @@ public class InvestorManagementController {
         return Result.ofError(5000,refunded.getMessage());
     }
 
-    @RequestMapping("/exportMyInvestment")
-    public void  exportMyInvestment(@RequestBody InvestmentDetailsDTO investmentDetailsDTO, HttpServletResponse response){
-        investmentDetailsDTO.setCurrentPage(1);
-        investmentDetailsDTO.setPageSize(1000);
-        Result<PageResult<InvestmentDetailsDTO>> myInvestment = investmentClient.getMyInvestment(investmentDetailsDTO);
-        PageResult<InvestmentDetailsDTO> value = myInvestment.getValue();
-        List<InvestmentDetailsDTO> investmentDetailsDTOS = value.getData();
-        for (InvestmentDetailsDTO dto:investmentDetailsDTOS){
+    @RequestMapping("/exportInvestmentDetailsList")
+    public void  exportInvestmentDetailsList( Long beginTime,Long endTime,Integer searchType, HttpServletResponse response){
+        InvestmentDetailsDTO investmentDetailsDTO = new InvestmentDetailsDTO();
+        investmentDetailsDTO.setBeginTime(beginTime);
+        investmentDetailsDTO.setEndTime(endTime);
+        investmentDetailsDTO.setSearchType(searchType);
+        Result<List<InvestmentDetailsDTO>> result = investmentClient.getInvestmentProduct(investmentDetailsDTO);
+        if (!result.isSuccess()){
+
+            String fileName = "项目管理_"+DateUtils.formatDate(new Date(),"yyyyMMdd");
+            exportProduct(response, Lists.newArrayList(),fileName);
+            return ;
+        }
+        List<InvestmentDetailsDTO> investmentDetailsDTOList = result.getValue();
+        for (InvestmentDetailsDTO dto:investmentDetailsDTOList){
             //dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
             if(dto.getState()==1){
                 dto.setStateDesc("正常");
@@ -131,15 +139,19 @@ public class InvestorManagementController {
             }
         }
 
-        POIUtils<InvestmentDetailsDTO,Object> ex = new POIUtils<InvestmentDetailsDTO,Object>();
-        String[] headers = new String[]{"主键自增id","项目ID","投资人id","项目名称","魔柜名称","所属店铺","魔柜类型","补货前商品数","上货商品数","下货商品数","补货后商品数"};
         String fileName = "项目管理_"+DateUtils.formatDate(new Date(),"yyyyMMdd");
-        ex.exportToExcel(response,fileName,headers, investmentDetailsDTOS);
+        exportProduct(response,investmentDetailsDTOList,fileName);
         return ;
     }
 
+    private void exportProduct(HttpServletResponse response, List<InvestmentDetailsDTO> investmentDetailsDTOList, String fileName) {
+        POIUtils<InvestmentDetailsDTO,Object> ex = new POIUtils<InvestmentDetailsDTO,Object>();
+        String[] headers = new String[]{"主键自增id","项目ID","项目名称","支付订单号","支付时间","投资人id","投资人名字","投资人手机号","投资人邮箱","投资人绑定卡号","身份证号","身份证正面图片(url)","11.身份证反面图片(url))"};
+        ex.exportToExcel(response,fileName,headers, investmentDetailsDTOList);
+    }
+
     /**
-     * 根据条件筛选数据
+     * 根据条件筛选数
      * @param beginTime  起始时间戳
      * @param endTime   结束时间戳
      * @param searchType  1：支付成功，2：申请退款

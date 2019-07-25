@@ -16,6 +16,20 @@ public class InvestmentDetailsDTO {
      * 项目id
      */
     private Long projectId;
+
+    /**
+     * 项目名称
+     */
+    private String projectName;
+
+    /**
+     * 支付订单号
+     */
+    private String payOrderId;
+    /**
+     * 支付时间
+     */
+    private String payTime;
     /**
      * 投资人id
      */
@@ -36,6 +50,11 @@ public class InvestmentDetailsDTO {
      * 投资人银行卡号码
      */
     private String bankCardNumber;
+
+    /**
+     * 身份证号码
+     */
+    private String idCardNumber;
     /**
      * 身份证正面
      */
@@ -45,15 +64,9 @@ public class InvestmentDetailsDTO {
      */
     private String idCardPngDown;
 
-    /**
-     * 身份证号码
-     */
-    private String idCardNumber;
 
-    /**
-     * 项目名称
-     */
-    private String projectName;
+
+
     /**
      * 预期月收益
      */
@@ -74,14 +87,7 @@ public class InvestmentDetailsDTO {
      * 入金时间
      */
     private Date inputMarginTime;
-    /**
-     * 支付订单号
-     */
-    private String payOrderId;
-    /**
-     * 支付时间
-     */
-    private String payTime;
+
     /**
      * 当前投资状态
      */
