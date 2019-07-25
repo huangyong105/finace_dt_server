@@ -26,6 +26,9 @@ public interface InvestmentDetailsMapper {
     @Select("select * from investment_details where state = 3 and gmt_created < #{endTime} and gmt_created > #{beginTime}")
     List<InvestmentDetailsDO> selectByRefund(@Param("endTime") String endTime, @Param("beginTime") String beginTime);
 
+    @Select("select * from investment_details where state = 3 and gmt_created < #{endTime} and gmt_created > #{beginTime} and project_id = #{productId}")
+    List<InvestmentDetailsDO> selectByRefundAndId(@Param("endTime") String endTime, @Param("beginTime") String beginTime,@Param("productId")Long productId);
+
     @Select("select * from investment_details where id=#{id}")
     InvestmentDetailsDO selectById(Long id);
 

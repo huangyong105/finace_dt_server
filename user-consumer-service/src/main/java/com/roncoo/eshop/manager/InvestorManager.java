@@ -95,8 +95,12 @@ public class InvestorManager {
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
         String timeEnd=format.format(investmentDetailsDTO.getEndTime());
         String timeBegin=format.format(investmentDetailsDTO.getBeginTime());
-
-        List<PayOrderDO> payOrderDOS = payOrderMapper.selectBySearchSuccess(timeEnd, timeBegin);
+        List<PayOrderDO> payOrderDOS = null;
+        if(investmentDetailsDTO.getProjectId()==null) {
+            payOrderDOS = payOrderMapper.selectBySearchSuccess(timeEnd, timeBegin);
+        }else{
+            payOrderDOS = payOrderMapper.selectBySearchSuccessAndId(timeEnd, timeBegin, investmentDetailsDTO.getProjectId());
+        }
         List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
         for(PayOrderDO payOrderDO:payOrderDOS){
             InvestmentDetailsDTO investmentDetails = new InvestmentDetailsDTO();
@@ -123,8 +127,12 @@ public class InvestorManager {
         SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //设置格式
         String timeEnd=format.format(investmentDetailsDTO.getEndTime());
         String timeBegin=format.format(investmentDetailsDTO.getBeginTime());
-
-        List<InvestmentDetailsDO> investmentDetailsDOS = investmentDetailsMapper.selectByRefund(timeEnd, timeBegin);
+        List<InvestmentDetailsDO> investmentDetailsDOS = null;
+        if (investmentDetailsDTO.getProjectId() == null) {
+            investmentDetailsDOS = investmentDetailsMapper.selectByRefund(timeEnd, timeBegin);
+        }else{
+            investmentDetailsDOS = investmentDetailsMapper.selectByRefundAndId(timeEnd,timeBegin,investmentDetailsDTO.getProjectId());
+        }
         List<InvestmentDetailsDTO> investmentDetailsDTOS = new ArrayList<>();
         for (InvestmentDetailsDO investmentDetailsDO:investmentDetailsDOS){
             PayOrderDO payOrderDO = payOrderMapper.selectById(investmentDetailsDO.getId());

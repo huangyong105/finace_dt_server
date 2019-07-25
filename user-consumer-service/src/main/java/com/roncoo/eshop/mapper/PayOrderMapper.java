@@ -27,4 +27,8 @@ public interface PayOrderMapper {
     @Select("select * from pay_order where pay_state = 1 and gmt_created < #{endTime} and gmt_created > #{beginTime}")
     List<PayOrderDO> selectBySearchSuccess(@Param("endTime") String endTime, @Param("beginTime") String beginTime);
 
+    @Select("select * from pay_order where pay_state = 1 and gmt_created < #{endTime} and gmt_created > #{beginTime} and project_id = #{productId}")
+    List<PayOrderDO> selectBySearchSuccessAndId(@Param("endTime") String endTime, @Param("beginTime") String beginTime,@Param("productId")Long productId);
+
+
 }
