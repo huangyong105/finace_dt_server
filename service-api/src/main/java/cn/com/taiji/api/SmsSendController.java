@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
+
 
 /**
  * 功能描述: <br>
@@ -25,6 +27,18 @@ public class SmsSendController {
     @Autowired
     private CaptchaRender render;
 
+    @PostConstruct
+    public  void init() {
+        try {
+            Result result =  sendSms("15008479748",1);
+            if (result != null) {
+                return ;
+            }
+        } catch (ClientException e) {
+            log.info("找回密码信息异常:{}",e);
+            return ;
+        }
+    }
     /**
      * 发送短信验证码
      * @throws ClientException

@@ -82,7 +82,8 @@ public class CaptchaRender  {
 	 */
 	public int  render(String phone,int type) throws ClientException {
 
-		Integer dailyTimes = NumberUtils.toInt((String)redisDao.get(genRedisSmsCountLimit(phone,type)));
+		Object count = redisDao.get(genRedisSmsCountLimit(phone,type));
+		Integer dailyTimes = NumberUtils.toInt(String.valueOf(count));
 		if (dailyTimes >= 3) {
 			return  1;
 		}
