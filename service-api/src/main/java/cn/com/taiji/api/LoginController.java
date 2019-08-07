@@ -10,6 +10,8 @@ import cn.com.taiji.lockinterface.AquiredLockWorker;
 import cn.com.taiji.data.User;
 import cn.com.taiji.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 public class LoginController {
-
+    private static Logger LOG= LoggerFactory.getLogger(LoginController.class);
     private final String USER_NAME_KEY = "USER_NAME";
     private final String USER_TOKEN = "USER_TOKEN";
     private final String PASSWORD = "PASSWORD";
@@ -116,6 +118,7 @@ public class LoginController {
         user.setIdCardNumber(userEntity.getIdCardNumber());
         user.setIdCardPngUp(userEntity.getIdCardPngUp());
         user.setIdCardPngDown(userEntity.getIdCardPngDown());
+        user.setBankCardNumber(userEntity.getBankCardNumber());
         if (userService.realNameCertification(user)!=null){
             if (user.getBankCardNumber()==null){
                 user.setState(110);

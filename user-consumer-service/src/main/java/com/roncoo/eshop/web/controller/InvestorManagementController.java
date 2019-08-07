@@ -315,7 +315,7 @@ public class InvestorManagementController {
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         String sym = request.getRequestURL().toString().split("/investor/")[0];
-        String notifyUrl = sym + "/investor/wxpayCallback";
+        String notifyUrl = sym + "/investor/wxpayrealNameCertificationCallback";
         JSONObject jsAtt = new JSONObject();
         jsAtt.put("uid", userId);
         String attach = jsAtt.toJSONString();
