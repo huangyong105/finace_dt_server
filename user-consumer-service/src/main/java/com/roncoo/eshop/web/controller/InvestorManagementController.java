@@ -315,7 +315,7 @@ public class InvestorManagementController {
         //生成唯一支付订单id
         String orderCode = OrderCodeUtil.getOrderCode(userId);
         String sym = request.getRequestURL().toString().split("/investor/")[0];
-        String notifyUrl = sym + "/investor/wxpayrealNameCertificationCallback";
+        String notifyUrl = sym + "/investor/wxpayCallback";
         JSONObject jsAtt = new JSONObject();
         jsAtt.put("uid", userId);
         String attach = jsAtt.toJSONString();
@@ -624,6 +624,7 @@ public class InvestorManagementController {
         user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
         user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
         user.setUsername(investorManagementDTO.getName());
+        user.setBankCardNumber(investorManagementDTO.getBankCardNumber());
         Result result = userClient.realNameCertification(user);
         if (result.isSuccess()){
             return MyResult.ofSuccess("认证成功");
