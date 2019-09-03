@@ -624,6 +624,7 @@ public class InvestorManagementController {
         user.setIdCardPngUp(investorManagementDTO.getIdCardPngUp());
         user.setIdCardPngDown(investorManagementDTO.getIdCardPngDown());
         user.setUsername(investorManagementDTO.getName());
+        user.setBankCardNumber(investorManagementDTO.getBankCardNumber());
         Result result = userClient.realNameCertification(user);
         if (result.isSuccess()){
             return MyResult.ofSuccess("认证成功");
