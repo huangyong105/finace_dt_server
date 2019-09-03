@@ -24,13 +24,13 @@
     <!-- Custom box css -->
     <link href="../../plugins/custombox/css/custombox.min.css" rel="stylesheet">
     <!-- App css -->
-    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/pages.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/menu.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/pages.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/menu.css" rel="stylesheet" type="text/css"/>
+    <link href="../../assets/css/responsive.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../plugins/switchery/switchery.min.css">
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,6 +39,23 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-timepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/daterangepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" />
+
+    <![endif]-->
+
 
 </head>
 
@@ -101,7 +118,6 @@
                     </li>
 
 
-
                 </ul> <!-- end navbar-right -->
 
             </div><!-- end container -->
@@ -116,7 +132,7 @@
 
             <!--- Sidemenu -->
             <div id="sidebar-menu">
-                <ul id ="ul_has_sub">
+                <ul id="ul_has_sub">
                     <li class="menu-title">Navigation</li>
 
                 </ul>
@@ -127,7 +143,7 @@
             <div class="help-box">
                 <h5 class="text-muted m-t-0">帮助 ？</h5>
                 <p class=""><span class="text-dark"><b>Email:</b></span> <br/> 汇致旺</p>
-                <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br/> </p>
+                <p class="m-b-0"><span class="text-dark"><b>Call:</b></span> <br/></p>
             </div>
 
         </div>
@@ -135,7 +151,6 @@
 
     </div>
     <!-- Left Sidebar End -->
-
 
 
     <!-- ============================================================== -->
@@ -149,7 +164,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="page-title-box">
-                            <h4 class="page-title"> </h4>
+                            <h4 class="page-title"></h4>
                             <ol class="breadcrumb p-0 m-0">
                                 <li>
                                     <a href="#">汇致旺</a>
@@ -169,55 +184,66 @@
                     <div class="col-sm-12">
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <form class="form-horizontal" id="search_form" action="#">
-                                <input type="hidden" placeholder="" id="row-id-1" name ="id" class="form-control">
+                                <input type="hidden" placeholder="" id="row-id-1" name="id" class="form-control">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">新增</h4>
                                         </div>
                                         <div class="modal-body">
 
-                                            <div class="form-group" id ="dc_1">
+                                            <div class="form-group" id="dc_1">
                                                 <label for="projectName">项目名称</label>
-                                                <input type="text" name="projectName" class="form-control" id="projectName" placeholder="项目名称">
+                                                <input type="text" name="projectName" class="form-control"
+                                                       id="projectName" placeholder="项目名称">
                                             </div>
-                                            <div class="form-group" id ="dc_2">
+                                            <div class="form-group" id="dc_2">
                                                 <label for="monthEarnings">预期月收益</label>
-                                                <input type="text" name="monthEarnings" class="form-control" id="monthEarnings" placeholder="预期月收益">
+                                                <input type="text" name="monthEarnings" class="form-control"
+                                                       id="monthEarnings" placeholder="预期月收益">
                                             </div>
-                                            <div class="form-group" id ="dc_3">
+                                            <div class="form-group" id="dc_3">
                                                 <label for="expectedRiskTolerance">最低承受风险</label>
-                                                <input type="text" name="expectedRiskTolerance" class="form-control" id="expectedRiskTolerance" placeholder="最低承受风险">
+                                                <input type="text" name="expectedRiskTolerance" class="form-control"
+                                                       id="expectedRiskTolerance" placeholder="最低承受风险">
                                             </div>
-                                            <div class="form-group" id ="dc_4">
+                                            <div class="form-group" id="dc_4">
                                                 <label for="minMargin">最低保证金</label>
-                                                <input type="text" name="minMargin" class="form-control" id="minMargin" placeholder="最低保证金">
+                                                <input type="text" name="minMargin" class="form-control" id="minMargin"
+                                                       placeholder="最低保证金">
                                             </div>
 
-                                            <div class="form-group" id ="dc_5">
-                                                <label for="moneyProportion" >资金配比</label>
-                                                <input type="text" name="moneyProportion" class="form-control" id="moneyProportion" placeholder="资金配比">
+                                            <div class="form-group" id="dc_5">
+                                                <label for="moneyProportion">资金配比</label>
+                                                <input type="text" name="moneyProportion" class="form-control"
+                                                       id="moneyProportion" placeholder="资金配比">
                                             </div>
-
 
 
                                             <div class="form-group">
                                                 <label for="isOnline_1">上线状态</label><br/>
                                                 <div class="radio radio-info radio-inline">
-                                                    <input type="radio" id="isOnline_1" value="0" name="isOnline" checked>
+                                                    <input type="radio" id="isOnline_1" value="0" name="isOnline"
+                                                           checked>
                                                     <label for="isOnline_1"> 下线 </label>
                                                 </div>
                                                 <div class="radio radio-inline">
-                                                    <input type="radio" id="isOnline_2" value="1" name="isOnline" >
+                                                    <input type="radio" id="isOnline_2" value="1" name="isOnline">
                                                     <label for="isOnline_2"> 上线 </label>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                            <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                                    class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+                                            </button>
+                                            <button type="button" id="btn_submit" class="btn btn-primary"
+                                                    data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk"
+                                                                               aria-hidden="true"></span>保存
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -228,11 +254,34 @@
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
                             <div class="row">
-                                <h4 class="m-t-0 header-title" style="float:left"><b>&nbsp;&nbsp;&nbsp;&nbsp;投资管理</b></h4>
-                                <div class="col-md-1" style="float:right;">
-                                    <button type="button" class="btn btn-info pull-right waves-effect waves-light" id="btn_add">创&nbsp;&nbsp;建</button>
-                                    <div class="clearfix"></div>
-                                </div>
+                                <h4 class="m-t-0 header-title" style="float:left"><b>&nbsp;&nbsp;&nbsp;&nbsp;投资管理</b>
+                                </h4>
+                            </div>
+                            <div class="row">
+                                <form class="form-horizontal" id="search_form_1" action="#">
+                                    <div class="profile-info-row" id="search_panel" style="width:1100px;">
+                                        <div class="col-md-4 no-padding-left">
+                                            <div class="input-group col-md-4">
+                                                <span class="input-group-addon"> <i
+                                                        class="fa fa-calendar bigger-110"></i> </span>
+                                                <input class="form-control" type="text" name="date"
+                                                       style="width: 300px;"/>
+                                            </div>
+                                        </div>
+                                        <select id="form-field-select-3" style="width:200px;height: 35px" name="searchType">
+                                            <option value="1">已支付</option>
+                                            <option value="2">申请退款</option>
+                                        </select>
+                                        <button type="button" style="width: 100px;float: right"
+                                                class="btn btn-info pull-right waves-effect waves-light"
+                                                id="but_export">&nbsp;&nbsp;导&nbsp;&nbsp;出&nbsp;&nbsp;
+                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button type="button" style="width: 100px;float: right"
+                                                class="btn btn-info pull-right waves-effect waves-light"
+                                                id="btn_add">创&nbsp;&nbsp;建
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                             <table id="datatable" class="table table-striped  table-colored table-info">
                                 <thead>
@@ -269,7 +318,7 @@
 
     </div>
 
-    <div id="custom-modal" class="modal-demo" >
+    <div id="custom-modal" class="modal-demo">
         <input type="hidden" placeholder="" id="row-id" class="form-control">
 
         <button type="button" class="close" onclick="Custombox.close();">
@@ -284,7 +333,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info waves-effect waves-light" id="confirm-del">&nbsp;确&nbsp;&nbsp;认&nbsp;</button>
-                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal" onclick="Custombox.close();">&nbsp;取&nbsp;&nbsp;消&nbsp;</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"
+                        onclick="Custombox.close();">&nbsp;取&nbsp;&nbsp;消&nbsp;
+                </button>
             </div>
         </div>
     </div>
@@ -341,16 +392,37 @@
 <script src="../../assets/js/jquery.app.js"></script>
 <script src="../../assets/js/jquery.validate.min.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
+<!-- init -->
+<script src="assets/js/jquery-ui.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="assets/js/chosen.jquery.min.js"></script>
+<script src="assets/js/spinbox.min.js"></script>
+<script src="assets/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/bootstrap-timepicker.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/daterangepicker.min.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="assets/js/jquery.knob.min.js"></script>
+<script src="assets/js/autosize.min.js"></script>
+<script src="assets/js/jquery.inputlimiter.min.js"></script>
+<script src="assets/js/jquery.maskedinput.min.js"></script>
+<script src="assets/js/bootstrap-tag.min.js"></script>
 
+<!-- ace scripts -->
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
 <script>
     var table;
     var token = $.cookie('token');
-    function del(id,name){
+
+    function del(id, name) {
         $('#row-id').val(id);
         //弹出提示框
-        showCustombox("确认删除应用："+name,false);
+        showCustombox("确认删除应用：" + name, false);
     }
-    function update(id,projectName,monthEarnings,expectedRiskTolerance,minMargin,moneyProportion,gmtCreated,isOnline){
+
+    function update(id, projectName, monthEarnings, expectedRiskTolerance, minMargin, moneyProportion, gmtCreated, isOnline) {
         showOrHide(1);
         $('#row-id-1').val(id);
         $('#projectName').val(projectName);
@@ -363,9 +435,11 @@
         $("#myModalLabel").text("更新");
         $('#myModal').modal();
     }
-    function showSecurity(security,obj){
+
+    function showSecurity(security, obj) {
         $(obj).parents('span').html(security);
     }
+
     $("#btn_add").click(function () {
         showOrHide(1);
         $('#projectName').val("");
@@ -377,14 +451,16 @@
         $("#myModalLabel").text("新增");
         $('#myModal').modal();
     });
-    function online(id ,isOnline){
+
+    function online(id, isOnline) {
         showOrHide(0);
         $('#row-id-1').val(id);
         $(":radio[name='isOnline'][value='" + isOnline + "']").prop("checked", "checked");
         $("#myModalLabel").text("更新");
         $('#myModal').modal();
     }
-    function showOrHide (state) {
+
+    function showOrHide(state) {
         if (state && state === 1) {
             $('#dc_1').show();
             $('#dc_2').show();
@@ -399,7 +475,8 @@
             $('#dc_5').hide();
         }
     }
-    function formatDate(inputTime){
+
+    function formatDate(inputTime) {
         var date = new Date(inputTime);
         var y = date.getFullYear();
         var m = date.getMonth() + 1;
@@ -412,131 +489,149 @@
         var second = date.getSeconds();
         minute = minute < 10 ? ('0' + minute) : minute;
         second = second < 10 ? ('0' + second) : second;
-        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+        return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
     }
-    function showUI () {
+
+    function showUI() {
         $.ajax({
-            dataType : "json",
-            url: host+"/loadUrls",
+            dataType: "json",
+            url: host + "/loadUrls",
             contentType: 'application/json;charset=UTF-8',
             type: 'POST',
-            success:function(data){
-                if(!data.success){
+            success: function (data) {
+                if (!data.success) {
                     alert(data.message);
-                }else{
-                    $.each(data.value, function(i, item) {
+                } else {
+                    $.each(data.value, function (i, item) {
                         $("#ul_has_sub").append(
                             "<li class=\"has_sub\">" +
                             "<a href=\"" +
                             item.url +
                             "\" class=\"waves-effect\"><i class=\"mdi mdi-google-play\"></i>" +
-                            " <span>"+
+                            " <span>" +
                             item.name
-                            +"</span></a>"
-                            +"</li>"
+                            + "</span></a>"
+                            + "</li>"
                         );
                     });
                 }
             },
-            error: function(res){
+            error: function (res) {
                 authorValidate(res);
             }
         });
     }
+
     $(document).ready(function () {
-        showUI ();
-        $('#confirm-del').click(function(){
+        //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+        //to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+        $('#search_panel input[name=date]').daterangepicker({
+            applyClass: 'btn-sm btn-success',
+            cancelClass: 'btn-sm btn-default',
+            startDate: new Date(new Date() - 1000 * 60 * 60 * 24 * 7),
+            endDate: new Date(),
+            locale: {
+                applyLabel: 'Apply',
+                cancelLabel: 'Cancel',
+            }
+        })
+            .prev().on(ace.click_event, function () {
+            $(this).next().focus();
+        });
+
+        showUI();
+        $('#confirm-del').click(function () {
             var id = $('#row-id').val();
             $.ajax({
-                dataType : "json",
-                url: host+"/uc/deleteSysUser",
+                dataType: "json",
+                url: host + "/uc/deleteSysUser",
                 contentType: 'application/json;charset=UTF-8',
                 type: 'POST',
                 // 传给服务器的数据，可以添加我们自己的查询参数
-                data: '{"id":"'+id+'"}',
-                success:function(res){
+                data: '{"id":"' + id + '"}',
+                success: function (res) {
                     table.ajax.reload();
                 },
-                error: function(res){
+                error: function (res) {
                     authorValidate(res);
                 }
             });
             Custombox.close();
         });
         table = $('#datatable').DataTable({
-            "processing" : false,
+            "processing": false,
             "serverSide": true,
             //"sPaginationType" : "full_numbers",//分页工具条样式
-            "bStateSave" : false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
-            "bScrollCollapse" : false, //当显示的数据不足以支撑表格的默认的高度
+            "bStateSave": false, //是否打开客户端状态记录功能,此功能在ajax刷新纪录的时候不会将个性化设定回复为初始化状态
+            "bScrollCollapse": false, //当显示的数据不足以支撑表格的默认的高度
             "bSort": false,             //不能排序
-            "searching" : false,
+            "searching": false,
             "iDisplayLength": 10,
             "bLengthChange": false,
             "sPaginationType": "full_numbers",
-            ajax(data, callback, settings){
+            ajax(data, callback, settings) {
                 //封装请求参数
                 var param = getFormData($("#search_form"));
                 var info = $('#datatable').DataTable().page.info();
                 var oTable = $("#datatable").dataTable(); //table1为表格的id
-                var tableSetings=oTable.fnSettings();
-                var paging_length=tableSetings._iDisplayLength;//当前每页显示多少
-                var page_start=tableSetings._iDisplayStart;//当前页开始
-                var page=(page_start / paging_length)+1;
-                param.pageSize =info.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
+                var tableSetings = oTable.fnSettings();
+                var paging_length = tableSetings._iDisplayLength;//当前每页显示多少
+                var page_start = tableSetings._iDisplayStart;//当前页开始
+                var page = (page_start / paging_length) + 1;
+                param.pageSize = info.length;       //页面显示记录条数，在页面显示每页显示多少项的时候
                 param.currentPage = page;   //开始的记录序号
                 $.ajax({
-                    dataType : "json",
-                    url: host+"/investment/getAllProjectList",
+                    dataType: "json",
+                    url: host + "/investment/getAllProjectList",
                     contentType: 'application/json;charset=UTF-8',
                     type: 'POST',
-                    data :JSON.stringify(param),
-                    success:function(res){
-                        setTimeout( function () {
+                    data: JSON.stringify(param),
+                    success: function (res) {
+                        setTimeout(function () {
                             var out = {};
                             out.draw = data.draw;
                             out.recordsTotal = res.value.pageInfo.totalCount;
                             out.recordsFiltered = res.value.pageInfo.totalCount;
-                            out.data =  res.value.data;
-                            callback( out );
-                        },50);
+                            out.data = res.value.data;
+                            callback(out);
+                        }, 50);
                     },
-                    error: function(res){
+                    error: function (res) {
                         authorValidate(res);
                     }
                 });
             },
             "columns": [
-                { data: 'id'},
-                { data: 'projectName'},
-                { data : 'monthEarnings'},
-                { data: 'expectedRiskTolerance'},
-                { data: 'minMargin'},
-                { data: 'moneyProportion'},
-                { data : 'gmtCreated'},
-                { data : 'isOnline'},
-                { data : null}
+                {data: 'id'},
+                {data: 'projectName'},
+                {data: 'monthEarnings'},
+                {data: 'expectedRiskTolerance'},
+                {data: 'minMargin'},
+                {data: 'moneyProportion'},
+                {data: 'gmtCreated'},
+                {data: 'isOnline'},
+                {data: null}
             ],
             columnDefs: [{
                 targets: 6,
-                render: function(data, type, row, meta) {
-                    if(row.gmtCreated ){
-                       return formatDate(row.gmtCreated);
+                render: function (data, type, row, meta) {
+                    if (row.gmtCreated) {
+                        return formatDate(row.gmtCreated);
                     }
                 }
-            },{
+            }, {
                 targets: 7,
-                render: function(data, type, row, meta) {
-                    if(row.isOnline && row.isOnline === 1){
+                render: function (data, type, row, meta) {
+                    if (row.isOnline && row.isOnline === 1) {
                         return '上架';
-                    }else{
+                    } else {
                         return '正常';
                     }
                 }
-            },{
+            }, {
                 targets: 8,
-                render: function(data, type, row, meta) {
-                    if( row.isOnline &&  row.isOnline === 1 ) {
+                render: function (data, type, row, meta) {
+                    if (row.isOnline && row.isOnline === 1) {
                         return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 下架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
                     } else {
                         return '<a   type="button"  href="#" onclick="online(\'' + row.id + '\',\'' + row.isOnline + '\')" > 上架</a>&nbsp;&nbsp;<a type="button"  href="#" onclick="update(\'' + row.id + '\',\'' + row.projectName + '\',\'' + row.monthEarnings + '\',\'' + row.expectedRiskTolerance + '\',\'' + row.minMargin + '\',\'' + row.moneyProportion + '\',\'' + row.gmtCreated + '\',\'' + row.isOnline + '\')" >编辑</a>';
@@ -571,41 +666,110 @@
 
     });
     TableManageButtons.init();
-    $("#but_search").click(function(){
+    $("#but_search").click(function () {
         table.ajax.reload();
     });
-    $("#logout").click(function(){
-        location.href="/logout"
+    $("#logout").click(function () {
+        location.href = "/logout"
     });
-    $("#btn_submit").click(function(){
-        var id =  $('#row-id-1').val();
-        var node = $('#dc_1') ;
-        var url =null;
-        if (!id ) {
-            url=   host+"/investment/saveProject";
-        }  else if (node.is(':hidden')) {
-            url=   host+"/investment/onlineOrOffline";
+    $("#btn_submit").click(function () {
+        var id = $('#row-id-1').val();
+        var node = $('#dc_1');
+        var url = null;
+        if (!id) {
+            url = host + "/investment/saveProject";
+        } else if (node.is(':hidden')) {
+            url = host + "/investment/onlineOrOffline";
         }
         else {
-            url=   host+"/investment/onlineOrOffline";
+            url = host + "/investment/onlineOrOffline";
         }
         var param = getFormData($("#search_form"));
         $.ajax({
-            dataType : "json",
-            url : url,
+            dataType: "json",
+            url: url,
             contentType: 'application/json;charset=UTF-8',
-            type : "post",
-            data : JSON.stringify(param),
-            success : function(data) {
-                if(!data.success){
+            type: "post",
+            data: JSON.stringify(param),
+            success: function (data) {
+                if (!data.success) {
                     alert(data.message);
-                }else{
+                } else {
                     table.ajax.reload();
                 }
             },
-            error : function (e){
+            error: function (e) {
                 var d = e.responseJSON;
-                if(d){
+                if (d) {
+                    alert(d.message);
+                }
+            }
+        });
+
+    });
+
+
+    $("#but_export").click(function () {
+        var data = {};
+
+        var url = host + "/investor/exportInvestmentDetailsList";
+
+        var param = getFormData($("#search_form_1"));
+        url =url+"?date="+ param.date+"&searchType="+param.searchType;
+        alert(param.date+"&"+param.searchType)
+        window.open(url);
+        /*$.ajax({
+            dataType: "json",
+            url: url,
+            contentType: 'application/json;charset=UTF-8',
+            type: "get",
+            data: param,
+            success: function (data) {
+                if (!data.success) {
+                    alert(data.message);
+                } else {
+                    table.ajax.reload();
+                }
+            },
+            error: function (e) {
+                var d = e.responseJSON;
+                if (d) {
+                    alert(d.message);
+                }
+            }
+        });
+*/
+    });
+
+    $("#btn_submit").click(function () {
+        var id = $('#row-id-1').val();
+        var node = $('#dc_1');
+        var url = null;
+        if (!id) {
+            url = host + "/investment/saveProject";
+        } else if (node.is(':hidden')) {
+            url = host + "/investment/onlineOrOffline";
+        }
+        else {
+            url = host + "/investment/onlineOrOffline";
+        }
+        var param = getFormData($("#search_form"));
+        $.ajax({
+            dataType: "json",
+            url: url,
+            contentType: 'application/json;charset=UTF-8',
+            type: "post",
+            data: JSON.stringify(param),
+            success: function (data) {
+                if (!data.success) {
+                    alert(data.message);
+                } else {
+                    table.ajax.reload();
+                }
+            },
+            error: function (e) {
+                var d = e.responseJSON;
+                if (d) {
                     alert(d.message);
                 }
             }

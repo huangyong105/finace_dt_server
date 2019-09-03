@@ -14,11 +14,14 @@ import com.jit.wxs.service.CuserService;
 import com.jit.wxs.util.POIUtils;
 import org.apache.http.client.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -31,10 +34,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/investor")
 public class InvestorManagementController {
+
+    static final SimpleDateFormat SDF_MMDDYYY = new SimpleDateFormat("MM/dd/yyyy");
+    static final SimpleDateFormat SDF_YYY_MM_DD = new SimpleDateFormat("yyyy-MM-dd");
+    static final long MILLIS_ONE_DAY = 1000l * 60 * 60 * 24;
+
     @Autowired
     CuserService cuserService;
     @Autowired
     InvestmentClient investmentClient;
+
 
     /**
      * 获取c端用户列表
@@ -113,21 +122,39 @@ public class InvestorManagementController {
     }
 
     @RequestMapping("/exportInvestmentDetailsList")
-    public void  exportInvestmentDetailsList( Long beginTime,Long endTime,Integer searchType, HttpServletResponse response){
+    public void  exportInvestmentDetailsList( String date ,Integer searchType, HttpServletResponse response){
+        Long beginTime = null , endTime = null;
+        if (date != null && date.length() > 0) {
+            String ss[] = date.split("[ -]+");
+            if (ss != null && ss.length == 2) {
+                try {
+                    beginTime = SDF_MMDDYYY.parse(ss[0]).getTime();
+                    Date d2 = SDF_MMDDYYY.parse(ss[1]);
+                    endTime = new Date(d2.getTime() + MILLIS_ONE_DAY).getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         InvestmentDetailsDTO investmentDetailsDTO = new InvestmentDetailsDTO();
         investmentDetailsDTO.setBeginTime(beginTime);
         investmentDetailsDTO.setEndTime(endTime);
         investmentDetailsDTO.setSearchType(searchType);
         Result<List<InvestmentDetailsDTO>> result = investmentClient.getInvestmentProduct(investmentDetailsDTO);
-        if (!result.isSuccess()){
+        if (!result.isSuccess() || CollectionUtils.isEmpty(result.getValue())){
 
             String fileName = "项目管理_"+DateUtils.formatDate(new Date(),"yyyyMMdd");
             exportProduct(response, Lists.newArrayList(),fileName);
             return ;
         }
         List<InvestmentDetailsDTO> investmentDetailsDTOList = result.getValue();
+        Long id = 1L ;
         for (InvestmentDetailsDTO dto:investmentDetailsDTOList){
-            //dto.setStateDesc(PayStateEnum.getValueByKey(dto.getState()));
+            dto.setId(id++);
+            if (dto == null || dto.getState() == null) {
+                continue;
+            }
             if(dto.getState()==1){
                 dto.setStateDesc("正常");
             }
@@ -157,6 +184,7 @@ public class InvestorManagementController {
      * @param searchType  1：支付成功，2：申请退款
      * @return
      */
+    @RequestMapping("/getInvestmentDetailsList")
     public List<InvestmentDetailsDTO> getInvestmentDetailsList(Long beginTime,Long endTime,Integer searchType){
         InvestmentDetailsDTO investmentDetailsDTO = new InvestmentDetailsDTO();
         investmentDetailsDTO.setBeginTime(beginTime);
